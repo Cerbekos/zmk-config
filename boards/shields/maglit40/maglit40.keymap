@@ -98,7 +98,7 @@
         &trans       &kp JP_PLUS      &kp MINUS     &kp JP_ASTERISK &kp SLASH   &kp JP_UNDERSCORE    &kp JP_EQUAL  &kp JP_COLON  &kp JP_YEN    &kp DOT       &kp JP_TILDE &trans
         &trans       &kp N1           &kp N2        &kp N3        &kp N4        &kp N5               &kp N6        &kp N7        &kp N8        &kp N9        &kp N0      &trans   
         &trans       &kp N6           &kp N7        &kp N8        &kp N9        &kp N0               &kp N1        &kp N2        &kp N3        &kp N4        &kp N5
-                                      &trans        &mo 5         &trans        &trans               &trans        &trans        &trans
+                                      &trans        &trans        &trans        &mo 5                &trans        &trans        &trans
       >;
     };
 
@@ -116,7 +116,7 @@
         &trans        &kp EXCL        &kp JP_DQUOTE &kp HASH      &kp DLLR      &kp PRCNT           &kp JP_AMPERSAND  &kp JP_QUOTE  &kp JP_LPAREN  &kp JP_RPAREN   &kp JP_CARET  &trans
         &trans        &trans          &trans        &trans        &trans        &trans              &kp JP_AT     &kp JP_BACKQUOTE  &kp JP_LBRACKET  &kp JP_LBRACE  &trans      &trans   
         &trans        &trans          &trans        &trans        &trans        &trans              &mkp JP_PLUS  &kp JP_RBRACKET   &kp JP_RBRACKET  &kp JP_RBRACE  &trans
-                                      &trans        &trans        &trans        &trans              &trans        &trans          &trans
+                                      &trans        &trans        &mo 5         &trans              &trans        &trans          &trans
       >;
     };
 
@@ -125,7 +125,7 @@
         &trans      &trans            &trans        &trans        &trans        &trans              &trans        &msc SCRL_UP    &mmv MOVE_UP   &msc SCRL_DOWN   &trans        &trans
         &trans      &trans            &trans        &trans        &trans        &trans              &mkp LCLK     &mmv MOVE_LEFT  &mmv MOVE_DOWN &mmv MOVE_RIGHT  &trans        &trans   
         &trans      &trans            &trans        &trans        &trans        &trans              &mkp RCLK     &trans          &mkp MCLK      &trans           &trans
-                                      &trans        &trans        &trans        &trans              &trans        &trans          &trans
+                                      &trans        &trans        &trans        &trans              &mo 5         &trans          &trans
       >;
     };
 
