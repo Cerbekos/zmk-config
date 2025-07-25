@@ -26,6 +26,14 @@
     diode-direction = "col2row";
     wakeup-source;
   };
+
+  behaviors {
+    bt_status: bt_status {
+      compatible = "zmk,behavior-callback";
+      label = "Battery Status";
+    };
+  };
+  
 };
 
 
