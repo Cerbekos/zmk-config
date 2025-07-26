@@ -1,5 +1,5 @@
 compatible: "zmk,behavior-battery-status"
-include: "behavior.yaml"
+include: "behavior-metadata.yaml"
 
 properties:
   label:
