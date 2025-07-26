@@ -3,7 +3,7 @@ description: Custom battery status behavior
 
 compatible: "zmk,behavior-battery-status"
 
-include: "behavior.yaml"
+include: "behavior-metadata.yaml"
 
 properties:
   label:
