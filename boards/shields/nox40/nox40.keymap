@@ -109,7 +109,7 @@
 
     layer_3 {
       bindings = <
-        &kp EXCL    &kp JP_DQUOTE     &kp HASH      &kp DLLR      &kp PRCNT     &kp C_VOL_UP          &bt_status     &kp JP_AMPERSAND  &kp JP_QUOTE  &kp JP_LPAREN    &kp JP_RPAREN  &kp JP_CARET   
+        &kp EXCL    &kp JP_DQUOTE     &kp HASH      &kp DLLR      &kp PRCNT     &kp C_VOL_UP          &bt_status 0   &kp JP_AMPERSAND  &kp JP_QUOTE  &kp JP_LPAREN    &kp JP_RPAREN  &kp JP_CARET   
         &trans          &trans        &trans        &trans        &trans        &kp C_VOL_DN          &trans         &kp JP_AT     &kp JP_BACKQUOTE  &kp JP_LBRACKET  &kp JP_LBRACE  &trans        
         &trans          &trans        &trans        &trans        &trans                                             &mkp JP_PLUS  &kp JP_ASTERISK   &kp JP_RBRACKET  &kp JP_RBRACE  &kp JP_UNDERSCORE
                                       &trans        &mo 5         &trans                                             &trans        &trans        &trans

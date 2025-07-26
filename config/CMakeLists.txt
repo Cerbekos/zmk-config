@@ -1,1 +1,1 @@
-target_sources(app PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/battery-status.c)
+zephyr_library_sources(behaviors/battery_status_behavior.c)

@@ -27,12 +27,12 @@
     wakeup-source;
   };
 
-  behaviors {
-    bt_status: bt_status {
-      compatible = "zmk,behavior-callback";
-      label = "Battery Status";
+    behaviors {
+        bt_status: battery_status {
+            compatible = "zmk,behavior";
+            label = "BATTERY_STATUS";
+        };
     };
-  };
   
 };
 
