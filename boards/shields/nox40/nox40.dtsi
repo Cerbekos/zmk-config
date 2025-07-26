@@ -29,7 +29,7 @@
 
     behaviors {
         bt_status: battery_status {
-            compatible = "zmk,behavior";
+            compatible = "zmk,behavior-battery-status";
             label = "BATTERY_STATUS";
             #binding-cells = <1>;
         };

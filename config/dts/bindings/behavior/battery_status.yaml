@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: MIT
+description: Custom battery status behavior
+
+compatible: "zmk,behavior-battery-status"
+
+include: one_cell.yaml
+
+properties:
+  label:
+    type: string
+    required: true
