@@ -3,7 +3,7 @@ description: Custom battery status behavior
 
 compatible: "zmk,behavior-battery-status"
 
-include: one_cell.yaml
+include: "zmk,behavior.yaml"
 
 properties:
   label:
