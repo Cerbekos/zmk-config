@@ -1,15 +1,10 @@
-# SPDX-License-Identifier: MIT
-description: Custom battery status behavior
-
 compatible: "zmk,behavior-battery-status"
-
-include: "behavior-metadata.yaml"
+include: "behavior.yaml"
 
 properties:
   label:
     type: string
     required: true
 
-required-cells:
-  - input
-binding-cells: 1
+# この部分が重要！
+"#binding-cells": 1
