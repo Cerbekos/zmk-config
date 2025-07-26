@@ -31,6 +31,7 @@
         bt_status: battery_status {
             compatible = "zmk,behavior";
             label = "BATTERY_STATUS";
+            #binding-cells = <1>;
         };
     };
   
