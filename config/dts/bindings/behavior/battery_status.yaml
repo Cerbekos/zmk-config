@@ -9,3 +9,7 @@ properties:
   label:
     type: string
     required: true
+
+required-cells:
+  - input
+binding-cells: 1
