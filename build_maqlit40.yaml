@@ -9,10 +9,11 @@
 # shield: [ "corne_left", "corne_right" ]
 ---
 include:
-### Tentalice ###
+### Maglit40ble ###
   - board: seeeduino_xiao_ble
-    shield: tentalice
+    shield: maglit40_left
     snippet: studio-rpc-usb-uart
-    cmake-args: -DCONFIG_ZMK_STUDIO=y
+  - board: seeeduino_xiao_ble
+    shield: maglit40_right
 #  - board: seeeduino_xiao_ble
 #    shield: settings_reset

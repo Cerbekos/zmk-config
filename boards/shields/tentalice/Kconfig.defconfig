@@ -1,0 +1,6 @@
+if SHIELD_TENTALICE
+
+config ZMK_KEYBOARD_NAME
+    default "TENTALICE"
+
+endif

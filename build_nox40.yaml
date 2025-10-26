@@ -9,21 +9,6 @@
 # shield: [ "corne_left", "corne_right" ]
 ---
 include:
-### Splitent ###
-#  - board: seeeduino_xiao_ble
-#    shield: splitent_left
-#  - board: seeeduino_xiao_ble
-#    shield: splitent_right
-#  - board: seeeduino_xiao_ble
-#    shield: settings_reset
-### Maglit40ble ###
-#  - board: seeeduino_xiao_ble
-#    shield: maglit40_left
-#    snippet: studio-rpc-usb-uart
-#  - board: seeeduino_xiao_ble
-#    shield: maglit40_right
-#  - board: seeeduino_xiao_ble
-#    shield: settings_reset
 ### nox40 ###
   - board: seeeduino_xiao_ble
     shield: nox40_left
