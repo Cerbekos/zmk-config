@@ -12,7 +12,6 @@
   kscan0: kscan {
     compatible = "zmk,kscan-gpio-charlieplex";    
     wakeup-source;
-    interrupt-gpios = <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;    
   };
 
   default_transform: matrix_transform {
