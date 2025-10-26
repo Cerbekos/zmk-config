@@ -52,9 +52,6 @@
         evt-type = <INPUT_EV_REL>;
         x-input-code = <INPUT_REL_X>;
         y-input-code = <INPUT_REL_Y>;
-
-        force-awake;
-        force-awake-4ms-mode;
     };
 };
 
@@ -64,3 +61,5 @@
     device = <&trackball>;
   };
 };
+
+&xiao_serial { status = "disabled"; };
