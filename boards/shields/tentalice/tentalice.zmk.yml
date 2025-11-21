@@ -6,6 +6,7 @@ url: https://github.com/
 requires: [seeeduino_xiao_ble]
 features:
   - keys
+  - underglow
   - studio
 siblings:
   - tentalice
