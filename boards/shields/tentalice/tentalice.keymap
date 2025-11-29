@@ -124,9 +124,9 @@
     layer_4 {
       bindings = <
         &trans          &trans          &trans        &trans        &trans        &trans              &trans        &msc SCRL_UP    &kp C_VOL_UP    &msc SCRL_DOWN  &trans        &trans
-        &trans          &trans          &trans        &trans        &trans        &trans              &mkp LCLK     &mmv MOVE_LEFT  &kp C_VOL_DN    &mmv MOVE_RIGHT &trans        &trans
+        &trans          &RGB_HUD        &RGB_HUI      &RGB_EFR      &RGB_EFF      &trans              &mkp LCLK     &mmv MOVE_LEFT  &kp C_VOL_DN    &mmv MOVE_RIGHT &trans        &trans
         &trans          &trans          &trans        &trans        &trans        &trans              &mkp RCLK     &trans          &mkp MCLK       &trans          &trans        &trans
-        &trans                                        &trans        &trans                                          &mo 5           &trans                                        &trans
+        &trans                                        &trans        &RGB_TOG                                        &mo 5           &trans                                        &trans
       >;
     };
 
