@@ -53,8 +53,7 @@
         cpi = <600>;
         evt-type = <INPUT_EV_REL>;
         x-input-code = <INPUT_REL_X>;
-        y-input-code = <INPUT_REL_Y>;
-        scroll-layers = <1 2>;
+        y-input-code = <INPUT_REL_Y>;        
     };
 };
 
@@ -86,7 +85,13 @@
     trackball_listener: trackball_listener {
         compatible = "zmk,input-listener";
         device = <&trackball>;
-
+        
         input-processors = <&zip_temp_layer 4 100000>;
+        
+        scroll_mode {
+            layers = <2 3>;
+            input-processors = <&zip_xy_to_scroll_mapper>;
+        };
+        
     };
 };
