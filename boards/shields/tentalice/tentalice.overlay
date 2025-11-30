@@ -54,6 +54,7 @@
         evt-type = <INPUT_EV_REL>;
         x-input-code = <INPUT_REL_X>;
         y-input-code = <INPUT_REL_Y>;
+        scroll-layers = <1 2>
     };
 };
 
@@ -61,6 +62,8 @@
 
 &zip_temp_layer {
     excluded-positions = <
+        27 // C
+        28 // V
         29 // left B
         30 // right B
         31 // N
