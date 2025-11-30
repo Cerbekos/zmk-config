@@ -1,5 +1,7 @@
 #include "tentalice.dtsi"
 
+&xiao_serial { status = "disabled"; };
+
 &kscan0 {
 	gpios
 		= <&xiao_d 2 (GPIO_ACTIVE_HIGH)>
@@ -55,11 +57,33 @@
     };
 };
 
-/ {
-  trackball_listener {
-    compatible = "zmk,input-listener";
-    device = <&trackball>;
-  };
+#include <input/processors.dtsi>
+
+&zip_temp_layer {
+    excluded-positions = <
+        29 // left B
+        30 // right B
+        31 // N
+        32 // M
+        12 // left Ctrl
+        24 // left Shift
+        37 // left Alt
+        23 // right Ctrl
+        35 // right Shift
+        40 // right Alt
+
+    >;
 };
 
-&xiao_serial { status = "disabled"; };
+&zip_temp_layer {
+    require-prior-idle-ms = <200>;
+};
+
+/ {
+    trackball_listener: trackball_listener {
+        compatible = "zmk,input-listener";
+        device = <&trackball>;
+
+        input-processors = <&zip_temp_layer 4 100000>;
+    };
+};
