@@ -123,7 +123,7 @@
 
     layer_4 {
       bindings = <
-        &trans          &trans          &trans        &trans        &trans        &trans              &trans        &msc SCRL_UP    &mmv MOVE_UP    &msc SCRL_DOWN  &trans        &trans
+        &trans          &rgb_ug RGB_COLOR_HSB(128,100,100)  &trans        &trans        &trans        &trans              &trans        &msc SCRL_UP    &mmv MOVE_UP    &msc SCRL_DOWN  &trans        &trans
         &trans          &rgb_ug RGB_HUD &rgb_ug RGB_HUI &rgb_ug RGB_EFR &rgb_ug RGB_EFF &trans        &trans        &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT &trans        &trans
         &trans          &rgb_ug RGB_SAI &rgb_ug RGB_SAD &rgb_ug RGB_BRI &rgb_ug RGB_BRD &trans        &mkp LCLK     &mkp RCLK       &mkp MCLK       &trans          &trans        &trans
         &trans                                        &trans        &rgb_ug RGB_TOG                                 &mo 5           &trans                                        &trans
