@@ -78,7 +78,18 @@
             #binding-cells = <0>;
             tapping-term-ms = <150>;
             bindings = <&mt RCTRL MINUS>, <&kp JP_EQUAL>;
-        };  
+        };
+        layer1_rgb: layer1_rgb {
+            compatible = "zmk,behavior-macro";
+            label = "Layer1 with RGB";
+            #binding-cells = <0>;
+            bindings = <
+                &rgb_ug RGB_COLOR_HSB(120, 100, 100),
+                &macro_pause_for_release,
+                &rgb_ug RGB_COLOR_HSB(0, 100, 100),
+                &mo 1
+            >;
+        };
     };
 
 
@@ -123,7 +134,7 @@
 
     layer_4 {
       bindings = <
-        &trans          &rgb_ug RGB_COLOR_HSB(128,100,100)  &trans        &trans        &trans        &trans              &trans        &msc SCRL_UP    &mmv MOVE_UP    &msc SCRL_DOWN  &trans        &trans
+        &trans          &rgb_ug RGB_COLOR_HSB(128,100,100)  &layer1_rgb        &trans        &trans        &trans              &trans        &msc SCRL_UP    &mmv MOVE_UP    &msc SCRL_DOWN  &trans        &trans
         &trans          &rgb_ug RGB_HUD &rgb_ug RGB_HUI &rgb_ug RGB_EFR &rgb_ug RGB_EFF &trans        &trans        &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT &trans        &trans
         &trans          &rgb_ug RGB_SAI &rgb_ug RGB_SAD &rgb_ug RGB_BRI &rgb_ug RGB_BRD &trans        &mkp LCLK     &mkp RCLK       &mkp MCLK       &trans          &trans        &trans
         &trans                                        &trans        &rgb_ug RGB_TOG                                 &mo 5           &trans                                        &trans
