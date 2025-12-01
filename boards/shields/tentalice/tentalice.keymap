@@ -83,12 +83,10 @@
             compatible = "zmk,behavior-macro";
             label = "Layer1 with RGB";
             #binding-cells = <0>;
-            bindings = <
-                &rgb_ug RGB_COLOR_HSB(120, 100, 100),
-                &macro_pause_for_release,
-                &rgb_ug RGB_COLOR_HSB(0, 100, 100),
-                &mo 1
-            >;
+            bindings = <&rgb_ug RGB_COLOR_HSB(120, 100, 100)>,
+                <&macro_pause_for_release>,
+                <&rgb_ug RGB_COLOR_HSB(0, 100, 100)>,
+                <&mo 1>;
         };
     };
 
