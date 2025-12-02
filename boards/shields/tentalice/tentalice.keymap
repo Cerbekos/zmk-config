@@ -53,7 +53,7 @@
             tapping-term-ms = <180>;
             quick-tap-ms = <180>;
             require-prior-idle-ms = <125>;
-            bindings = <&macro_param_1to1>, <&rlt MACRO_PLACEHOLDER>, <&kp>;
+            bindings = <&macro_param_1to1>, <&rl MACRO_PLACEHOLDER>, <&kp>;
         };
         td_QEC: tap_dance_0 {
             compatible = "zmk,behavior-tap-dance";
@@ -79,7 +79,7 @@
             tapping-term-ms = <150>;
             bindings = <&mt RCTRL MINUS>, <&kp JP_EQUAL>;
         };
-        rlt: my_rgb_layer_tap {
+        rl: my_rgb_layer {
             compatible = "zmk,behavior-macro-one-param";
             wait-ms = <0>;
             tap-ms = <0>;
