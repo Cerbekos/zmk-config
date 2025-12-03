@@ -86,7 +86,7 @@
         compatible = "zmk,input-listener";
         device = <&trackball>;
         
-        input-processors = <&zip_temp_layer 4 100000>;
+        input-processors = <&rmo_zip_led>;
         
         scroll_mode {
             layers = <2 3>;
@@ -94,4 +94,16 @@
         };
         
     };
+};
+
+rmo_zip_led: rgb_mo_zip {
+    compatible = "zmk,behavior-macro";
+    #binding-cells = <0>;
+    bindings = <
+        &zip_temp_layer 4 100000
+        &rgb_ug RGB_ON
+        &rgb_ug RGB_COLOR_HSB(240,100,100)
+        &macro_pause_for_release
+        &rgb_ug RGB_OFF
+    >;
 };
