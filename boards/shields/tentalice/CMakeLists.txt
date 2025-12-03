@@ -1,1 +1,0 @@
-target_sources(app PRIVATE behavior_rgb_temp.c)
