@@ -71,6 +71,11 @@
             tapping-term-ms = <150>;
             bindings = <&mt RCTRL MINUS>, <&kp JP_EQUAL>;
         };
+        rgb_temp: rgb_temp {
+            compatible = "zmk,behavior-rgb-temp";
+            label = "RGB_TEMP";
+            #binding-cells = <0>;
+        };        
         rlt: rgb_layer_tap {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
