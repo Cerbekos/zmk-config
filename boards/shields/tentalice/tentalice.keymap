@@ -76,7 +76,7 @@
             #binding-cells = <2>;
             flavor = "tap-preferred";
             tapping-term-ms = <200>;
-            bindings = <&rmo>, <0>, <&kp>;
+            bindings = <&rmo,0>, <&kp>;
             quick-tap-ms = <150>;
         };
         rmo: rgb_mo {
