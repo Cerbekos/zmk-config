@@ -86,23 +86,12 @@
         compatible = "zmk,input-listener";
         device = <&trackball>;
         
-        input-processors = <&zip_temp_layer 4 100000>, <&zip_rgb_indicator>;
-        
+        input-processors = <&zip_temp_layer 4 100000>;
+
         scroll_mode {
-            layers = <2 3>;
+            layers = <1 2>;
             input-processors = <&zip_xy_to_scroll_mapper>;
         };
         
     };
-};
-
-zip_rgb_indicator: zip_rgb_indicator {
-    compatible = "zmk,input-processor";
-    #binding-cells = <0>;
-    bindings = <
-        &rgb_ug RGB_ON
-        &rgb_ug RGB_COLOR_HSB(240,100,100)   // 好きな色に変更可能
-        &macro_pause_for_release
-        &rgb_ug RGB_OFF
-    >;
 };
