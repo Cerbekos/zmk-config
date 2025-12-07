@@ -31,10 +31,6 @@
 #define JP_EISU         LANGUAGE_2        // 英数
 #define JP_HANZEN       GRAVE             // 半角/全角
 
-&led_strip {
-    chain-length = <4>;
-};
-
 &lt {
   quick-tap-ms = <180>;
   flavor = "tap-preferred";
