@@ -99,7 +99,7 @@
 
         scroll_mode {
             layers = <1>;
-            input-processors = <                
+            input-processors = <
                 &zip_xy_to_scroll_mapper
                 &zip_scroll_scaler 1 6
             >;
@@ -107,8 +107,9 @@
 
         scroll_mode_h {
             layers = <2>;
-            input-processors = <                
-                &zip_xy_to_hscroll_mapper
+            input-processors = <
+                &zip_xy_transform(90)
+                &zip_xy_to_scroll_mapper
                 &zip_scroll_scaler 1 6
             >;
         };        
