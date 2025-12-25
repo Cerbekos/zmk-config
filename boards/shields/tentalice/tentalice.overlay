@@ -94,7 +94,7 @@
         device = <&trackball>;
         
         input-processors = <
-            &zip_temp_layer 4 100000
+            &zip_temp_layer 8 100000
         >;
 
         scroll_mode {
