@@ -111,7 +111,7 @@
         device = <&trackball>;
         
         input-processors = <
-            &zip_rot 180
+            &zip_rot 30
             &zip_temp_layer 4 100000
         >;
 
