@@ -89,7 +89,7 @@
     /* 45度回転させるプロセッサの定義 */
     zip_rotate_315: zip_rotate_315 {
         compatible = "zmk,input-processor-transform";
-        #input-processor-cells = <0>;
+        #input-processor-cells = <1>;
         type = <1>;
         x-codes = <INPUT_REL_X>;
         y-codes = <INPUT_REL_Y>;
@@ -113,7 +113,7 @@
         device = <&trackball>;
         
         input-processors = <
-            &zip_rotate_315
+            &zip_rotate_315 0
             &zip_temp_layer 4 100000
         >;
 
