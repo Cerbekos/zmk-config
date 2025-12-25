@@ -90,8 +90,14 @@
         compatible = "zmk,input-processor-transform";
         #input-processor-cells = <1>;
         type = <1>; 
-        x-codes = <0x00 0x01>;
-        y-codes = <0x00 0x01>;
+        x-codes = <0>;
+        y-codes = <1>;
+    };
+    zip_scale_up: zip_scale_up {
+        compatible = "zmk,input-processor-scaler";
+        #input-processor-cells = <2>;
+        type = <1>;
+        codes = <0 1>;
     };
 };
 
@@ -111,7 +117,8 @@
         device = <&trackball>;
         
         input-processors = <
-            &zip_rot 315
+            &zip_scale_up 2 1
+            &zip_rot 225
             &zip_temp_layer 4 100000
         >;
 
