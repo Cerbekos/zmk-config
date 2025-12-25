@@ -94,13 +94,13 @@
         device = <&trackball>;
         
         input-processors = <
-            &zip_temp_layer 8 100000
+            &zip_temp_layer 4 100000
         >;
 
         scroll_mode {
             layers = <1 2>;
             input-processors = <
-                &zip_temp_layer 8 100000
+                &zip_temp_layer 6 100000
                 &zip_xy_to_scroll_mapper
             >;
         };
