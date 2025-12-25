@@ -59,7 +59,6 @@
 };
 
 #include <input/processors.dtsi>
-#include <dt-bindings/zmk/input_transform.h>
 
 &zip_temp_layer {
     excluded-positions = <
@@ -85,53 +84,21 @@
     require-prior-idle-ms = <200>;
 };
 
-/{
-    zip_rot: zip_rot {
-        compatible = "zmk,input-processor-transform";
-        #input-processor-cells = <0>;
-        type = <1>; 
-        x-codes = <1>;
-        y-codes = <2>;
-        config = <45>;
-    };
-};
-
 / {
-    input_processors {
-        zip_scroll_y_scaler: zip_scroll_y_scaler {
-            compatible = "zmk,input-processor-scaler";
-            #input-processor-cells = <2>;
-            type = <INPUT_EV_REL>;
-            codes = <INPUT_REL_WHEEL>;
-            track-remainders;
-        };
-    };
-
     trackball_listener: trackball_listener {
         compatible = "zmk,input-listener";
         device = <&trackball>;
         
         input-processors = <
-            &zip_rot
             &zip_temp_layer 4 100000
         >;
 
         scroll_mode {
-            layers = <1>;
+            layers = <1 2>;
             input-processors = <
                 &zip_xy_to_scroll_mapper
                 &zip_scroll_scaler 1 6
             >;
-        };
-
-        scroll_mode_h {
-            layers = <2>;
-            input-processors = <
-                &zip_rot
-                &zip_xy_to_scroll_mapper
-                &zip_scroll_y_scaler 0 1
-                &zip_scroll_scaler 1 6
-            >;
-        };        
+        };   
     };
 };
