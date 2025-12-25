@@ -90,8 +90,8 @@
         compatible = "zmk,input-processor-transform";
         #input-processor-cells = <1>;
         type = <1>; 
-        x-codes = <0>;
-        y-codes = <1>;
+        x-codes = <0x00 0x01>;
+        y-codes = <0x00 0x01>;
     };
     zip_scale_up: zip_scale_up {
         compatible = "zmk,input-processor-scaler";
