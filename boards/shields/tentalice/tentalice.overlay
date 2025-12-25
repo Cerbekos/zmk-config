@@ -93,7 +93,7 @@
         x-codes = <0x00 0x01>;
         y-codes = <0x00 0x01>;
     };
-}
+};
 
 / {
     input_processors {
