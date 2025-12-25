@@ -62,47 +62,50 @@
 
 &zip_temp_layer {
     excluded-positions = <
-        14 // S
-        15 // D
-        16 // F
-        19 // J
-        20 // K
-        21 // L
-        27 // C
-        28 // V
-        29 // left B
-        30 // right B
-        31 // N
-        32 // M
-        12 // left Ctrl
-        24 // left Shift
-        37 // left Alt
-        23 // right Ctrl
-        35 // right Shift
-        40 // right Alt
-
+        14 /* S */
+        15 /* D */
+        16 /* F */
+        19 /* J */
+        20 /* K */
+        21 /* L */
+        27 /* C */
+        28 /* V */
+        29 /* left B */
+        30 /* right B */
+        31 /* N */
+        32 /* M */
+        12 /* left Ctrl */
+        24 /* left Shift */
+        37 /* left Alt */
+        23 /* right Ctrl */
+        35 /* right Shift */
+        40 /* right Alt */
     >;
-};
-
-&zip_temp_layer {
     require-prior-idle-ms = <200>;
 };
 
 / {
+    input_processors {
+        zip_scroll_y_scaler: zip_scroll_y_scaler {
+            compatible = "zmk,input-processor-scaler";
+            #input-processor-cells = <2>;
+            type = <INPUT_EV_REL>;
+            codes = <INPUT_REL_WHEEL>;
+            track-remainders;
+        };
+    };
+
     trackball_listener: trackball_listener {
         compatible = "zmk,input-listener";
         device = <&trackball>;
         
-        input-processors = <
-            &zip_temp_layer 4 100000
-        >;
+        input-processors = <&zip_temp_layer 4 100000>;
 
         scroll_mode {
             layers = <1>;
             input-processors = <
                 &zip_xy_to_scroll_mapper
-                &zip_scroll_y_scaler 1 6
-                &zip_scroll_x_scaler 0 1
+                &zip_scroll_scaler 1 6
             >;
         };
 
@@ -111,8 +114,8 @@
             input-processors = <
                 &zip_xy_transform(90)
                 &zip_xy_to_scroll_mapper
-                &zip_scroll_x_scaler 1 6
                 &zip_scroll_y_scaler 0 1
+                &zip_scroll_scaler 1 6
             >;
         };        
     };
