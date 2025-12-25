@@ -94,6 +94,13 @@
             codes = <INPUT_REL_WHEEL>;
             track-remainders;
         };
+        zip_rot: zip_rot {
+            compatible = "zmk,input-processor-transform";
+            #input-processor-cells = <1>;
+            type = <1>; 
+            x-codes = <INPUT_REL_X INPUT_REL_Y>;
+            y-codes = <INPUT_REL_X INPUT_REL_Y>;
+        };
     };
 
     trackball_listener: trackball_listener {
@@ -101,7 +108,7 @@
         device = <&trackball>;
         
         input-processors = <
-            &zip_xy_transform(30)
+            &zip_rot 315
             &zip_temp_layer 4 100000
         >;
 
