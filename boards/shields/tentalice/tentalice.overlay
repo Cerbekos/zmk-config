@@ -88,16 +88,11 @@
 /{
     zip_rot: zip_rot {
         compatible = "zmk,input-processor-transform";
-        #input-processor-cells = <1>;
+        #input-processor-cells = <0>;
         type = <1>; 
-        x-codes = <0x00 0x01>;
-        y-codes = <0x00 0x01>;
-    };
-    zip_scale_up: zip_scale_up {
-        compatible = "zmk,input-processor-scaler";
-        #input-processor-cells = <2>;
-        type = <1>;
-        codes = <0 1>;
+        x-codes = <1>;
+        y-codes = <2>;
+        config = <45>
     };
 };
 
@@ -117,8 +112,7 @@
         device = <&trackball>;
         
         input-processors = <
-            &zip_scale_up 2 1
-            &zip_rot 315
+            &zip_rot
             &zip_temp_layer 4 100000
         >;
 
