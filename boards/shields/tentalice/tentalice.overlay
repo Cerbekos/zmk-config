@@ -86,18 +86,6 @@
 };
 
 / {
-    /* 45度回転させるプロセッサの定義 */
-    zip_rotate_315: zip_rotate_315 {
-        compatible = "zmk,input-processor-transform";
-        #input-processor-cells = <1>;
-        type = <1>;
-        x-codes = <INPUT_REL_X>;
-        y-codes = <INPUT_REL_Y>;
-        value = <315>; // 半時計回りに45度
-    };
-};
-
-/ {
     input_processors {
         zip_scroll_y_scaler: zip_scroll_y_scaler {
             compatible = "zmk,input-processor-scaler";
@@ -113,7 +101,7 @@
         device = <&trackball>;
         
         input-processors = <
-            &zip_rotate_315 0
+            &zip_xy_transform(315)
             &zip_temp_layer 4 100000
         >;
 
