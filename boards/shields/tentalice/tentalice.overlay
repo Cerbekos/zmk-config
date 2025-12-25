@@ -54,7 +54,7 @@
         evt-type = <INPUT_EV_REL>;
         x-input-code = <INPUT_REL_X>;
         y-input-code = <INPUT_REL_Y>;
-        //invert-y;
+        invert-y;
     };
 };
 
@@ -118,7 +118,7 @@
         
         input-processors = <
             &zip_scale_up 2 1
-            &zip_rot 225
+            &zip_rot 315
             &zip_temp_layer 4 100000
         >;
 
