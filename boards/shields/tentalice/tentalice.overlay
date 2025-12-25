@@ -92,7 +92,7 @@
         type = <1>; 
         x-codes = <1>;
         y-codes = <2>;
-        config = <45>
+        config = <45>;
     };
 };
 
@@ -127,7 +127,7 @@
         scroll_mode_h {
             layers = <2>;
             input-processors = <
-                &zip_rot 90
+                &zip_rot
                 &zip_xy_to_scroll_mapper
                 &zip_scroll_y_scaler 0 1
                 &zip_scroll_scaler 1 6
