@@ -331,8 +331,8 @@
     layer_4 {
       bindings = <
         &trans          &trans          &trans        &trans        &trans        &trans              &trans        &trans          &trans          &trans          &trans        &rgb_ug RGB_EFR
-        &trans          &trans          &mkp MCLL     &mkp RCLK     &mkp LCLK     &trans              &trans        &mkp LCLK       &mkp RCLK       &mkp MCLK       &trans        &rgb_ug RGB_EFF
-        &trans          &trans          &trans        &mkp MCLL     &mkp RCLK     &mkp LCLK           &mkp LCLK     &mkp RCLK       &mkp MCLK       &trans          &trans        &trans
+        &trans          &trans          &mkp MCLK     &mkp RCLK     &mkp LCLK     &trans              &trans        &mkp LCLK       &mkp RCLK       &mkp MCLK       &trans        &rgb_ug RGB_EFF
+        &trans          &trans          &trans        &mkp MCLK     &mkp RCLK     &mkp LCLK           &mkp LCLK     &mkp RCLK       &mkp MCLK       &trans          &trans        &trans
         &trans                                        &trans        &rgb_ug RGB_TOG                                 &rlt_violet 5 SPACE    &trans                                 &trans
       >;
     };
