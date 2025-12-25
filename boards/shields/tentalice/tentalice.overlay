@@ -54,12 +54,12 @@
         evt-type = <INPUT_EV_REL>;
         x-input-code = <INPUT_REL_X>;
         y-input-code = <INPUT_REL_Y>;
-        invert-y; 
-        rotation-angle = <45>;
+        invert-y;        
     };
 };
 
 #include <input/processors.dtsi>
+#include <dt-bindings/zmk/input_transform.h>
 
 &zip_temp_layer {
     excluded-positions = <
@@ -86,6 +86,16 @@
 };
 
 / {
+    /* 45度回転させるプロセッサの定義 */
+    zip_rotate_315: zip_rotate_315 {
+        compatible = "zmk,input-processor-transform";
+        #input-processor-cells = <0>;
+        type = <INPUT_TRANSFORM_ROTATION>;
+        value = <315>; // 半時計回りに45度
+    };
+};
+
+/ {
     input_processors {
         zip_scroll_y_scaler: zip_scroll_y_scaler {
             compatible = "zmk,input-processor-scaler";
@@ -100,7 +110,10 @@
         compatible = "zmk,input-listener";
         device = <&trackball>;
         
-        input-processors = <&zip_temp_layer 4 100000>;
+        input-processors = <
+            &zip_rotate_315
+            &zip_temp_layer 4 100000
+        >;
 
         scroll_mode {
             layers = <1>;
