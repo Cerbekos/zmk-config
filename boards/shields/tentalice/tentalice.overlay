@@ -101,7 +101,8 @@
             layers = <1>;
             input-processors = <
                 &zip_xy_to_scroll_mapper
-                &zip_scroll_scaler 1 6
+                &zip_scroll_y_scaler 1 6
+                &zip_scroll_x_scaler 0 1
             >;
         };
 
@@ -110,7 +111,8 @@
             input-processors = <
                 &zip_xy_transform(90)
                 &zip_xy_to_scroll_mapper
-                &zip_scroll_scaler 1 6
+                &zip_scroll_x_scaler 1 6
+                &zip_scroll_y_scaler 0 1
             >;
         };        
     };
