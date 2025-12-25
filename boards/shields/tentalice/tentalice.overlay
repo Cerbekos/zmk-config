@@ -108,7 +108,7 @@
         device = <&trackball>;
         
         input-processors = <
-            &zip_rot 315
+            &zip_rot 180
             &zip_temp_layer 4 100000
         >;
 
@@ -123,7 +123,7 @@
         scroll_mode_h {
             layers = <2>;
             input-processors = <
-                &zip_xy_transform(90)
+                &zip_rot 90
                 &zip_xy_to_scroll_mapper
                 &zip_scroll_y_scaler 0 1
                 &zip_scroll_scaler 1 6
