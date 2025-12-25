@@ -99,7 +99,10 @@
 
         scroll_mode {
             layers = <1 2>;
-            input-processors = <&zip_xy_to_scroll_mapper>;
+            input-processors = <
+                &zip_temp_layer 4 100000
+                &zip_xy_to_scroll_mapper
+            >;
         };
         
     };
