@@ -54,8 +54,7 @@
         evt-type = <INPUT_EV_REL>;
         x-input-code = <INPUT_REL_X>;
         y-input-code = <INPUT_REL_Y>;
-        invert-y;
-        invert-x;
+        invert-y; 
     };
 };
 
@@ -89,7 +88,7 @@
         device = <&trackball>;
         
         input-processors = <
-            &zip_xy_transform(-35)
+            &zip_xy_transform(-45)
             &zip_temp_layer 4 100000
         >;
 
