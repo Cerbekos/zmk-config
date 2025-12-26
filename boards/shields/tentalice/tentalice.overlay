@@ -59,6 +59,7 @@
 };
 
 #include <input/processors.dtsi>
+#include <scroll-snap.dtsi>
 
 &zip_temp_layer {
     excluded-positions = <
@@ -98,6 +99,7 @@
             input-processors = <
                 &zip_xy_to_scroll_mapper
                 &zip_scroll_scaler 1 6
+                &zip_scroll_snap
             >;
         };   
     };
