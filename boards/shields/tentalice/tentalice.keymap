@@ -303,9 +303,9 @@
 
     layer_1 {
       bindings = <
-        &trans          &kp JP_PLUS   &kp MINUS     &kp JP_ASTER  &kp SLASH     &kp JP_UNDER          &kp JP_EQUAL  &kp JP_COLON  &kp DOT       &kp JP_YEN    &kp JP_TILDE  &trans
+        &trans          &kp F1        &kp F2        &kp F3        &kp F4        &kp F5                &kp F6        &kp F7        &kp F8        &kp F9        &kp F10       &trans
         &trans          &kp N1        &kp N2        &kp N3        &kp N4        &kp N5                &kp N6        &kp N7        &kp N8        &kp N9        &kp N0        &trans
-        &trans          &kp N6        &kp N7        &kp N8        &kp N9        &kp N0                &kp JP_AT     &kp JP_LBRACKET &kp JP_RBRACKET &kp JP_LBRACE &kp JP_RBRACE &trans
+        &trans          &kp JP_PLUS   &kp MINUS     &kp JP_ASTER  &kp SLASH     &kp JP_UNDER          &kp JP_EQUAL  &kp JP_COLON  &kp DOT       &kp JP_YEN    &kp JP_AT  &trans
         &rlt_violet 5 SPACE                         &trans        &trans                                            &trans        &trans                                    &trans
       >;
     };
@@ -313,8 +313,8 @@
     layer_2 {
       bindings = <
         &trans          &kp EXCL      &kp JP_DQUOTE &kp HASH      &kp DLLR      &kp PRCNT             &trans        &kp PG_UP     &kp UP        &kp PG_DN     &trans        &kp DEL
-        &trans          &kp JP_AMP    &kp JP_QUOTE  &kp JP_LPAREN &kp JP_RPAREN &kp JP_CARET          &kp HOME      &kp LEFT      &kp DOWN      &kp RIGHT     &kp BSPC      &trans
-        &trans          &kp JP_BAQT   &kp JP_PIPE   &kp JP_LBRACE &kp JP_RBRACE &kp JP_UNDER          &trans        &kp END       &kp LA(UP)    &trans        &trans        &trans
+        &trans          &kp JP_AMP    &kp JP_QUOTE  &kp JP_LPAREN &kp JP_LBRACKET &kp JP_LBRACE       &kp HOME      &kp LEFT      &kp DOWN      &kp RIGHT     &kp BSPC      &trans
+        &trans          &kp JP_BAQT   &kp JP_PIPE   &kp JP_RPAREN &kp JP_RBRACKET &kp JP_RBRACE       &trans        &kp END       &kp LA(UP)    &trans        &trans        &trans
         &trans                                      &trans        &trans                                            &trans        &trans                                    &rlt_violet 5 SPACE
       >;
     };
