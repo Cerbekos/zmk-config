@@ -33,12 +33,12 @@
 
 &lt {
   quick-tap-ms = <180>;
-  flavor = "tap-preferred";
+  flavor = "hold-preferred";
 };
 
 &mt {
   quick-tap-ms = <180>;
-  flavor = "tap-preferred";
+  flavor = "hold-preferred";
 };
 
 / {
@@ -72,7 +72,7 @@
         rlt_red: rgb_layer_tap_red {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            flavor = "tap-preferred";
+            flavor = "hold-preferred";
             tapping-term-ms = <180>;
             bindings = <&rmo_red>, <&kp>;
             quick-tap-ms = <150>;
@@ -96,7 +96,7 @@
         rlt_blue: rgb_layer_tap_blue {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            flavor = "tap-preferred";
+            flavor = "hold-preferred";
             tapping-term-ms = <180>;
             bindings = <&rmo_blue>, <&kp>;
             quick-tap-ms = <150>;
@@ -120,7 +120,7 @@
         rlt_green: rgb_layer_tap_green {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            flavor = "tap-preferred";
+            flavor = "hold-preferred";
             tapping-term-ms = <180>;
             bindings = <&rmo_green>, <&kp>;
             quick-tap-ms = <150>;
@@ -144,7 +144,7 @@
         rlt_yellow: rgb_layer_tap_yellow {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            flavor = "tap-preferred";
+            flavor = "hold-preferred";
             tapping-term-ms = <180>;
             bindings = <&rmo_yellow>, <&kp>;
             quick-tap-ms = <150>;
@@ -168,7 +168,7 @@
         rlt_violet: rgb_layer_tap_violet {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            flavor = "tap-preferred";
+            flavor = "hold-preferred";
             tapping-term-ms = <180>;
             bindings = <&rmo_violet>, <&kp>;
             quick-tap-ms = <150>;
