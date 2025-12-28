@@ -99,6 +99,7 @@
         scroll_mode {
             layers = <1 2>;
             input-processors = <
+                &zip_xy_inverter 0 1
                 &zip_xy_to_scroll_mapper
                 &zip_scroll_scaler 1 10
                 &zip_scroll_snap
