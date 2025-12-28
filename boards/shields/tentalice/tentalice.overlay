@@ -54,7 +54,6 @@
         evt-type = <INPUT_EV_REL>;
         x-input-code = <INPUT_REL_X>;
         y-input-code = <INPUT_REL_Y>;
-        invert-y;
     };
 };
 
@@ -94,6 +93,7 @@
         device = <&trackball>;
         
         input-processors = <
+            &zip_xy_transform (INPUT_TRANSFORM_Y_INVERT)
             &zip_temp_layer 4 100000
         >;
 
@@ -101,7 +101,6 @@
             layers = <1 2>;
             input-processors = <
                 &zip_xy_to_scroll_mapper
-                &zip_xy_transform (INPUT_TRANSFORM_Y_INVERT)
                 &zip_scroll_scaler 1 10
                 &zip_scroll_snap
             >;
