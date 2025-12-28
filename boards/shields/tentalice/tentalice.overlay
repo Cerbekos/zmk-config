@@ -54,11 +54,13 @@
         evt-type = <INPUT_EV_REL>;
         x-input-code = <INPUT_REL_X>;
         y-input-code = <INPUT_REL_Y>;
+        invert-y;
     };
 };
 
 #include <input/processors.dtsi>
 #include <scroll-snap.dtsi>
+#include <dt-bindings/zmk/input_transform.h>
 
 &zip_temp_layer {
     excluded-positions = <
@@ -92,13 +94,13 @@
         device = <&trackball>;
         
         input-processors = <
-            &zip_xy_swap_mapper
             &zip_temp_layer 4 100000
         >;
 
         scroll_mode {
             layers = <1 2>;
             input-processors = <
+                &zip_xy_transform (INPUT_TRANSFORM_Y_INVERT)
                 &zip_xy_to_scroll_mapper
                 &zip_scroll_scaler 1 10
                 &zip_scroll_snap
