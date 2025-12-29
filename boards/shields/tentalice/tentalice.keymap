@@ -332,7 +332,7 @@
       bindings = <
         &trans          &trans          &trans        &trans        &trans        &trans              &trans        &trans        &trans        &trans         &trans        &rgb_ug RGB_EFR
         &trans          &trans          &trans        &trans        &trans        &trans              &trans        &mkp LCLK     &mkp RCLK     &mkp MCLK      &trans        &rgb_ug RGB_EFF
-        &trans          &trans          &trans        &trans        &trans        &trans              &trabs        &mkp RCLK     &mkp MCLK     &mo(1)         &trans        &trans
+        &trans          &trans          &trans        &trans        &trans        &trans              &trans        &mkp RCLK     &mkp MCLK     &mo(1)         &trans        &trans
         &trans                                        &trans        &trans                            &rlt_violet 5 SPACE    &trans                                 &trans
       >;
     };
