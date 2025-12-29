@@ -63,18 +63,18 @@
 
 &zip_temp_layer {
     excluded-positions = <
+        12 /* left Ctrl */
         19 /* J */
         20 /* K */
         21 /* L */
+        23 /* right Ctrl */
+        24 /* left Shift */
         30 /* right B */
         31 /* N */
         32 /* M */
         33 /* , */
-        12 /* left Ctrl */
-        24 /* left Shift */
-        37 /* left Alt */
-        23 /* right Ctrl */
         35 /* right Shift */
+        37 /* left Alt */
         40 /* right Alt */
     >;
     require-prior-idle-ms = <200>;
