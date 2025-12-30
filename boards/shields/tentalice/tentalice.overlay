@@ -61,7 +61,13 @@
 #include <scroll-snap.dtsi>
 #include <dt-bindings/zmk/input_transform.h>
 
+&mkp_input_listener {
+    //マウスキークリックでマウスレイヤーを1秒間延長
+    input-processors = <&zip_temp_layer 4 1000>;
+};
+
 &zip_temp_layer {
+    //以下のキークリックでマウスレイヤー解除
     excluded-positions = <
         12 /* left Ctrl */
         19 /* J */
@@ -76,6 +82,7 @@
         37 /* left Alt */
         40 /* right Alt */
     >;
+    //キー入力から一定時間はAMLを発動しない
     require-prior-idle-ms = <200>;
 };
 
@@ -84,11 +91,13 @@
         compatible = "zmk,input-listener";
         device = <&trackball>;
         
+        //トラックボール操作でマウスレイヤー起動
         input-processors = <
             &zip_xy_transform (INPUT_TRANSFORM_Y_INVERT)
             &zip_temp_layer 4 100000
         >;
 
+        //特定のレイヤーでスクロールモード
         scroll_mode {
             layers = <1 2>;
             input-processors = <
