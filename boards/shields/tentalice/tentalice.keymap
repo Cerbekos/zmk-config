@@ -75,14 +75,14 @@
         device = <&trackball>;
         //トラックボール操作でマウスレイヤー起動
         input-processors = <
-            &zip_xy_transform (INPUT_TRANSFORM_Y_INVERT)
+            &zip_xy_transform (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_Y_INVERT)
             &zip_temp_layer 4 100000
         >;
         //特定のレイヤーでスクロールモード
         scroll_mode {
             layers = <1 2>;
             input-processors = <
-                &zip_xy_transform (INPUT_TRANSFORM_Y_INVERT)
+                &zip_xy_transform (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_Y_INVERT)
                 &zip_xy_to_scroll_mapper
                 &zip_scroll_scaler 1 10
                 &zip_scroll_snap
