@@ -8,6 +8,7 @@
 #include <input/processors.dtsi>
 #include <scroll-snap.dtsi>
 #include <dt-bindings/zmk/input_transform.h>
+#include <input/processors/sensor_rotation.dtsi>
 
 // OS設定を日本語キーボードのまま使用するための変換定義
 #define JP_DQUOTE       AT                // "
@@ -75,6 +76,7 @@
         device = <&trackball>;
         //トラックボール操作でマウスレイヤー起動
         input-processors = <
+            &sensor_rotation
             &zip_xy_transform (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_Y_INVERT)
             &zip_temp_layer 4 100000
         >;
@@ -87,7 +89,14 @@
                 &zip_scroll_scaler 1 10
                 &zip_scroll_snap
             >;
-        };   
+        };
+    };
+    input_processors {
+        sensor_rotation: sensor_rotation {
+            compatible = "zmk,input-processor-sensor-rotation";
+            #input-processor-cells = <0>;
+            rotation-angle = <45>; /* 0-360 */
+      };
     };
 };
 

@@ -6,6 +6,9 @@ manifest:
     #  url-base: https://github.com/badjeff
     - name: kot149
       url-base: https://github.com/kot149
+    - name: zmk-feature-sensor_rotation
+      url-base: https://github.com/hsgw/zmk-feature-sensor_rotation
+      revision: main
   projects:
     - name: zmk
       remote: zmkfirmware
