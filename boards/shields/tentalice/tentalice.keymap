@@ -10,7 +10,7 @@
 #include <dt-bindings/zmk/input_transform.h>
 #include <input/processors/sensor_rotation.dtsi>
 
-// OS設定を日本語キーボードのまま使用するための変換定義
+/* OS設定を日本語キーボードのまま使用するための変換定義 */
 #define JP_DQUOTE       AT                // "
 #define JP_AMP          CARET             // &
 #define JP_QUOTE        AMPERSAND         // '
@@ -46,7 +46,7 @@
 };
 
 &zip_temp_layer {
-    //解除キー
+    /* 解除キー */
     excluded-positions = <
         12 /* left Ctrl */
         19 /* J */
@@ -61,12 +61,12 @@
         37 /* left Alt */
         40 /* right Alt */
     >;
-    //キー入力から一定時間はAMLを発動しない
+    /* キー入力から一定時間はAMLを発動しない */
     require-prior-idle-ms = <200>;
 };
 
 &mkp_input_listener {
-    //マウスキーで時間延長
+    /* マウスキーで時間延長 */
     input-processors = <&zip_temp_layer 4 500>;
 };
 
@@ -74,16 +74,17 @@
     trackball_listener: trackball_listener {
         compatible = "zmk,input-listener";
         device = <&trackball>;
-        //トラックボール操作でマウスレイヤー起動
+        /* トラックボール操作でマウスレイヤー起動 */
         input-processors = <
             &sensor_rotation
             &zip_xy_transform (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_Y_INVERT)
             &zip_temp_layer 4 100000
         >;
-        //特定のレイヤーでスクロールモード
+        /* 特定のレイヤーでスクロールモード */
         scroll_mode {
             layers = <1 2>;
             input-processors = <
+                &sensor_rotation
                 &zip_xy_transform (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_Y_INVERT)
                 &zip_xy_to_scroll_mapper
                 &zip_scroll_scaler 1 10
@@ -95,14 +96,14 @@
         sensor_rotation: sensor_rotation {
             compatible = "zmk,input-processor-sensor-rotation";
             #input-processor-cells = <0>;
-            rotation-angle = <35>; /* 0-360 */
+            rotation-angle = <35>;
       };
     };
 };
 
 / {
     behaviors {
-        //タップダンス 
+        /* タップダンス */
         td_CS: tap_dance_1 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
@@ -121,7 +122,7 @@
             tapping-term-ms = <150>;
             bindings = <&mt RCTRL MINUS>, <&kp JP_EQUAL>;
         };
-        //レイヤーインジケータ
+        /* レイヤーインジケータ */
         rlt_red: rgb_layer_tap_red {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -242,7 +243,7 @@
               , <&macro_tap &rgb_ug RGB_OFF>
               ;
         };
-        // モディファイアインジケータ
+        /* モディファイアインジケータ */============
         rmt_orange: rgb_mod_tap_orange {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
