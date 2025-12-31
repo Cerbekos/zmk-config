@@ -50,7 +50,7 @@
         reg = <0>;
         spi-max-frequency = <2000000>;
         //irq-gpios = <&xiao_d 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        mothion-gpios = <&xiao_d 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        motion-gpios = <&xiao_d 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         //cpi = <600>;
         res-cpi = <600>;
         //evt-type = <INPUT_EV_REL>;
