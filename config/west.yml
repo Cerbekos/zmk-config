@@ -2,8 +2,8 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
-    - name: badjeff
-      url-base: https://github.com/badjeff
+    #- name: badjeff
+    #  url-base: https://github.com/badjeff
     - name: kot149
       url-base: https://github.com/kot149
   projects:
@@ -11,9 +11,9 @@ manifest:
       remote: zmkfirmware
       revision: main
       import: app/west.yml
-    - name: zmk-pmw3610-driver
-      remote: badjeff
-      revision: main
+    #- name: zmk-pmw3610-driver
+    #  remote: badjeff
+    #  revision: main
     - name: zmk-scroll-snap
       remote: kot149
       revision: v1

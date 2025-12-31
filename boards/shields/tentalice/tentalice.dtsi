@@ -26,5 +26,8 @@
       RC(6,0)                 RC(6,1) RC(6,2)                   RC(6,3) RC(6,4)                 RC(6,5) 
     >;
   };
+};
 
+&uicr {
+        nfct-pins-as-gpios;
 };
