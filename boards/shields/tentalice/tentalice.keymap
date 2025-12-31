@@ -93,6 +93,7 @@
         };
     };
     input_processors {
+        /* トラックボールの角度調整 */
         sensor_rotation: sensor_rotation {
             compatible = "zmk,input-processor-sensor-rotation";
             #input-processor-cells = <0>;
