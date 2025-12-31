@@ -99,7 +99,7 @@
             #input-processor-cells = <0>;
             
       };
-    };rotation-angle = <40>;
+    };rotation-angle = <25>;
 };
 
 / {
