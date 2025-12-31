@@ -6,9 +6,8 @@ manifest:
     #  url-base: https://github.com/badjeff
     - name: kot149
       url-base: https://github.com/kot149
-    - name: zmk-feature-sensor_rotation
-      url-base: https://github.com/hsgw/zmk-feature-sensor_rotation
-      revision: main
+    - name: hsgw
+      url-base: https://github.com/hsgw
   projects:
     - name: zmk
       remote: zmkfirmware
@@ -20,5 +19,9 @@ manifest:
     - name: zmk-scroll-snap
       remote: kot149
       revision: v1
+    - name: zmk-feature-sensor_rotation
+      remote: hsgw
+      revision: main
+      import: west.yml
   self:
     path: config
