@@ -78,6 +78,7 @@
         input-processors = <
             &sensor_rotation
             &zip_xy_transform (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_Y_INVERT)
+            &zip_xy_scaler 2 1
             &zip_temp_layer 4 100000
         >;
         //特定のレイヤーでスクロールモード
@@ -95,7 +96,7 @@
         sensor_rotation: sensor_rotation {
             compatible = "zmk,input-processor-sensor-rotation";
             #input-processor-cells = <0>;
-            rotation-angle = <30>; /* 0-360 */
+            rotation-angle = <35>; /* 0-360 */
       };
     };
 };
