@@ -31,3 +31,12 @@
 &uicr {
         nfct-pins-as-gpios;
 };
+
+&gpio0 {
+    wakeup-source;
+};
+
+&kscan0 {
+    sleep-wakeup-source = <&gpio0 9 GPIO_ACTIVE_LOW>;
+};
+
