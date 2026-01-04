@@ -11,7 +11,9 @@
   };
 
   kscan0: kscan {
-    compatible = "zmk,kscan-gpio-charlieplex";    
+    compatible = "zmk,kscan-gpio-charlieplex";
+    wakeup-source;
+    interrupt-gpios = <&gpio0 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN) >;
    };
 
   default_transform: matrix_transform {
@@ -30,8 +32,3 @@
 &uicr {
         nfct-pins-as-gpios;
 };
-
-&gpio0 {
-    wakeup-source;
-};
-
