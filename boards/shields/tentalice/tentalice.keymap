@@ -108,13 +108,13 @@
         td_CS: tap_dance_1 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <180>;
+            tapping-term-ms = <150>;
             bindings = <&kp COMMA>, <&kp SEMI>;
         };
         td_DC: tap_dance_2 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <180>;
+            tapping-term-ms = <150>;
             bindings = <&kp DOT>, <&kp JP_COLON>;
         };
         td_CME: tap_dance_3 {
@@ -351,7 +351,7 @@
               , <&macro_press &bt BT_SEL MACRO_PLACEHOLDER>
               , <&macro_tap &rgb_ug RGB_ON>
               , <&macro_tap &rgb_ug RGB_COLOR_HSB(240,100,100)>
-              , <&macro_pause_for_release>
+              , <&macro_wait_time 5000>
               , <&macro_tap &rgb_ug RGB_OFF>
               ;
         };
@@ -408,10 +408,10 @@
 
     layer_5 {
       bindings = <
-        &trans          &rgb_BT_SEL 0    &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4        &bt BT_SEL 0    &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &trans
-        &trans          &trans          &trans        &trans        &bt BT_CLR    &bt BT_CLR_ALL      &bt BT_CLR_ALL  &bt BT_CLR    &trans        &trans        &trans        &trans
-        &trans          &trans          &trans        &trans        &trans        &trans              &trans          &trans        &trans        &trans        &trans        &trans
-        &trans                                        &bootloader   &trans                                            &trans        &bootloader                               &trans
+        &out OUT_TOG    &rgb_BT_SEL 0   &bt rgb_BT_SEL 1 &bt rgb_BT_SEL 2 &bt rgb_BT_SEL 3 &bt rgb_BT_SEL 4       &trans    &trans    &trans    &trans    &trans    &trans
+        &trans          &trans          &trans        &trans        &bt BT_CLR    &bt BT_CLR_ALL                  &trans    &trans    &trans    &trans    &trans    &trans
+        &trans          &trans          &trans        &trans        &trans        &trans                          &trans    &trans    &trans    &trans    &trans    &trans
+        &trans                                        &bootloader   &trans                                        &trans    &bootloader                             &trans
       >;
     };
   };
