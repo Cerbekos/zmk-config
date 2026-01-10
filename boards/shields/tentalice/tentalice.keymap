@@ -341,20 +341,6 @@
               , <&macro_tap &rgb_ug RGB_OFF>
               ;
         };
-        rgb_bt_sel: rgb_bt_sel {
-            compatible = "zmk,behavior-macro-one-param";
-            wait-ms = <0>;
-            tap-ms = <0>;
-            #binding-cells = <1>;
-            bindings
-              = <&macro_param_1to1>
-              , <&macro_press &bt BT_SEL MACRO_PLACEHOLDER>
-              , <&macro_tap &rgb_ug RGB_ON>
-              , <&macro_tap &rgb_ug RGB_COLOR_HSB(240,100,100)>
-              , <&macro_wait_time 5000>
-              , <&macro_tap &rgb_ug RGB_OFF>
-              ;
-        };
     };
 
 
@@ -408,8 +394,8 @@
 
     layer_5 {
       bindings = <
-        &out OUT_TOG    &rgb_bt_sel 0   &rgb_bt_sel 1 &rgb_bt_sel 2 &rgb_bt_sel 3 &rgb_bt_sel 4       &trans        &trans        &trans        &trans         &trans         &trans
-        &trans          &trans          &trans        &trans        &bt BT_CLR    &bt BT_CLR_ALL      &trans        &trans        &trans        &trans         &trans         &trans
+        &out OUT_BLE    &bt BT_SEL 0    &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4       &trans        &trans        &trans        &trans         &trans         &trans
+        &out OUT_USB    &trans          &trans        &trans        &bt BT_CLR    &bt BT_CLR_ALL      &trans        &trans        &trans        &trans         &trans         &trans
         &trans          &trans          &trans        &trans        &trans        &trans              &trans        &trans        &trans        &trans         &trans         &trans
         &trans                                        &bootloader   &trans                                          &trans        &bootloader                                 &trans
       >;
