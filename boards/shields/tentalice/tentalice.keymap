@@ -67,7 +67,7 @@
 };
 
 &zip_mouse_gesture {
-    stroke-size = <50>;
+    stroke-size = <20>;
 
     history_back {
         pattern = <GESTURE_LEFT>;
