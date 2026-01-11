@@ -10,9 +10,9 @@
 #include <dt-bindings/zmk/input_transform.h>
 #include <input/processors/sensor_rotation.dtsi>
 #include <mouse-gesture.dtsi>
+#include <behaviors/input_gestures_accel.dtsi>
 
-/* OS設定を日本語キーボードのまま使用するための変換定義 */
-#define JP_DQUOTE       AT                // "
+b#define JP_DQUOTE       AT                // "
 #define JP_AMP          CARET             // &
 #define JP_QUOTE        AMPERSAND         // '
 #define JP_EQUAL        UNDER             // =
@@ -36,6 +36,7 @@
 #define JP_EISU         LANGUAGE_2        // 英数
 #define JP_HANZEN       GRAVE             // 半角/全角
 
+/* レイヤー・モディファイアカスタマイズ */
 &lt {
   quick-tap-ms = <180>;
   flavor = "hold-preferred";
@@ -46,6 +47,7 @@
   flavor = "hold-preferred";
 };
 
+/* トラックボール関連 */
 &zip_temp_layer {
     /* 解除キー */
     excluded-positions = <
@@ -67,27 +69,23 @@
 };
 
 &zip_mouse_gesture {
+    /* マウスジェスチャー設定 */
     stroke-size = <20>;
+    history_back { pattern = <GESTURE_LEFT>; bindings = <&kp LA(LEFT)>; };
+    history_forward { pattern = <GESTURE_RIGHT>; bindings = <&kp LA(RIGHT)>; };
+    close_tab { pattern = <GESTURE_DOWN GESTURE_RIGHT>; bindings = <&kp LC(W)>; };
+    new_tab { pattern = <GESTURE_DOWN GESTURE_LEFT>; bindings = <&kp LC(T)>; };
+};
 
-    history_back {
-        pattern = <GESTURE_LEFT>;
-        bindings = <&kp LA(LEFT)>;
-    };
-
-    history_forward {
-        pattern = <GESTURE_RIGHT>;
-        bindings = <&kp LA(RIGHT)>;
-    };
-
-    close_tab {
-        pattern = <GESTURE_DOWN GESTURE_RIGHT>;
-        bindings = <&kp LC(W)>;
-    };
-
-    new_tab {
-        pattern = <GESTURE_DOWN GESTURE_LEFT>;
-        bindings = <&kp LC(T)>;
-    };
+&pointer_accel {
+    /* ポインタ加速設定 */
+    input-type = <INPUT_EV_REL>;  // 相対入力デバイス用
+    track-remainders;             // 小数点以下の移動量を蓄積する
+    min-factor = <800>;           // 非常に遅い速度で 0.8倍
+    max-factor = <3000>;          // 高速時に 3.0倍
+    speed-threshold = <1200>;     // 1x（等倍）となる速度の閾値：毎秒 1200 カウント
+    speed-max = <6000>;           // 最大加速が適用される速度：毎秒 6000 カウント
+    acceleration-exponent = <2>;  // 二次（2乗）による加速曲線
 };
 
 / {
@@ -99,6 +97,7 @@
             &sensor_rotation
             &zip_xy_transform (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_Y_INVERT)
             &zip_temp_layer 4 100000
+            &pointer_accel
             &zip_mouse_gesture
         >;
         /* 特定のレイヤーでスクロールモード */
@@ -123,6 +122,7 @@
     };
 };
 
+/* キーマップ */
 / {
     behaviors {
         /* タップダンス */
@@ -363,7 +363,6 @@
               ;
         };
     };
-
 
   keymap {
     compatible = "zmk,keymap";

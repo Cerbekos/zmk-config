@@ -6,6 +6,8 @@ manifest:
       url-base: https://github.com/kot149
     - name: hsgw
       url-base: https://github.com/hsgw
+    - name: oleksandrmaslov
+      url-base: https://github.com/oleksandrmaslov
   projects:
     - name: zmk
       remote: zmkfirmware
@@ -21,5 +23,8 @@ manifest:
       remote: hsgw
       revision: main
       import: west.yml
+    - name: zmk-pointing-acceleration
+      remote: oleksandrmaslov
+      revision: main
   self:
     path: config
