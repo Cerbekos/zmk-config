@@ -14,6 +14,9 @@ manifest:
     - name: zmk-scroll-snap
       remote: kot149
       revision: v1
+    - name: zmk-mouse-gesture
+      remote: kot149
+      revision: v1
     - name: zmk-feature-sensor_rotation
       remote: hsgw
       revision: main

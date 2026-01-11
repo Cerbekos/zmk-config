@@ -9,6 +9,7 @@
 #include <scroll-snap.dtsi>
 #include <dt-bindings/zmk/input_transform.h>
 #include <input/processors/sensor_rotation.dtsi>
+#include <mouse-gesture.dtsi>
 
 /* OS設定を日本語キーボードのまま使用するための変換定義 */
 #define JP_DQUOTE       AT                // "
@@ -70,6 +71,31 @@
     input-processors = <&zip_temp_layer 4 500>;
 };
 
+&zip_mouse_gesture {
+    stroke-size = <300>;
+    enable-eager-mode;
+
+    history_back {
+        pattern = <GESTURE_RIGHT>;
+        bindings = <&kp LA(LEFT)>;
+    };
+
+    history_forward {
+        pattern = <GESTURE_LEFT>;
+        bindings = <&kp LA(RIGHT)>;
+    };
+
+    close_tab {
+        pattern = <GESTURE_DOWN GESTURE_RIGHT>;
+        bindings = <&kp LC(W)>;
+    };
+
+    new_tab {
+        pattern = <GESTURE_DOWN GESTURE_LEFT>;
+        bindings = <&kp LC(T)>;
+    };
+};
+
 / {
     trackball_listener: trackball_listener {
         compatible = "zmk,input-listener";
@@ -79,6 +105,7 @@
             &sensor_rotation
             &zip_xy_transform (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_Y_INVERT)
             &zip_temp_layer 4 100000
+            &zip_mouse_gesture
         >;
         /* 特定のレイヤーでスクロールモード */
         scroll_mode {
@@ -387,7 +414,7 @@
       bindings = <
         &trans          &trans          &trans        &trans        &trans        &trans              &trans        &trans        &trans        &trans         &trans        &rgb_ug RGB_EFR
         &trans          &trans          &trans        &trans        &trans        &trans              &trans        &mkp LCLK     &mkp RCLK     &mkp MCLK      &trans        &rgb_ug RGB_EFF
-        &trans          &trans          &trans        &trans        &trans        &trans              &mkp LCLK     &mkp RCLK     &mo(1)        &trans         &trans        &trans
+        &trans          &trans          &trans        &trans        &trans        &trans              &mkp LCLK     &mkp RCLK     &mo(1)        &mouse_gesture &trans        &trans
         &trans                                        &trans        &trans                                          &rlt_violet 5 SPACE    &trans                            &trans
       >;
     };
