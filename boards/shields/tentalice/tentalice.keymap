@@ -74,16 +74,16 @@
 };
 
 &zip_mouse_gesture {
-    stroke-size = <300>;
+    stroke-size = <200>;
     enable-eager-mode;
 
     history_back {
-        pattern = <GESTURE_RIGHT>;
+        pattern = <GESTURE_LEFT>;
         bindings = <&kp LA(LEFT)>;
     };
 
     history_forward {
-        pattern = <GESTURE_LEFT>;
+        pattern = <GESTURE_RIGHT>;
         bindings = <&kp LA(RIGHT)>;
     };
 
