@@ -12,7 +12,8 @@
 #include <mouse-gesture.dtsi>
 #include <behaviors/input_gestures_accel.dtsi>
 
-b#define JP_DQUOTE       AT                // "
+/* OS設定を日本語キーボードのまま使用するための変換定義 */
+#define JP_DQUOTE       AT                // "
 #define JP_AMP          CARET             // &
 #define JP_QUOTE        AMPERSAND         // '
 #define JP_EQUAL        UNDER             // =
