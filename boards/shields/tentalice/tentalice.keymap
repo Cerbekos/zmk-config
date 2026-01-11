@@ -72,10 +72,22 @@
 &zip_mouse_gesture {
     /* マウスジェスチャー設定 */
     stroke-size = <20>;
-    history_back { pattern = <GESTURE_LEFT>; bindings = <&kp LA(LEFT)>; };
-    history_forward { pattern = <GESTURE_RIGHT>; bindings = <&kp LA(RIGHT)>; };
-    close_tab { pattern = <GESTURE_DOWN GESTURE_RIGHT>; bindings = <&kp LC(W)>; };
-    new_tab { pattern = <GESTURE_DOWN GESTURE_LEFT>; bindings = <&kp LC(T)>; };
+    history_back { 
+      pattern = <GESTURE_LEFT>; 
+      bindings = <&kp LA(LEFT)>; 
+    };
+    history_forward { 
+      pattern = <GESTURE_RIGHT>; 
+      bindings = <&kp LA(RIGHT)>; 
+    };
+    close_tab { 
+      pattern = <GESTURE_DOWN>; 
+      bindings = <&kp LC(W)>; 
+    };
+    new_tab { 
+      pattern = <GESTURE_UP>; 
+      bindings = <&kp LC(T)>; 
+    };
 };
 
 &pointer_accel {
@@ -110,6 +122,7 @@
                 &zip_xy_to_scroll_mapper
                 &zip_scroll_scaler 1 10
                 &zip_scroll_snap
+                &zip_mouse_gesture
             >;
         };
     };
