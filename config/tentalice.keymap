@@ -475,10 +475,10 @@
 
         layer_0 {
             bindings = <
-  &kp ESC                      &kp Q                   &kp W             &kp E             &kp R               &kp T                  &kp Y  &kp U  &kp I  &kp O   &kp P    &kp BSPC
-  &rmt_cyan LCTL TAB           &kp A                   &kp S             &kp D             &kp F               &kp G                  &kp H  &kp J  &kp K  &kp L   &td_CME  &rmt_cyan RCTRL GRAVE
-  &rmt_orange LSHFT JP_HANZEN  &kp Z                   &kp X             &kp C             &kp V               &kp B                  &kp B  &kp N  &kp M  &td_CS  &td_DC   &rmt_orange RSHFT SLASH
-  &rlt_yellow 3 JP_LPAREN      &rmt_magenta LALT CAPS  &rlt_red 1 SPACE  &rlt_green 2 RET  &rmt_lime RGUI DEL  &rlt_blue 4 JP_RPAREN
+  &kp ESC                     &kp Q                    &kp W             &kp E             &kp R               &kp T              &kp Y  &kp U  &kp I  &kp O   &kp P    &kp BSPC
+  &rmt_cyan LCTRL TAB         &kp A                    &kp S             &kp D             &kp F               &kp G              &kp H  &kp J  &kp K  &kp L   &td_CME  &rmt_cyan RCTRL GRAVE
+  &rmt_orange LSHFT CAPSLOCK  &kp Z                    &kp X             &kp C             &kp V               &kp B              &kp B  &kp N  &kp M  &td_CS  &td_DC   &rmt_orange RSHFT SLASH
+  &rlt_yellow 3 LG(TAB)       &rmt_magenta LALT LG(V)  &rlt_red 1 SPACE  &rlt_green 2 RET  &rmt_lime RGUI DEL  &rlt_blue 4 LG(D)
             >;
         };
 
