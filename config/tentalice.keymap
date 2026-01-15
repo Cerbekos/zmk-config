@@ -57,6 +57,10 @@
 
     excluded-positions = <
         12 /* left Ctrl */
+        18 /* H */
+        19 /* J */
+        20 /* K */
+        21 /* L */
         24 /* left Shift */
         30 /* right B */
         31 /* N */
@@ -512,7 +516,7 @@
         layer_4 {
             bindings = <
   &trans  &trans  &trans  &trans               &trans  &trans  &trans     &trans     &trans  &trans          &trans  &rgb_ug RGB_EFR
-  &trans  &trans  &trans  &trans               &trans  &trans  &trans     &trans     &trans  &trans          &trans  &rgb_ug RGB_EFF
+  &trans  &trans  &trans  &trans               &trans  &trans  &mkp LCLK  &mkp RCLK  &mo 1   &mouse_gesture  &trans  &rgb_ug RGB_EFF
   &trans  &trans  &trans  &trans               &trans  &trans  &mkp LCLK  &mkp RCLK  &mo 1   &mouse_gesture  &trans  &trans
   &trans  &trans  &trans  &rlt_violet 5 SPACE  &trans  &trans
             >;
