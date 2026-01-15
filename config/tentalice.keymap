@@ -57,11 +57,17 @@
 
     excluded-positions = <
         12 /* left Ctrl */
+        13 /* A */
+        14 /* S */
+        15 /* D */
+        16 /* F */
+        17 /* G */
         18 /* H */
         19 /* J */
         20 /* K */
         21 /* L */
         24 /* left Shift */
+        29 /* left B */
         30 /* right B */
         31 /* N */
         32 /* M */
