@@ -53,41 +53,27 @@
 /* トラックボール関連 */
 
 &zip_temp_layer {
-    /* 解除キー */
 
     excluded-positions = <
         12 /* left Ctrl */
-        13 /* A */
-        14 /* S */
-        15 /* D */
-        16 /* F */
-        17 /* G */
-        18 /* H */
-        19 /* J */
-        20 /* K */
-        21 /* L */
         24 /* left Shift */
-        29 /* left B */
         30 /* right B */
         31 /* N */
         32 /* M */
         33 /* , */
         37 /* left Alt */
-    >;
+    >; // マウスレイヤーを解除しないキーリスト
 
-    /* キー入力から一定時間はAMLを発動しない */
-
-    require-prior-idle-ms = <200>;
+    require-prior-idle-ms = <200>; // キー入力から一定時間はAMLを発動しない
 };
 
 &mkp_input_listener {
-    /* マウスキーで時間延長 */
-
-    input-processors = <&zip_temp_layer 4 500>;
+    input-processors = <&zip_temp_layer 4 100000>; // マウスキーで時間延長
 };
 
 &zip_mouse_gesture {
-    /* マウスジェスチャー設定 */
+
+    /* マウスジェスチャー */
 
     stroke-size = <20>;
 
@@ -113,7 +99,8 @@
 };
 
 &pointer_accel {
-    /* ポインタ加速設定 */
+
+    /* ポインタ加速 */
 
     input-type = <INPUT_EV_REL>;  // 相対入力デバイス用
     track-remainders;             // 小数点以下の移動量を蓄積する
@@ -156,6 +143,7 @@
     };
 
     input_processors {
+
         /* トラックボールの角度調整 */
 
         sensor_rotation: sensor_rotation {
@@ -166,10 +154,11 @@
     };
 };
 
-/* キーマップ */
+/* ビヘイビア・キーマップ関連 */
 
 / {
     behaviors {
+
         /* タップダンス */
 
         td_CS: tap_dance_1 {
@@ -479,6 +468,8 @@
 
     macros {
     };
+
+    /* キーマップ */
 
     keymap {
         compatible = "zmk,keymap";
