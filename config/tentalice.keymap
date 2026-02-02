@@ -164,21 +164,21 @@
         td_CS: tap_dance_1 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <150>;
+            tapping-term-ms = <160>;
             bindings = <&kp COMMA>, <&kp SEMI>;
         };
 
         td_DC: tap_dance_2 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <150>;
+            tapping-term-ms = <160>;
             bindings = <&kp DOT>, <&kp JP_COLON>;
         };
 
         td_CME: tap_dance_3 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <150>;
+            tapping-term-ms = <160>;
             bindings = <&mt RCTRL MINUS>, <&kp JP_EQUAL>;
         };
 
@@ -191,7 +191,7 @@
             tapping-term-ms = <180>;
             bindings = <&rmo_red>, <&kp>;
 
-            quick-tap-ms = <150>;
+            quick-tap-ms = <160>;
         };
 
         rmo_red: rgb_mo_red {
@@ -222,7 +222,7 @@
             tapping-term-ms = <180>;
             bindings = <&rmo_blue>, <&kp>;
 
-            quick-tap-ms = <150>;
+            quick-tap-ms = <160>;
         };
 
         rmo_blue: rgb_mo_blue {
@@ -253,7 +253,7 @@
             tapping-term-ms = <180>;
             bindings = <&rmo_green>, <&kp>;
 
-            quick-tap-ms = <150>;
+            quick-tap-ms = <160>;
         };
 
         rmo_green: rgb_mo_green {
@@ -284,7 +284,7 @@
             tapping-term-ms = <180>;
             bindings = <&rmo_yellow>, <&kp>;
 
-            quick-tap-ms = <150>;
+            quick-tap-ms = <160>;
         };
 
         rmo_yellow: rgb_mo_yellow {
@@ -315,7 +315,7 @@
             tapping-term-ms = <180>;
             bindings = <&rmo_violet>, <&kp>;
 
-            quick-tap-ms = <150>;
+            quick-tap-ms = <160>;
         };
 
         rmo_violet: rgb_mo_violet {
@@ -348,7 +348,7 @@
             tapping-term-ms = <180>;
             bindings = <&rkp_orange>, <&kp>;
 
-            quick-tap-ms = <150>;
+            quick-tap-ms = <160>;
         };
 
         rkp_orange: rgb_kp_orange {
@@ -379,7 +379,7 @@
             tapping-term-ms = <180>;
             bindings = <&rkp_cyan>, <&kp>;
 
-            quick-tap-ms = <150>;
+            quick-tap-ms = <160>;
         };
 
         rkp_cyan: rgb_kp_cyan {
@@ -410,7 +410,7 @@
             tapping-term-ms = <180>;
             bindings = <&rkp_magenta>, <&kp>;
 
-            quick-tap-ms = <150>;
+            quick-tap-ms = <160>;
         };
 
         rkp_magenta: rgb_kp_magenta {
@@ -441,7 +441,7 @@
             tapping-term-ms = <180>;
             bindings = <&rkp_lime>, <&kp>;
 
-            quick-tap-ms = <150>;
+            quick-tap-ms = <160>;
         };
 
         rkp_lime: rgb_kp_lime {
@@ -477,9 +477,9 @@
         layer_0 {
             bindings = <
   &kp ESC                     &kp Q                    &kp W             &kp E             &kp R                        &kp T              &kp Y  &kp U  &kp I  &kp O   &kp P    &kp BSPC
-  &rmt_cyan LCTRL TAB         &kp A                    &kp S             &kp D             &kp F                        &kp G              &kp H  &kp J  &kp K  &kp L   &td_CME  &rmt_cyan RCTRL DELETE
+  &rmt_cyan LCTRL TAB         &kp A                    &kp S             &kp D             &kp F                        &kp G              &kp H  &kp J  &kp K  &kp L   &td_CME  &rmt_cyan RCTRL RET
   &rmt_orange LSHFT CAPSLOCK  &kp Z                    &kp X             &kp C             &kp V                        &kp B              &kp B  &kp N  &kp M  &td_CS  &td_DC   &rmt_orange RSHFT SLASH
-  &rlt_yellow 3 LG(TAB)       &rmt_magenta LALT GRAVE  &rlt_red 1 SPACE  &rlt_green 2 RET  &rmt_lime RGUI LEFT_BRACKET  &rlt_blue 4 LG(V)
+  &rlt_yellow 3 LG(TAB)       &rmt_magenta LALT JP_EISU &rlt_red 1 SPACE  &rlt_green 2 RET  &rmt_lime RGUI JP_KANA  &rlt_blue 4 DELETE
             >;
         };
 
