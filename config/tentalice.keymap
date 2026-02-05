@@ -77,7 +77,6 @@
 
     stroke-size = <50>;
     idle-timeout-ms = <50>;
-    enable-eager-mode = true;
     gesture-cooldown-ms = <250>;
 
     history_back {
