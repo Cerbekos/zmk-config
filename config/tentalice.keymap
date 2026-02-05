@@ -75,7 +75,10 @@
 
     /* マウスジェスチャー */
 
-    stroke-size = <20>;
+    stroke-size = <50>;
+    idle-timeout-ms = <50>;
+    enable-eager-mode = <true>;
+    gesture-cooldown-ms = <250>;
 
     history_back {
         pattern = <GESTURE_LEFT>;
