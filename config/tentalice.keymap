@@ -76,8 +76,13 @@
     /* マウスジェスチャー */
 
     stroke-size = <50>;
+<<<<<<< HEAD
     idle-timeout-ms = <0>;
     gesture-cooldown-ms = <10>;
+=======
+    idle-timeout-ms = <50>;
+    gesture-cooldown-ms = <250>;
+>>>>>>> 7c297a0 (mg3)
 
     history_back {
         pattern = <GESTURE_LEFT>;
