@@ -6,7 +6,6 @@
     zmk,kscan = &kscan0;
     transform = <&default_transform>;
     zmk,physical-layout = &tentalice_default_layout;
-    zmk,battery = &vbatt;
     zmk,underglow = &led_strip;
   };
 
