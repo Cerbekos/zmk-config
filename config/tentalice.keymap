@@ -77,7 +77,7 @@
 
     stroke-size = <50>;
     idle-timeout-ms = <0>;
-    gesture-cooldown-ms = <0>;
+    gesture-cooldown-ms = <10>;
 
     history_back {
         pattern = <GESTURE_LEFT>;
