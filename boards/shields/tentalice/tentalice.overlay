@@ -55,3 +55,12 @@
         zephyr,axis-y = <INPUT_REL_Y>;
     };
 };
+
+
+&{
+  vbatt: vbatt {
+    compatible = "fixed-battery";
+    status = "okay";
+    voltage-microvolt = <3300000>;
+  };
+};
