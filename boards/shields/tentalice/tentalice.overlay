@@ -57,7 +57,7 @@
 };
 
 
-&{
+&vbatt {
   vbatt: vbatt {
     compatible = "fixed-battery";
     status = "okay";
