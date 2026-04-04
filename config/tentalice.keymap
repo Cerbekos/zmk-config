@@ -76,7 +76,7 @@
     /* マウスジェスチャー */
 
     stroke-size = <10>;             // ストロークの長さ
-    enable-eager-modes;             // ジェスチャーパターンの一致で即時実行するか
+    enable-eager-mode;             // ジェスチャーパターンの一致で即時実行するか
     idle-timeout-ms = <0>;          // アイドル状態になるまで待機する時間
     gesture-cooldown-ms = <10>;     // 実行後次のジェスチャー処理を停止する時間
 
