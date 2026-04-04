@@ -10,7 +10,7 @@
 ---
 include:
 ### Tentalice ###
-  - board: xiao_ble
+  - board: seeeduino_xiao_ble
     shield: tentalice
     snippet: studio-rpc-usb-uart
     cmake-args: -DCONFIG_ZMK_STUDIO=y
