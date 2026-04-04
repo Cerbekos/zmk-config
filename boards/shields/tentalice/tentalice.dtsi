@@ -9,10 +9,6 @@
     zmk,battery = &vbatt;
     zmk,underglow = &led_strip;
   };
-
-  vbatt: vbatt {
-    compatible = "zmk,battery-nrf-vddh";
-  };
   
   kscan0: kscan {
     compatible = "zmk,kscan-gpio-charlieplex";
