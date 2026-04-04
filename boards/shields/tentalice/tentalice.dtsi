@@ -6,16 +6,8 @@
     zmk,kscan = &kscan0;
     transform = <&default_transform>;
     zmk,physical-layout = &tentalice_default_layout;
-    zmk,battery = &vbatt;
+    zmk,battery = &vbat;
     zmk,underglow = &led_strip;
-  };
-
-  vbatt: vbatt {
-    compatible = "zmk,battery-voltage-divider";
-    io-channels = <&adc 7>;
-    output-ohms = <510000>;
-    full-ohms = <(510000 + 1000000)>;
-    power-gpios = <&gpio0 14 (GPIO_OPEN_DRAIN | GPIO_ACTIVE_LOW)>;
   };
   
   kscan0: kscan {
