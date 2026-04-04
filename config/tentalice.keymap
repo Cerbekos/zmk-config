@@ -123,7 +123,6 @@
         input-processors = <
             &sensor_rotation
             &zip_xy_transform (INPUT_TRANSFORM_XY_SWAP)
-            &zip_xy_transform (INPUT_TRANSFORM_Y_INVERT)
             &zip_temp_layer 4 100000
             &pointer_accel
             &zip_mouse_gesture
@@ -136,7 +135,6 @@
             input-processors = <
                 &sensor_rotation
                 &zip_xy_transform (INPUT_TRANSFORM_XY_SWAP)
-                &zip_xy_transform (INPUT_TRANSFORM_Y_INVERT)
                 &zip_xy_to_scroll_mapper
                 &zip_scroll_scaler 1 10
                 &pointer_accel
