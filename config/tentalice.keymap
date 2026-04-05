@@ -167,21 +167,21 @@
         td_CS: tap_dance_1 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <160>;
+            tapping-term-ms = <180>;
             bindings = <&kp COMMA>, <&kp SEMI>;
         };
 
         td_DC: tap_dance_2 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <160>;
+            tapping-term-ms = <180>;
             bindings = <&kp DOT>, <&kp JP_COLON>;
         };
 
         td_CME: tap_dance_3 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <160>;
+            tapping-term-ms = <180>;
             bindings = <&mt RCTRL MINUS>, <&kp JP_EQUAL>;
         };
 
@@ -482,7 +482,7 @@
   &kp ESC                     &kp Q                    &kp W             &kp E             &kp R                        &kp T              &kp Y  &kp U  &kp I  &kp O   &kp P    &kp BSPC
   &rmt_cyan LCTRL TAB         &kp A                    &kp S             &kp D             &kp F                        &kp G              &kp H  &kp J  &kp K  &kp L   &td_CME  &rmt_cyan RCTRL RET
   &rmt_orange LSHFT CAPSLOCK  &kp Z                    &kp X             &kp C             &kp V                        &kp B              &kp B  &kp N  &kp M  &td_CS  &td_DC   &rmt_orange RSHFT SLASH
-  &rlt_yellow 3 &mkp LCLK     &rmt_magenta LALT JP_HANZEN &rlt_red 1 SPACE  &rlt_green 2 RET  &rmt_lime RGUI INT4  &rlt_blue 4 DELETE
+  &rlt_yellow 3 LG(TAB)       &rmt_magenta LALT JP_HANZEN &rlt_red 1 SPACE  &rlt_green 2 RET  &rmt_lime RGUI INT4  &rlt_blue 4 DELETE
             >;
         };
 
