@@ -78,7 +78,7 @@
     stroke-size = <10>;             // ストロークの長さ
     enable-eager-mode;             // ジェスチャーパターンの一致で即時実行するか
     idle-timeout-ms = <10>;          // アイドル状態になるまで待機する時間
-    gesture-cooldown-ms = <10>;     // 実行後次のジェスチャー処理を停止する時間
+    gesture-cooldown-ms = <100>;     // 実行後次のジェスチャー処理を停止する時間
 
     history_back {
         pattern = <GESTURE_LEFT>;
