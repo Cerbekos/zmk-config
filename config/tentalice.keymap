@@ -124,7 +124,6 @@
             &sensor_rotation
             &zip_xy_transform (INPUT_TRANSFORM_XY_SWAP)
             &zip_temp_layer 4 100000
-            &pointer_accel
             &zip_mouse_gesture
         >;
 
@@ -137,7 +136,6 @@
                 &zip_xy_transform (INPUT_TRANSFORM_XY_SWAP)
                 &zip_xy_to_scroll_mapper
                 &zip_scroll_scaler 1 10
-                &pointer_accel
                 &zip_mouse_gesture
             >;
         };
