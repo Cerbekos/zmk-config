@@ -68,17 +68,17 @@
 };
 
 &mkp_input_listener {
-    input-processors = <&zip_temp_layer 4 100000>; // マウスキーで時間延長
+    input-processors = <&zip_temp_layer 4 200>; // マウスキーで時間延長
 };
 
 &zip_mouse_gesture {
 
     /* マウスジェスチャー */
 
-    stroke-size = <10>;             // ストロークの長さ
-    enable-eager-mode;             // ジェスチャーパターンの一致で即時実行するか
-    idle-timeout-ms = <10>;          // アイドル状態になるまで待機する時間
-    gesture-cooldown-ms = <100>;     // 実行後次のジェスチャー処理を停止する時間
+    stroke-size = <10>;                 // ストロークの長さ
+    enable-eager-mode;                  // ジェスチャーパターンの一致で即時実行するか
+    idle-timeout-ms = <10>;             // アイドル状態になるまで待機する時間
+    gesture-cooldown-ms = <100>;        // 実行後次のジェスチャー処理を停止する時間
 
     history_back {
         pattern = <GESTURE_LEFT>;
@@ -482,7 +482,7 @@
   &kp ESC                     &kp Q                    &kp W             &kp E             &kp R                        &kp T              &kp Y  &kp U  &kp I  &kp O   &kp P    &kp BSPC
   &rmt_cyan LCTRL TAB         &kp A                    &kp S             &kp D             &kp F                        &kp G              &kp H  &kp J  &kp K  &kp L   &td_CME  &rmt_cyan RCTRL RET
   &rmt_orange LSHFT CAPSLOCK  &kp Z                    &kp X             &kp C             &kp V                        &kp B              &kp B  &kp N  &kp M  &td_CS  &td_DC   &rmt_orange RSHFT SLASH
-  &rlt_yellow 3 LG(TAB)       &rmt_magenta LALT JP_HANZEN &rlt_red 1 SPACE  &rlt_green 2 RET  &rmt_lime RGUI INT4  &rlt_blue 4 DELETE
+  &rlt_yellow 3 &mkp LCLK     &rmt_magenta LALT JP_HANZEN &rlt_red 1 SPACE  &rlt_green 2 RET  &rmt_lime RGUI INT4  &rlt_blue 4 DELETE
             >;
         };
 
