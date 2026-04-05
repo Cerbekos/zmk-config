@@ -4,6 +4,7 @@
 #include <input/processors/sensor_rotation.dtsi>
 #include <mouse-gesture.dtsi>
 #include <scroll-snap.dtsi>
+#include <behaviors/input_gestures_accel.dtsi>
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
@@ -100,6 +101,19 @@
     };
 };
 
+&pointer_accel {
+
+    /* ポインタ加速 */
+
+    input-type = <INPUT_EV_REL>;  // 相対入力デバイス用
+    track-remainders;             // 小数点以下の移動量を蓄積する
+    min-factor = <800>;           // 非常に遅い速度で 0.8倍
+    max-factor = <3000>;          // 高速時に 3.0倍
+    speed-threshold = <1200>;     // 1x（等倍）となる速度の閾値：毎秒 1200 カウント
+    speed-max = <6000>;           // 最大加速が適用される速度：毎秒 6000 カウント
+    acceleration-exponent = <2>;  // 二次（2乗）による加速曲線
+};
+
 / {
     trackball_listener: trackball_listener {
         compatible = "zmk,input-listener";
@@ -111,6 +125,7 @@
             &sensor_rotation
             &zip_xy_transform (INPUT_TRANSFORM_XY_SWAP)
             &zip_temp_layer 4 100000
+            &pointer_accel
             &zip_mouse_gesture
         >;
 
@@ -123,6 +138,7 @@
                 &zip_xy_transform (INPUT_TRANSFORM_XY_SWAP)
                 &zip_xy_to_scroll_mapper
                 &zip_scroll_scaler 1 10
+                &pointer_accel
                 &zip_scroll_snap
                 &zip_mouse_gesture
             >;
