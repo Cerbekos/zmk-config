@@ -1,6 +1,5 @@
 #include <dt-bindings/zmk/behaviors.h>
 #include <input/processors.dtsi>
-#include <scroll-snap.dtsi>
 #include <dt-bindings/zmk/input_transform.h>
 #include <input/processors/sensor_rotation.dtsi>
 #include <mouse-gesture.dtsi>
@@ -139,7 +138,6 @@
                 &zip_xy_to_scroll_mapper
                 &zip_scroll_scaler 1 10
                 &pointer_accel
-                &zip_scroll_snap
                 &zip_mouse_gesture
             >;
         };
