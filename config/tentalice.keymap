@@ -99,19 +99,6 @@
     };
 };
 
-&pointer_accel {
-
-    /* ポインタ加速 */
-
-    input-type = <INPUT_EV_REL>;  // 相対入力デバイス用
-    track-remainders;             // 小数点以下の移動量を蓄積する
-    min-factor = <800>;           // 非常に遅い速度で 0.8倍
-    max-factor = <3000>;          // 高速時に 3.0倍
-    speed-threshold = <1200>;     // 1x（等倍）となる速度の閾値：毎秒 1200 カウント
-    speed-max = <6000>;           // 最大加速が適用される速度：毎秒 6000 カウント
-    acceleration-exponent = <2>;  // 二次（2乗）による加速曲線
-};
-
 / {
     trackball_listener: trackball_listener {
         compatible = "zmk,input-listener";
