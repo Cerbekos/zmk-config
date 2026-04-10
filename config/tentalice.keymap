@@ -68,7 +68,7 @@
 };
 
 &mkp_input_listener {
-    input-processors = <&zip_temp_layer 4 200>; // マウスキーで時間延長
+    input-processors = <&zip_temp_layer 4 10000>; // マウスキーで時間延長
 };
 
 &zip_mouse_gesture {
