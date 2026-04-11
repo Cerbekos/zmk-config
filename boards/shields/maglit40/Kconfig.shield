@@ -1,5 +1,0 @@
-config SHIELD_MAGLIT40_LEFT
-    def_bool $(shields_list_contains,maglit40_left)
-
-config SHIELD_MAGLIT40_RIGHT
-    def_bool $(shields_list_contains,maglit40_right)

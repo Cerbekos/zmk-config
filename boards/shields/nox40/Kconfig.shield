@@ -1,5 +1,0 @@
-config SHIELD_NOX40_LEFT
-    def_bool $(shields_list_contains,nox40_left)
-
-config SHIELD_NOX40_RIGHT
-    def_bool $(shields_list_contains,nox40_right)
