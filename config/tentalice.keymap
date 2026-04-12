@@ -53,7 +53,6 @@
 /* トラックボール関連 */
 
 &zip_temp_layer {
-
     excluded-positions = <
         12 /* left Ctrl */
         24 /* left Shift */
@@ -62,8 +61,8 @@
         32 /* M */
         33 /* , */
         37 /* left Alt */
-    >; // マウスレイヤーを解除しないキーリスト
-
+    >;
+ // マウスレイヤーを解除しないキーリスト
     require-prior-idle-ms = <200>; // キー入力から一定時間はAMLを発動しない
 };
 
@@ -72,7 +71,6 @@
 };
 
 &zip_mouse_gesture {
-
     /* マウスジェスチャー */
 
     stroke-size = <50>;
@@ -101,7 +99,6 @@
 };
 
 &pointer_accel {
-
     /* ポインタ加速 */
 
     input-type = <INPUT_EV_REL>;  // 相対入力デバイス用
@@ -145,7 +142,6 @@
     };
 
     input_processors {
-
         /* トラックボールの角度調整 */
 
         sensor_rotation: sensor_rotation {
@@ -160,28 +156,33 @@
 
 / {
     behaviors {
-
         /* タップダンス */
 
         td_CS: tap_dance_1 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <160>;
+            tapping-term-ms = <170>;
             bindings = <&kp COMMA>, <&kp SEMI>;
+
+            label = ",";
         };
 
         td_DC: tap_dance_2 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <160>;
+            tapping-term-ms = <170>;
             bindings = <&kp DOT>, <&kp JP_COLON>;
+
+            label = ".";
         };
 
         td_CME: tap_dance_3 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <160>;
+            tapping-term-ms = <170>;
             bindings = <&mt RCTRL MINUS>, <&kp JP_EQUAL>;
+
+            label = "/";
         };
 
         /* レイヤーインジケータ */
@@ -478,10 +479,10 @@
 
         layer_0 {
             bindings = <
-  &kp ESC                     &kp Q                    &kp W             &kp E             &kp R                        &kp T              &kp Y  &kp U  &kp I  &kp O   &kp P    &kp BSPC
-  &rmt_cyan LCTRL TAB         &kp A                    &kp S             &kp D             &kp F                        &kp G              &kp H  &kp J  &kp K  &kp L   &td_CME  &rmt_cyan RCTRL RET
-  &rmt_orange LSHFT CAPSLOCK  &kp Z                    &kp X             &kp C             &kp V                        &kp B              &kp B  &kp N  &kp M  &td_CS  &td_DC   &rmt_orange RSHFT SLASH
-  &rlt_yellow 3 LG(TAB)       &rmt_magenta LALT JP_HANZEN &rlt_red 1 SPACE  &rlt_green 2 RET  &rmt_lime RGUI INT4  &rlt_blue 4 DELETE
+  &kp ESC                     &kp Q                        &kp W             &kp E             &kp R                &kp T               &kp Y  &kp U  &kp I  &kp O   &kp P    &kp BSPC
+  &rmt_cyan LCTRL TAB         &kp A                        &kp S             &kp D             &kp F                &kp G               &kp H  &kp J  &kp K  &kp L   &td_CME  &rmt_cyan RCTRL RET
+  &rmt_orange LSHFT CAPSLOCK  &kp Z                        &kp X             &kp C             &kp V                &kp B               &kp B  &kp N  &kp M  &td_CS  &td_DC   &rmt_orange RSHFT SLASH
+  &rlt_yellow 3 LG(TAB)       &rmt_magenta LALT JP_HANZEN  &rlt_red 1 SPACE  &rlt_green 2 RET  &rmt_lime RGUI INT4  &rlt_blue 4 DELETE
             >;
         };
 
