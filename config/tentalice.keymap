@@ -147,7 +147,7 @@
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <170>;
-            bindings = <&kp DOT>, <&kp jp_colon>;
+            bindings = <&kp DOT>, <&jp_colon>;
 
             label = ".";
         };
@@ -156,7 +156,7 @@
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <170>;
-            bindings = <&mt RCTRL MINUS>, <&kp jp_equal>;
+            bindings = <&mt RCTRL MINUS>, <&jp_equal>;
 
             label = "/";
         };
@@ -501,7 +501,7 @@
             bindings = <
   &trans  &kp EXCL          &jp_dquote       &kp HASH      &kp DLLR           &kp PRCNT            &jp_amp     &kp PG_UP  &kp UP    &kp PG_DN  &trans    &kp DEL
   &trans  &kp CARET         &kp AMPERSAND    &kp ASTERISK  &kp RIGHT_BRACKET  &kp RIGHT_BRACE      &kp HOME    &kp LEFT   &kp DOWN  &kp RIGHT  &kp BSPC  &trans
-  &trans  &kp SINGLE_QUOTE  &kp LS(INT_YEN)  &kp LPAR      &kp BACKSLASH      &kp PIPE             &kp LA(UP)  &kp END    &trans    &trans     &trans    &trans
+  &trans  &kp SINGLE_QUOTE  &jp_under        &kp LPAR      &kp BACKSLASH      &kp PIPE             &kp LA(UP)  &kp END    &trans    &trans     &trans    &trans
   &trans  &trans            &trans           &trans        &trans             &rlt_violet 5 SPACE
             >;
         };
