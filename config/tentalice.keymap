@@ -147,7 +147,7 @@
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <170>;
-            bindings = <&kp DOT>, <&kp JP_COLON>;
+            bindings = <&kp DOT>, <&kp jp_colon>;
 
             label = ".";
         };
@@ -156,7 +156,7 @@
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <170>;
-            bindings = <&mt RCTRL MINUS>, <&kp JP_EQUAL>;
+            bindings = <&mt RCTRL MINUS>, <&kp jp_equal>;
 
             label = "/";
         };
@@ -484,7 +484,7 @@
   &kp ESC                     &kp Q                        &kp W             &kp E             &kp R                     &kp T                &kp Y  &kp U  &kp I  &kp O   &kp P    &kp BSPC
   &rmt_cyan LCTRL TAB         &kp A                        &kp S             &kp D             &kp F                     &kp G                &kp H  &kp J  &kp K  &kp L   &td_CME  &rmt_cyan RCTRL LS(RET)
   &rmt_orange LSHFT CAPSLOCK  &kp Z                        &kp X             &kp C             &kp V                     &kp B                &kp B  &kp N  &kp M  &td_CS  &td_DC   &rmt_orange RSHFT SLASH
-  &rlt_yellow 3 LG(TAB)       &rmt_magenta LALT JP_HANZEN  &rlt_red 1 SPACE  &rlt_green 2 RET  &rmt_lime RGUI RS(K_APP)  &rlt_blue 4 LG(DEL)
+  &rlt_yellow 3 LG(TAB)       &rmt_magenta LALT CAPSLOCK  &rlt_red 1 SPACE  &rlt_green 2 RET  &rmt_lime RGUI RS(K_APP)  &rlt_blue 4 LG(DEL)
             >;
         };
 
@@ -492,14 +492,14 @@
             bindings = <
   &trans               &kp F1       &kp F2     &kp F3        &kp F4     &kp F5        &kp F6        &kp F7        &kp F8        &kp F9      &kp F10    &trans
   &trans               &kp N1       &kp N2     &kp N3        &kp N4     &kp N5        &kp N6        &kp N7        &kp N8        &kp N9      &kp N0     &trans
-  &trans               &kp JP_PLUS  &kp MINUS  &kp JP_ASTER  &kp SLASH  &kp JP_UNDER  &kp JP_EQUAL  &kp JP_CARET  &kp JP_COLON  &kp JP_YEN  &kp JP_AT  &trans
+  &trans               &jp_plus     &kp MINUS  &jp_aster     &kp SLASH  &jp_under     &jp_equal     &jp_caret     &jp_colon     &jp_yen     &jp_at     &trans
   &rlt_violet 5 SPACE  &trans       &trans     &trans        &trans     &trans
             >;
         };
 
         layer_2 {
             bindings = <
-  &trans  &kp EXCL          &jp_dquote       &kp HASH      &kp DLLR           &kp PRCNT            &kp JP_AMP  &kp PG_UP  &kp UP    &kp PG_DN  &trans    &trans
+  &trans  &kp EXCL          &jp_dquote       &kp HASH      &kp DLLR           &kp PRCNT            &jp_amp     &kp PG_UP  &kp UP    &kp PG_DN  &trans    &kp DEL
   &trans  &kp CARET         &kp AMPERSAND    &kp ASTERISK  &kp RIGHT_BRACKET  &kp RIGHT_BRACE      &kp HOME    &kp LEFT   &kp DOWN  &kp RIGHT  &kp BSPC  &trans
   &trans  &kp SINGLE_QUOTE  &kp LS(INT_YEN)  &kp LPAR      &kp BACKSLASH      &kp PIPE             &kp LA(UP)  &kp END    &trans    &trans     &trans    &trans
   &trans  &trans            &trans           &trans        &trans             &rlt_violet 5 SPACE
