@@ -444,31 +444,168 @@
                 <&rgb_ug RGB_OFF>;
         };
 
-    /* 日本語キーボード用マクロ定義 */    
-    jp_dquote: jp_dquote { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_DQUOTE"; bindings = <&kp AT>; };
-    jp_amp:    jp_amp    { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_AMP";    bindings = <&kp CARET>; };
-    jp_quote:  jp_quote  { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_QUOTE";  bindings = <&kp AMPERSAND>; };
-    jp_equal:  jp_equal  { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_EQUAL";  bindings = <&kp UNDER>; };
-    jp_caret:  jp_caret  { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_CARET";  bindings = <&kp EQUAL>; };
-    jp_yen:    jp_yen    { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_YEN";    bindings = <&kp 0x89>; };
-    jp_plus:   jp_plus   { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_PLUS";   bindings = <&kp COLON>; };
-    jp_tilde:  jp_tilde  { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_TILDE";  bindings = <&kp PLUS>; };
-    jp_pipe:   jp_pipe   { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_PIPE";   bindings = <&kp LS(0x89)>; };
-    jp_at:     jp_at     { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_AT";     bindings = <&kp LEFT_BRACKET>; };
-    jp_colon:  jp_colon  { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_COLON";  bindings = <&kp SINGLE_QUOTE>; };
-    jp_aster:  jp_aster  { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_ASTER";  bindings = <&kp DOUBLE_QUOTES>; };
-    jp_baqt:   jp_baqt   { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_BAQT";   bindings = <&kp LEFT_BRACE>; };
-    jp_under:  jp_under  { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_UNDER";  bindings = <&kp LS(0x87)>; };
-    jp_lbrkt:  jp_lbrkt  { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_LBRACKET"; bindings = <&kp RIGHT_BRACKET>; };
-    jp_rbrkt:  jp_rbrkt  { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_RBRACKET"; bindings = <&kp BACKSLASH>; };
-    jp_lpar:   jp_lpar   { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_LPAREN";  bindings = <&kp ASTERISK>; };
-    jp_rpar:   jp_rpar   { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_RPAREN";  bindings = <&kp LEFT_PARENTHESIS>; };
-    jp_lbrace: jp_lbrace { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_LBRACE";  bindings = <&kp RIGHT_BRACE>; };
-    jp_rbrace: jp_rbrace { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_RBRACE";  bindings = <&kp PIPE>; };
-    jp_kana:   jp_kana   { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_KANA";    bindings = <&kp LANGUAGE_1>; };
-    jp_eisu:   jp_eisu   { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_EISU";    bindings = <&kp LANGUAGE_2>; };
-    jp_hanzen: jp_hanzen { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_HANZEN";  bindings = <&kp GRAVE>; };
+        /* 日本語キーボード用マクロ定義 */
 
+        jp_dquote: jp_dquote {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "JP_DQUOTE";
+            bindings = <&kp AT>;
+        };
+
+        jp_amp: jp_amp {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "JP_AMP";
+            bindings = <&kp CARET>;
+        };
+
+        jp_quote: jp_quote {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "JP_QUOTE";
+            bindings = <&kp AMPERSAND>;
+        };
+
+        jp_equal: jp_equal {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "JP_EQUAL";
+            bindings = <&kp UNDER>;
+        };
+
+        jp_caret: jp_caret {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "JP_CARET";
+            bindings = <&kp EQUAL>;
+        };
+
+        jp_yen: jp_yen {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "JP_YEN";
+            bindings = <&kp 0x89>;
+        };
+
+        jp_plus: jp_plus {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "JP_PLUS";
+            bindings = <&kp COLON>;
+        };
+
+        jp_tilde: jp_tilde {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "JP_TILDE";
+            bindings = <&kp PLUS>;
+        };
+
+        jp_pipe: jp_pipe {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "JP_PIPE";
+            bindings = <&kp LS(0x89)>;
+        };
+
+        jp_at: jp_at {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "JP_AT";
+            bindings = <&kp LEFT_BRACKET>;
+        };
+
+        jp_colon: jp_colon {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "JP_COLON";
+            bindings = <&kp SINGLE_QUOTE>;
+        };
+
+        jp_aster: jp_aster {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "JP_ASTER";
+            bindings = <&kp DOUBLE_QUOTES>;
+        };
+
+        jp_baqt: jp_baqt {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "JP_BAQT";
+            bindings = <&kp LEFT_BRACE>;
+        };
+
+        jp_under: jp_under {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "JP_UNDER";
+            bindings = <&kp LS(0x87)>;
+        };
+
+        jp_lbrkt: jp_lbrkt {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "JP_LBRACKET";
+            bindings = <&kp RIGHT_BRACKET>;
+        };
+
+        jp_rbrkt: jp_rbrkt {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "JP_RBRACKET";
+            bindings = <&kp BACKSLASH>;
+        };
+
+        jp_lpar: jp_lpar {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "JP_LPAREN";
+            bindings = <&kp ASTERISK>;
+        };
+
+        jp_rpar: jp_rpar {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "JP_RPAREN";
+            bindings = <&kp LEFT_PARENTHESIS>;
+        };
+
+        jp_lbrace: jp_lbrace {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "JP_LBRACE";
+            bindings = <&kp RIGHT_BRACE>;
+        };
+
+        jp_rbrace: jp_rbrace {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "JP_RBRACE";
+            bindings = <&kp PIPE>;
+        };
+
+        jp_kana: jp_kana {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "JP_KANA";
+            bindings = <&kp LANGUAGE_1>;
+        };
+
+        jp_eisu: jp_eisu {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "JP_EISU";
+            bindings = <&kp LANGUAGE_2>;
+        };
+
+        jp_hanzen: jp_hanzen {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "JP_HANZEN";
+            bindings = <&kp GRAVE>;
+        };
     };
 
     macros {
@@ -481,28 +618,28 @@
 
         layer_0 {
             bindings = <
-  &kp ESC                     &kp Q                        &kp W             &kp E             &kp R                     &kp T                &kp Y  &kp U  &kp I  &kp O   &kp P    &kp BSPC
-  &rmt_cyan LCTRL TAB         &kp A                        &kp S             &kp D             &kp F                     &kp G                &kp H  &kp J  &kp K  &kp L   &td_CME  &rmt_cyan RCTRL LS(RET)
-  &rmt_orange LSHFT CAPSLOCK  &kp Z                        &kp X             &kp C             &kp V                     &kp B                &kp B  &kp N  &kp M  &td_CS  &td_DC   &rmt_orange RSHFT SLASH
+  &kp ESC                     &kp Q                       &kp W             &kp E             &kp R                     &kp T                &kp Y  &kp U  &kp I  &kp O   &kp P    &kp BSPC
+  &rmt_cyan LCTRL TAB         &kp A                       &kp S             &kp D             &kp F                     &kp G                &kp H  &kp J  &kp K  &kp L   &td_CME  &rmt_cyan RCTRL LS(RET)
+  &rmt_orange LSHFT CAPSLOCK  &kp Z                       &kp X             &kp C             &kp V                     &kp B                &kp B  &kp N  &kp M  &td_CS  &td_DC   &rmt_orange RSHFT SLASH
   &rlt_yellow 3 LG(TAB)       &rmt_magenta LALT CAPSLOCK  &rlt_red 1 SPACE  &rlt_green 2 RET  &rmt_lime RGUI RS(K_APP)  &rlt_blue 4 LG(DEL)
             >;
         };
 
         layer_1 {
             bindings = <
-  &trans               &kp F1       &kp F2     &kp F3        &kp F4     &kp F5        &kp F6        &kp F7        &kp F8        &kp F9      &kp F10    &trans
-  &trans               &kp N1       &kp N2     &kp N3        &kp N4     &kp N5        &kp N6        &kp N7        &kp N8        &kp N9      &kp N0     &trans
-  &trans               &jp_plus     &kp MINUS  &jp_aster     &kp SLASH  &jp_under     &jp_equal     &jp_caret     &jp_colon     &jp_yen     &jp_at     &trans
-  &rlt_violet 5 SPACE  &trans       &trans     &trans        &trans     &trans
+  &trans               &kp F1    &kp F2     &kp F3     &kp F4     &kp F5     &kp F6     &kp F7  &kp F8   &kp F9     &kp F10        &trans
+  &trans               &kp N1    &kp N2     &kp N3     &kp N4     &kp N5     &kp N6     &kp N7  &kp N8   &kp N9     &kp N0         &trans
+  &trans               &jp_plus  &kp MINUS  &jp_aster  &kp SLASH  &jp_under  &jp_equal  &jp_at  &jp_yen  &jp_colon  &kp BACKSLASH  &trans
+  &rlt_violet 5 SPACE  &trans    &trans     &trans     &trans     &trans
             >;
         };
 
         layer_2 {
             bindings = <
-  &trans  &kp EXCL          &jp_dquote       &kp HASH      &kp DLLR           &kp PRCNT            &jp_amp     &kp PG_UP  &kp UP    &kp PG_DN  &trans    &kp DEL
-  &trans  &kp CARET         &kp AMPERSAND    &kp ASTERISK  &kp RIGHT_BRACKET  &kp RIGHT_BRACE      &kp HOME    &kp LEFT   &kp DOWN  &kp RIGHT  &kp BSPC  &trans
-  &trans  &kp SINGLE_QUOTE  &jp_under        &kp LPAR      &kp BACKSLASH      &kp PIPE             &kp LA(UP)  &kp END    &trans    &trans     &trans    &trans
-  &trans  &trans            &trans           &trans        &trans             &rlt_violet 5 SPACE
+  &trans  &kp EXCL   &jp_dquote  &kp HASH  &kp DLLR   &kp PRCNT            &jp_amp     &kp PG_UP  &kp UP    &kp PG_DN  &trans    &kp DEL
+  &trans  &jp_amp    &jp_quote   &jp_lpar  &jp_lbrkt  &jp_lbrace           &kp HOME    &kp LEFT   &kp DOWN  &kp RIGHT  &kp BSPC  &trans
+  &trans  &jp_caret  &jp_baqt    &jp_rpar  &jp_rbrkt  &jp_rbrace           &kp LA(UP)  &kp END    &trans    &trans     &trans    &trans
+  &trans  &trans     &trans      &trans    &trans     &rlt_violet 5 SPACE
             >;
         };
 
