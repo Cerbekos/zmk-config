@@ -12,32 +12,6 @@
 #include <dt-bindings/zmk/pointing.h>
 #include <dt-bindings/zmk/rgb.h>
 
-/* OS設定を日本語キーボードのまま使用するための変換定義 */
-
-#define JP_DQUOTE       AT                // "
-#define JP_AMP          CARET             // &
-#define JP_QUOTE        AMPERSAND         // '
-#define JP_EQUAL        UNDER             // =
-#define JP_CARET        EQUAL             // ^
-#define JP_YEN          0x89              // ¥
-#define JP_PLUS         COLON             // +
-#define JP_TILDE        PLUS              // ~
-#define JP_PIPE         LS(0x89)          // |
-#define JP_AT           LEFT_BRACKET      // @
-#define JP_COLON        SINGLE_QUOTE      // :
-#define JP_ASTER        DOUBLE_QUOTES     // *
-#define JP_BAQT         LEFT_BRACE        // `
-#define JP_UNDER        LS(0x87)          // _
-#define JP_LBRACKET     RIGHT_BRACKET     // [
-#define JP_RBRACKET     BACKSLASH         // ]
-#define JP_LPAREN       ASTERISK          // (
-#define JP_RPAREN       LEFT_PARENTHESIS  // )
-#define JP_LBRACE       RIGHT_BRACE       // {
-#define JP_RBRACE       PIPE              // }
-#define JP_KANA         LANGUAGE_1        // かな
-#define JP_EISU         LANGUAGE_2        // 英数
-#define JP_HANZEN       GRAVE             // 半角/全角
-
 /* レイヤー・モディファイアカスタマイズ */
 
 &lt {
@@ -469,6 +443,32 @@
                 <&macro_tap>,
                 <&rgb_ug RGB_OFF>;
         };
+
+    /* 日本語キーボード用マクロ定義 */    
+    jp_dquote: jp_dquote { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_DQUOTE"; bindings = <&kp AT>; };
+    jp_amp:    jp_amp    { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_AMP";    bindings = <&kp CARET>; };
+    jp_quote:  jp_quote  { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_QUOTE";  bindings = <&kp AMPERSAND>; };
+    jp_equal:  jp_equal  { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_EQUAL";  bindings = <&kp UNDER>; };
+    jp_caret:  jp_caret  { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_CARET";  bindings = <&kp EQUAL>; };
+    jp_yen:    jp_yen    { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_YEN";    bindings = <&kp 0x89>; };
+    jp_plus:   jp_plus   { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_PLUS";   bindings = <&kp COLON>; };
+    jp_tilde:  jp_tilde  { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_TILDE";  bindings = <&kp PLUS>; };
+    jp_pipe:   jp_pipe   { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_PIPE";   bindings = <&kp LS(0x89)>; };
+    jp_at:     jp_at     { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_AT";     bindings = <&kp LEFT_BRACKET>; };
+    jp_colon:  jp_colon  { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_COLON";  bindings = <&kp SINGLE_QUOTE>; };
+    jp_aster:  jp_aster  { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_ASTER";  bindings = <&kp DOUBLE_QUOTES>; };
+    jp_baqt:   jp_baqt   { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_BAQT";   bindings = <&kp LEFT_BRACE>; };
+    jp_under:  jp_under  { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_UNDER";  bindings = <&kp LS(0x87)>; };
+    jp_lbrkt:  jp_lbrkt  { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_LBRACKET"; bindings = <&kp RIGHT_BRACKET>; };
+    jp_rbrkt:  jp_rbrkt  { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_RBRACKET"; bindings = <&kp BACKSLASH>; };
+    jp_lpar:   jp_lpar   { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_LPAREN";  bindings = <&kp ASTERISK>; };
+    jp_rpar:   jp_rpar   { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_RPAREN";  bindings = <&kp LEFT_PARENTHESIS>; };
+    jp_lbrace: jp_lbrace { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_LBRACE";  bindings = <&kp RIGHT_BRACE>; };
+    jp_rbrace: jp_rbrace { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_RBRACE";  bindings = <&kp PIPE>; };
+    jp_kana:   jp_kana   { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_KANA";    bindings = <&kp LANGUAGE_1>; };
+    jp_eisu:   jp_eisu   { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_EISU";    bindings = <&kp LANGUAGE_2>; };
+    jp_hanzen: jp_hanzen { compatible = "zmk,behavior-macro"; #binding-cells = <0>; label = "JP_HANZEN";  bindings = <&kp GRAVE>; };
+
     };
 
     macros {
@@ -499,7 +499,7 @@
 
         layer_2 {
             bindings = <
-  &trans  &kp EXCL          &kp AT           &kp HASH      &kp DLLR           &kp PRCNT            &kp JP_AMP  &kp PG_UP  &kp UP    &kp PG_DN  &trans    &trans
+  &trans  &kp EXCL          &jp_dquote       &kp HASH      &kp DLLR           &kp PRCNT            &kp JP_AMP  &kp PG_UP  &kp UP    &kp PG_DN  &trans    &trans
   &trans  &kp CARET         &kp AMPERSAND    &kp ASTERISK  &kp RIGHT_BRACKET  &kp RIGHT_BRACE      &kp HOME    &kp LEFT   &kp DOWN  &kp RIGHT  &kp BSPC  &trans
   &trans  &kp SINGLE_QUOTE  &kp LS(INT_YEN)  &kp LPAR      &kp BACKSLASH      &kp PIPE             &kp LA(UP)  &kp END    &trans    &trans     &trans    &trans
   &trans  &trans            &trans           &trans        &trans             &rlt_violet 5 SPACE
