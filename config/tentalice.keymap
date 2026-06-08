@@ -29,13 +29,11 @@
 &zip_temp_layer {
     excluded-positions = <
         18 /* H */
-        29 /* left B */
+        19 /* J */
+        20 /* K */
+        21 /* L */
         12 /* left Ctrl */
         24 /* left Shift */
-        30 /* right B */
-        31 /* N */
-        32 /* M */
-        33 /* , */
         37 /* left Alt */
     >;
 
@@ -657,8 +655,8 @@
         layer_4 {
             bindings = <
   &trans  &trans  &trans  &trans               &trans  &trans     &trans     &trans     &trans  &trans          &trans  &rgb_ug RGB_EFR
-  &trans  &trans  &trans  &trans               &trans  &trans     &mkp RCLK  &trans     &trans  &trans          &trans  &rgb_ug RGB_EFF
-  &trans  &trans  &trans  &trans               &trans  &mkp LCLK  &mkp LCLK  &mkp RCLK  &mo 1   &mouse_gesture  &trans  &trans
+  &trans  &trans  &trans  &trans               &trans  &trans     &mkp LCLK  &mkp RCLK  &mo 1   &mouse_gesture  &trans  &rgb_ug RGB_EFF
+  &trans  &trans  &trans  &trans               &trans  &trans  &trans  &trans  &trans   &trans  &trans  &trans
   &trans  &trans  &trans  &rlt_violet 5 SPACE  &trans  &trans
             >;
         };
