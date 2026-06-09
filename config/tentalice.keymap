@@ -27,13 +27,17 @@
 /* トラックボール関連 */
 
 &zip_temp_layer {
-    excluded-positions = <
-        18 /* H */
-        19 /* J */
-        20 /* K */
-        21 /* L */
+    excluded-positions = <        
         12 /* left Ctrl */
         24 /* left Shift */
+        26 /* X */
+        27 /* C */
+        28 /* V */
+        29 /* left B */
+        30 /* right B */
+        31 /* N */
+        32 /* M */
+        33 /* , */
         37 /* left Alt */
     >;
 
