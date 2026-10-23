@@ -1,0 +1,3 @@
+#include "gridaria.dtsi"
+
+&xiao_serial { status = "disabled"; };

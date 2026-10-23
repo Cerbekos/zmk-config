@@ -9,9 +9,8 @@
 # shield: [ "corne_left", "corne_right" ]
 ---
 include:
-### Tentalice ###
   - board: xiao_ble//zmk
-    shield: tentalice
+    shield: gridaria
     snippet: studio-rpc-usb-uart
     cmake-args: -DCONFIG_ZMK_STUDIO=y
   #- board: xiao_ble

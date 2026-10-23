@@ -1,6 +1,6 @@
 file_format: "1"
-id: tentalice
-name: Tentalice
+id: gridaria
+name: Gridaria
 type: shield
 url: https://github.com/
 requires: [seeeduino_xiao_ble]
@@ -9,4 +9,4 @@ features:
   - underglow
   - studio
 siblings:
-  - tentalice
+  - gridaria

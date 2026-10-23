@@ -1,5 +1,7 @@
-name: zmk-keyboard-nox40
+name: zmk-keyboard-gridaria
 
 build:
+  cmake: .
   settings:
     board_root: .
+    dts_root: .

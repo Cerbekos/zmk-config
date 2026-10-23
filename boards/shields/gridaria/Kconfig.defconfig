@@ -1,0 +1,6 @@
+if SHIELD_GRIDARIA
+
+config ZMK_KEYBOARD_NAME
+    default "Gridaria"
+
+endif
