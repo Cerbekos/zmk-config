@@ -109,13 +109,13 @@
 
 &adc {
   status = "okay";
-  zephyr,resolution = <12>;
 
   #address-cells = <1>;
   #size-cells = <0>;
 
   channel@0 {
     reg = <0>;
+    zephyr,resolution = <12>;
     zephyr,gain = "ADC_GAIN_1_4";
     zephyr,reference = "ADC_REF_VDD_1_4";
     zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
