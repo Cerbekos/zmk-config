@@ -283,8 +283,8 @@
         /* The first seven transparent positions store the fader targets for Studio. */
         layer_6 {
             bindings = <
-                &trans &trans &kp C_VOL_UP &kp C_BRI_UP &trans   &trans &trans &trans &trans &trans
-                &trans &trans &kp C_VOL_DOWN &kp C_BRI_DOWN &trans   &trans &trans &trans &trans &trans
+                &trans &trans &kp C_VOLUME_UP &kp C_BRIGHTNESS_INC &trans   &trans &trans &trans &trans &trans
+                &trans &trans &kp C_VOLUME_DOWN &kp C_BRIGHTNESS_DEC &trans   &trans &trans &trans &trans &trans
                 &trans &trans &trans &kp C_MUTE &trans   &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans &trans &trans
             >;
