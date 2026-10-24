@@ -669,6 +669,28 @@
         return layerNumbers.map((number) => ({ number, bindings: layers.get(number) }));
       }
 
+      function findFileFaderSettings(layers) {
+        for (const layer of layers) {
+          for (let start = 0; start <= layer.bindings.length - 7; start++) {
+            const isFaderSettings = layer.bindings.slice(start, start + 7).every((binding) =>
+              /^&fader_layer\s+[0-6]$/.test(binding.value));
+            if (isFaderSettings) return { layer, start };
+          }
+        }
+        return null;
+      }
+
+      function findDeviceFaderSettings(layers, behaviorId) {
+        for (const layer of layers) {
+          for (let start = 0; start <= layer.bindings.length - 7; start++) {
+            const isFaderSettings = layer.bindings.slice(start, start + 7).every((binding) =>
+              binding.behaviorId === behaviorId && binding.param1 <= 6);
+            if (isFaderSettings) return { layer, start };
+          }
+        }
+        return null;
+      }
+
       function bindingLabel(binding) {
         if (binding === "&trans") return ["TRNS", "透過"];
         if (binding === "&none") return ["NONE", "無効"];
@@ -894,12 +916,12 @@
       function renderKeyboardFader() {
         elements.keyboard.querySelector(".keyboard-fader")?.remove();
         const device = state.device;
-        const fileFaderLayer = !device && state.layers[6];
-        const faderLayer = device?.loaded ? device.faderSettingsLayer : fileFaderLayer;
-        const supported = device?.loaded
-          ? Boolean(device.faderSettingsLayer && device.faderBehaviorId)
-          : Boolean(fileFaderLayer?.bindings.slice(0, 7).every((binding) =>
-            /^&fader_layer\s+[0-6]$/.test(binding.value)));
+        const fileFaderSettings = !device ? findFileFaderSettings(state.layers) : null;
+        const deviceFaderSettings = device?.loaded && device.faderSettingsLayer
+          ? { layer: device.faderSettingsLayer, start: device.faderSettingsStart }
+          : null;
+        const faderSettings = deviceFaderSettings || fileFaderSettings;
+        const supported = Boolean(faderSettings);
         const fader = document.createElement("div");
         fader.className = "keyboard-fader";
         fader.setAttribute("role", "group");
@@ -924,7 +946,7 @@
           led.setAttribute("aria-hidden", "true");
           fader.append(led);
 
-          const binding = faderLayer?.bindings[visualPosition];
+          const binding = faderSettings?.layer.bindings[faderSettings.start + visualPosition];
           const targetLayer = device?.loaded
             ? binding?.param1
             : Number(binding?.value.match(/^&fader_layer\s+([0-6])$/)?.[1]);
@@ -1055,11 +1077,12 @@
             param1: targetLayer,
             param2: 0
           };
-          await setDeviceLayerBinding(device.faderSettingsLayer, position, binding);
+          await setDeviceLayerBinding(device.faderSettingsLayer, device.faderSettingsStart + position, binding);
           return;
         }
 
-        const binding = state.layers[6]?.bindings[position];
+        const faderSettings = findFileFaderSettings(state.layers);
+        const binding = faderSettings?.layer.bindings[faderSettings.start + position];
         if (!binding || !/^&fader_layer\s+[0-6]$/.test(binding.value)) return;
         const value = `&fader_layer ${targetLayer}`;
         state.source = state.source.slice(0, binding.start) + value + state.source.slice(binding.end);
@@ -1135,18 +1158,19 @@
             if (details) behaviors.set(details.id, details);
           }
           const faderBehavior = [...behaviors.values()].find((behavior) => behavior.displayName === "Fader Layer");
-          const faderSettingsLayer = keymap.layers.find((layer) => layer.id === 6);
-          if (!faderBehavior || !faderSettingsLayer ||
-              faderSettingsLayer.bindings.slice(0, 7).some((binding) =>
-                binding.behaviorId !== faderBehavior.id || binding.param1 > 6)) {
-            throw new Error("フェーダー割り当て対応ファームウェアを確認できません。初回のファームウェア書き込みが必要です。");
+          const faderSettings = faderBehavior
+            ? findDeviceFaderSettings(keymap.layers, faderBehavior.id)
+            : null;
+          if (!faderBehavior || !faderSettings) {
+            throw new Error("7個連続したフェーダー設定が見つかりません。動的検出対応ファームウェアか確認してください。");
           }
           if (state.device !== device) return;
 
           device.keymap = keymap;
           device.behaviors = behaviors;
           device.faderBehaviorId = faderBehavior.id;
-          device.faderSettingsLayer = faderSettingsLayer;
+          device.faderSettingsLayer = faderSettings.layer;
+          device.faderSettingsStart = faderSettings.start;
           device.loaded = true;
           elements.restoreStockButton.disabled = false;
           state.activeLayer = 0;
