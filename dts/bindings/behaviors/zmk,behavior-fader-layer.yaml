@@ -1,0 +1,8 @@
+# Copyright (c) 2026 Cerbekos
+# SPDX-License-Identifier: GPL-2.0-or-later
+
+description: No-op behavior used to configure Gridaria's fader layer assignments
+
+compatible: "zmk,behavior-fader-layer"
+
+include: one_param.yaml

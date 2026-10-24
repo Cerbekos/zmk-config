@@ -22,6 +22,12 @@
 
 / {
     behaviors {
+        fader_layer: fader_layer {
+            compatible = "zmk,behavior-fader-layer";
+            #binding-cells = <1>;
+            display-name = "Fader Layer";
+        };
+
         /* タップダンス */
 
         td_CS: tap_dance_1 {
@@ -274,9 +280,10 @@
             >;
         };
 
+        /* The first seven transparent positions store the fader targets for Studio. */
         layer_6 {
             bindings = <
-                &trans &trans &trans &trans &trans   &trans &trans &trans &trans &trans
+                &fader_layer 3 &fader_layer 2 &fader_layer 1 &fader_layer 0 &fader_layer 4   &fader_layer 5 &fader_layer 6 &trans &trans &trans
                 &trans &trans &trans &trans &trans   &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans   &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans &trans &trans
@@ -285,7 +292,7 @@
 
         layer_7 {
             bindings = <
-                &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &trans &out OUT_BLE &out OUT_USB &bt BT_CLR &bt BT_CLR_ALL
+                &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &studio_unlock &out OUT_BLE &out OUT_USB &bt BT_CLR &bt BT_CLR_ALL
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
                 &trans &trans &bootloader &trans               &trans &bootloader &trans &trans
