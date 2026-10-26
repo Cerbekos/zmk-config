@@ -246,8 +246,8 @@
 
         layer_2 {
             bindings = <
-                &kp EXCL    &jp_dquote  &kp HASH    &kp DLLR    &kp PRCNT   &jp_amp     &kp PG_UP   &kp UP      &kp PG_DN   &trans
-                &jp_amp     &jp_quote   &jp_lpar    &jp_lbrkt   &jp_lbrace  &kp HOME    &kp LEFT    &kp DOWN    &kp RIGHT   &kp BSPC
+                &kp EXCL    &jp_dquote  &kp HASH    &kp DLLR    &kp PRCNT   &jp_amp     &kp PG_UP   &kp UP      &kp PG_DN   &kp BSPC
+                &jp_amp     &jp_quote   &jp_lpar    &jp_lbrkt   &jp_lbrace  &kp HOME    &kp LEFT    &kp DOWN    &kp RIGHT   &trans
                 &jp_caret   &jp_baqt    &jp_rpar    &jp_rbrkt   &jp_rbrace  &kp LA(UP)  &kp END     &trans      &trans      &trans
                 &trans      &trans      &trans      &trans                              &trans      &trans      &trans      &lt 7 SPACE
             >;
@@ -255,7 +255,7 @@
 
         layer_3 {
             bindings = <
-                &trans      &msc SCRL_UP   &mmv MOVE_UP   &msc SCRL_DOWN  &trans       &trans       &msc SCRL_UP &mmv MOVE_UP &msc SCRL_DOWN &trans
+                &trans      &msc SCRL_UP   &mmv MOVE_UP   &msc SCRL_DOWN  &rgb_ug RGB_TOG       &trans       &msc SCRL_UP &mmv MOVE_UP &msc SCRL_DOWN &trans
                 &trans      &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_RIGHT &trans     &msc SCRL_LEFT &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_RIGHT &msc SCRL_RIGHT
                 &trans      &trans      &trans       &trans       &trans       &trans       &trans       &trans       &trans       &trans
                 &trans      &mkp MB3    &mkp MB2    &mkp LCLK   &mkp LCLK   &mkp MB2    &mkp MB3    &trans
