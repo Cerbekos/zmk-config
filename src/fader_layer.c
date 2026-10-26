@@ -117,7 +117,7 @@ static void gridaria_fader_input_callback(struct input_event *event, void *user_
         return;
     }
 
-    uint16_t sample = CLAMP(event->value - 1, 0, 1023);
+    uint16_t sample = 1023 - CLAMP(event->value - 1, 0, 1023);
     if (!fader_initialized) {
         for (uint8_t i = 0; i < FADER_SAMPLE_COUNT; i++) {
             fader_samples[i] = sample;
