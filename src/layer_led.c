@@ -13,9 +13,8 @@
 
 LOG_MODULE_REGISTER(gridaria_layer_led, CONFIG_ZMK_LOG_LEVEL);
 
-#define LAYER_LED_DISPLAY_MS 1000
 #define RGB_EFFECT_SOLID 0
-#define RGB_EFFECT_SPECTRUM 2
+#define RGB_EFFECT_SWIRL 3
 
 /* Indexed by keymap layer ID: 0 is rainbow, 1-6 are red, blue, green, yellow, violet, orange. */
 static const struct zmk_led_hsb layer_colors[] = {
@@ -36,26 +35,13 @@ static int select_rainbow(void) {
         return err;
     }
 
-    return zmk_rgb_underglow_select_effect(RGB_EFFECT_SPECTRUM);
+    return zmk_rgb_underglow_select_effect(RGB_EFFECT_SWIRL);
 }
-
-static void restore_rainbow(struct k_work *work) {
-    ARG_UNUSED(work);
-
-    int err = select_rainbow();
-    if (err) {
-        LOG_ERR("Failed to restore rainbow underglow: %d", err);
-    }
-}
-
-K_WORK_DELAYABLE_DEFINE(layer_led_restore_work, restore_rainbow);
 
 static void show_layer_color(uint8_t layer) {
     if (layer == indicated_layer) {
         return;
     }
-
-    k_work_cancel_delayable(&layer_led_restore_work);
 
     int err = zmk_rgb_underglow_on();
     if (err) {
@@ -77,15 +63,6 @@ static void show_layer_color(uint8_t layer) {
         return;
     }
     indicated_layer = layer;
-
-    if (layer == 0 || layer >= ARRAY_SIZE(layer_colors)) {
-        return;
-    }
-
-    err = k_work_reschedule(&layer_led_restore_work, K_MSEC(LAYER_LED_DISPLAY_MS));
-    if (err < 0) {
-        LOG_ERR("Failed to schedule rainbow restore: %d", err);
-    }
 }
 
 static int gridaria_layer_led_listener(const zmk_event_t *eh) {

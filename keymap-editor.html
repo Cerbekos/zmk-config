@@ -418,6 +418,11 @@
           "NUMBER_1=0x7001e EXCLAMATION=0x207001e NUMBER_2=0x7001f AT_SIGN=0x207001f NUMBER_3=0x70020 HASH=0x2070020 NUMBER_4=0x70021",
           "DOLLAR=0x2070021 NUMBER_5=0x70022 PERCENT=0x2070022 NUMBER_6=0x70023 CARET=0x2070023 NUMBER_7=0x70024 AMPERSAND=0x2070024",
           "NUMBER_8=0x70025 ASTERISK=0x2070025 NUMBER_9=0x70026 LEFT_PARENTHESIS=0x2070026 NUMBER_0=0x70027 RIGHT_PARENTHESIS=0x2070027",
+          "RETURN=0x70028",
+          "ESCAPE=0x70029 BACKSPACE=0x7002a TAB=0x7002b SPACE=0x7002c MINUS=0x7002d UNDERSCORE=0x207002d",
+          "EQUAL=0x7002e PLUS=0x207002e LEFT_BRACKET=0x7002f LEFT_BRACE=0x207002f RIGHT_BRACKET=0x70030",
+          "RIGHT_BRACE=0x2070030 BACKSLASH=0x70031 PIPE=0x2070031 SEMICOLON=0x70033 COLON=0x2070033",
+          "SINGLE_QUOTE=0x70034 DOUBLE_QUOTES=0x2070034",
           "GRAVE=0x70035 TILDE=0x2070035 COMMA=0x70036 LESS_THAN=0x2070036 PERIOD=0x70037 GREATER_THAN=0x2070037 SLASH=0x70038",
           "QUESTION=0x2070038 CAPSLOCK=0x70039 F1=0x7003a F2=0x7003b F3=0x7003c F4=0x7003d F5=0x7003e F6=0x7003f F7=0x70040 F8=0x70041",
           "F9=0x70042 F10=0x70043 F11=0x70044 F12=0x70045 PRINTSCREEN=0x70046 SCROLLLOCK=0x70047 PAUSE_BREAK=0x70048 INSERT=0x70049",
@@ -524,6 +529,11 @@
         { code: "tog", displayName: "Toggle Layer", label: "TOG", detail: "オン・オフ切替" },
         { code: "lt", displayName: "Layer Tap", label: "LT", detail: "長押しでレイヤー・タップでキー" }
       ];
+      const tapDanceTypes = [
+        { code: "td_CME", label: "-", firmwareLabel: "-", detail: "TD" },
+        { code: "td_CS", label: ",", firmwareLabel: ",", detail: "TD" },
+        { code: "td_DC", label: ".", firmwareLabel: ".", detail: "TD" }
+      ];
       const layerBehaviorCandidates = layerBehaviorTypes.flatMap(({ code }) =>
         Array.from({ length: LAYER_COUNT }, (_, layer) =>
           code === "lt" ? `&${code} ${layer} SPACE` : `&${code} ${layer}`
@@ -549,13 +559,14 @@
       const keycodeDisplayNames = new Map(Object.entries({
         NUMBER_1: "N1", NUMBER_2: "N2", NUMBER_3: "N3", NUMBER_4: "N4", NUMBER_5: "N5",
         NUMBER_6: "N6", NUMBER_7: "N7", NUMBER_8: "N8", NUMBER_9: "N9", NUMBER_0: "N0",
-        EXCLAMATION: "EXCL", AT_SIGN: "AT", HASH: "POUND", DOLLAR: "DLLR", PERCENT: "PRCNT",
-        AMPERSAND: "AMPS", ASTERISK: "STAR", LEFT_PARENTHESIS: "LPAR", RIGHT_PARENTHESIS: "RPAR",
-        UNDERSCORE: "UNDER", SLASH: "FSLH", QUESTION: "QMARK", BACKSLASH: "BSLH",
-        NON_US_BACKSLASH: "NUBS", SEMICOLON: "SEMI", SINGLE_QUOTE: "APOS", DOUBLE_QUOTES: "DQT",
-        LESS_THAN: "LT", PERIOD: "DOT", GREATER_THAN: "GT", LEFT_BRACKET: "LBKT",
-        LEFT_BRACE: "LBRC", RIGHT_BRACKET: "RBKT", RIGHT_BRACE: "RBRC", NON_US_HASH: "NUHS",
-        ESCAPE: "ESC", RETURN: "RET", RETURN2: "RET2", BACKSPACE: "BSPC", DELETE: "DEL",
+        EXCLAMATION: "!", AT_SIGN: "@", HASH: "#", DOLLAR: "$", PERCENT: "%",
+        AMPERSAND: "&", ASTERISK: "*", LEFT_PARENTHESIS: "(", RIGHT_PARENTHESIS: ")",
+        UNDERSCORE: "_", SLASH: "/", QUESTION: "?", BACKSLASH: "\\",
+        NON_US_BACKSLASH: "NUBS", SEMICOLON: ";", COLON: ":", SINGLE_QUOTE: "'", DOUBLE_QUOTES: "\"",
+        LESS_THAN: "<", COMMA: ",", PERIOD: ".", GREATER_THAN: ">", LEFT_BRACKET: "[",
+        LEFT_BRACE: "{", RIGHT_BRACKET: "]", RIGHT_BRACE: "}", NON_US_HASH: "NUHS",
+        MINUS: "-", EQUAL: "=", PLUS: "+", PIPE: "|", GRAVE: "`", TILDE: "~",
+        ESCAPE: "ESC", RETURN: "ENTER", RETURN2: "RET2", BACKSPACE: "BSPC", DELETE: "DEL",
         INSERT: "INS", PAGE_UP: "PG_UP", PAGE_DOWN: "PG_DN", UP_ARROW: "UP", DOWN_ARROW: "DOWN",
         LEFT_ARROW: "LEFT", RIGHT_ARROW: "RIGHT", K_APPLICATION: "K_CMENU", CAPSLOCK: "CLCK",
         LOCKING_CAPS: "LCAPS", SCROLLLOCK: "SLCK", LOCKING_SCROLL: "LSLCK", LOCKING_NUM: "LNLCK",
@@ -569,6 +580,14 @@
         RIGHT_ALT: "RA", LEFT_GUI: "LMETA", RIGHT_GUI: "RMETA", KP_NUMLOCK: "KP_NLCK"
       }));
       const displayKeycodeName = (code) => keycodeDisplayNames.get(code) || code;
+      const modifierDisplayNames = [
+        [0x01, "Ctrl"], [0x02, "Shift"], [0x04, "Alt"], [0x08, "GUI"],
+        [0x10, "Ctrl"], [0x20, "Shift"], [0x40, "Alt"], [0x80, "GUI"]
+      ];
+      const modifierCodeNames = [
+        [0x01, "LC"], [0x02, "LS"], [0x04, "LA"], [0x08, "LG"],
+        [0x10, "RC"], [0x20, "RS"], [0x40, "RA"], [0x80, "RG"]
+      ];
       const baseCandidates = [
         "&trans", "&none",
         ...keycodeCatalog.map(({ binding }) => binding),
@@ -620,6 +639,95 @@
 
       function deviceBindingKey(binding) {
         return `@${binding.behaviorId}:${binding.param1}:${binding.param2}`;
+      }
+
+      function keycodeForUsage(usage) {
+        return keycodeByUsage.get(usage) ||
+          keycodeByUsage.get(usage & 0x00ffffff) ||
+          keycodeByUsage.get(0x70000 | (usage & 0xffff));
+      }
+
+      function decodeDeviceKeycode(encodedKeycode) {
+        const exactCode = keycodeByUsage.get(encodedKeycode);
+        if (exactCode) return { code: exactCode, modifiers: 0 };
+        return {
+          code: keycodeForUsage(encodedKeycode & 0x00ffffff),
+          modifiers: (encodedKeycode >>> 24) & 0xff
+        };
+      }
+
+      function formatDeviceKeycode(encodedKeycode) {
+        const { code, modifiers } = decodeDeviceKeycode(encodedKeycode);
+        const key = code ? displayKeycodeName(code) : `Key 0x${encodedKeycode.toString(16).toUpperCase()}`;
+        const prefixes = modifierDisplayNames
+          .filter(([mask]) => modifiers & mask)
+          .map(([, name]) => name);
+        return [...prefixes, key].join("+");
+      }
+
+      function formatDeviceKeycodeExpression(encodedKeycode) {
+        const { code, modifiers } = decodeDeviceKeycode(encodedKeycode);
+        if (!code) return `0x${encodedKeycode.toString(16).toUpperCase()}`;
+        let expression = code;
+        for (const [mask, name] of modifierCodeNames) {
+          if (modifiers & mask) expression = `${name}(${expression})`;
+        }
+        return expression;
+      }
+
+      function normalizeBehaviorName(name) {
+        return name.toLowerCase().replace(/[^a-z0-9]/g, "");
+      }
+
+      function layerBehaviorForName(name) {
+        const normalized = normalizeBehaviorName(name);
+        return layerBehaviorTypes.find(({ displayName }) =>
+          normalizeBehaviorName(displayName) === normalized
+        );
+      }
+
+      function tapDanceForName(name) {
+        const byFirmwareLabel = tapDanceTypes.find(({ firmwareLabel }) => firmwareLabel === name);
+        if (byFirmwareLabel) return byFirmwareLabel;
+        const normalized = normalizeBehaviorName(name);
+        return tapDanceTypes.find(({ code }) =>
+          normalizeBehaviorName(code) === normalized
+        );
+      }
+
+      function tapDanceForBehavior(behavior) {
+        return [behavior.displayName, behavior.name, behavior.label]
+          .filter(Boolean)
+          .map(tapDanceForName)
+          .find(Boolean);
+      }
+
+      function behaviorParameterDescription(behavior, parameter, value) {
+        const key = `param${parameter}`;
+        const descriptions = (behavior.metadata || []).flatMap((set) => set[key] || []);
+        return descriptions.find((description) => {
+          if (description.constant !== undefined) return description.constant === value;
+          if (description.range) {
+            return value >= description.range.min && value <= description.range.max;
+          }
+          if (description.hidUsage) return Boolean(keycodeForUsage(value));
+          if (description.layerId) return true;
+          return false;
+        }) || descriptions[0];
+      }
+
+      function formatBehaviorParameter(behavior, parameter, value) {
+        const description = behaviorParameterDescription(behavior, parameter, value);
+        if (!description) return String(value);
+        if (description.hidUsage) return formatDeviceKeycode(value);
+        if (description.layerId) {
+          const layer = state.device?.keymap?.layers.find(({ id }) => id === value);
+          return layer?.name || `レイヤー ${value}`;
+        }
+        if (description.constant !== undefined && description.constant === value) {
+          return description.name;
+        }
+        return `${description.name} ${value}`;
       }
 
       function parseKeymap(source) {
@@ -700,23 +808,36 @@
           if (!behavior) return [`Behavior ${behaviorId}`, `${param1}, ${param2}`];
 
           if (/key press/i.test(behavior.displayName)) {
-            const key = keycodeByUsage.get(param1) || keycodeByUsage.get(0x70000 | param1);
-            return [key ? displayKeycodeName(key) : `Key ${param1}`, behavior.displayName];
+            return [formatDeviceKeycode(param1), "キー"];
           }
-          const layerBehavior = layerBehaviorTypes.find(({ displayName }) =>
-            displayName.toLowerCase() === behavior.displayName.toLowerCase()
-          );
+          const layerBehavior = layerBehaviorForName(behavior.displayName);
           if (layerBehavior) {
             const layer = param1;
             const keyCode = layerBehavior.code === "lt"
-              ? keycodeByUsage.get(param2) || keycodeByUsage.get(0x70000 | param2) || `Key ${param2}`
+              ? formatDeviceKeycode(param2)
               : null;
             return [
-              `${layerBehavior.label} ${layer}${keyCode ? ` / ${displayKeycodeName(keyCode)}` : ""}`,
+              `${layerBehavior.label} ${layer}${keyCode ? ` / ${keyCode}` : ""}`,
               layerBehavior.detail
             ];
           }
-          return [behavior.displayName, `${param1}, ${param2}`];
+          if (/hold.?tap|mod.?tap/i.test(behavior.displayName)) {
+            return [
+              `MT ${formatDeviceKeycode(param1)} / ${formatDeviceKeycode(param2)}`,
+              "長押しでモッド・タップでキー"
+            ];
+          }
+          const tapDance = tapDanceForBehavior(behavior);
+          if ((tapDance || /tap.?dance/i.test(behavior.displayName)) && param1 === 0 && param2 === 0) {
+            return [
+              tapDance?.label || "タップダンス",
+              tapDance?.detail || "タップ回数で出力が変わります"
+            ];
+          }
+          const parameters = [param1, param2]
+            .map((value, index) => value ? formatBehaviorParameter(behavior, index + 1, value) : "")
+            .filter(Boolean);
+          return [behavior.displayName, parameters.join(" · ")];
         }
         const parts = binding.split(/\s+/);
         const behavior = parts[0].slice(1);
@@ -739,21 +860,54 @@
         }
         if (behavior === "mt" && args.length > 1) return [args[1], `MT · ${args[0]}`];
         if (behavior === "lt" && args.length > 1) return [args[1], `LAYER ${args[0]}`];
-        if (behavior === "td_CS") return [",", "タップダンス"];
-        if (behavior === "td_DC") return [".", "タップダンス"];
-        if (behavior === "td_CME") return ["/", "タップダンス"];
+        const tapDance = tapDanceForName(behavior);
+        if (tapDance) return [tapDance.label, tapDance.detail];
         if (behavior.startsWith("jp_")) return [behavior.slice(3).toUpperCase(), "日本語マクロ"];
         return [args.length ? args.join(" ") : behavior.toUpperCase(), behavior.toUpperCase()];
+      }
+
+      function deviceBindingDisplay(bindingKey) {
+        if (!bindingKey.startsWith("@") || !state.device) return bindingKey;
+        const [behaviorId, param1, param2] = bindingKey.slice(1).split(":").map(Number);
+        const behavior = state.device.behaviors.get(behaviorId);
+        if (!behavior) return `不明な動作 (${behaviorId})`;
+        if (/key press/i.test(behavior.displayName)) {
+          return `&kp ${formatDeviceKeycodeExpression(param1)}`;
+        }
+        const layerBehavior = layerBehaviorForName(behavior.displayName);
+        if (layerBehavior) {
+          const tapKey = layerBehavior.code === "lt"
+            ? ` ${formatDeviceKeycodeExpression(param2)}`
+            : "";
+          return `&${layerBehavior.code} ${param1}${tapKey}`;
+        }
+        if (/hold.?tap|mod.?tap/i.test(behavior.displayName)) {
+          return `&mt ${formatDeviceKeycodeExpression(param1)} ${formatDeviceKeycodeExpression(param2)}`;
+        }
+        const tapDance = tapDanceForBehavior(behavior);
+        if ((tapDance || /tap.?dance/i.test(behavior.displayName)) && param1 === 0 && param2 === 0) {
+          return tapDance ? `&${tapDance.code}` : "タップダンス";
+        }
+        const parameters = [param1, param2]
+          .map((value, index) => value
+            ? formatBehaviorParameter(behavior, index + 1, value)
+            : "")
+          .filter(Boolean);
+        return parameters.length
+          ? `${behavior.displayName} · ${parameters.join(" · ")}`
+          : behavior.displayName;
       }
 
       function candidateCategory(candidate) {
         if (candidate.startsWith("@") && state.device) {
           const [behaviorId, param1] = candidate.slice(1).split(":").map(Number);
           const behavior = state.device.behaviors.get(behaviorId);
-          if (layerBehaviorTypes.some(({ displayName }) =>
-            displayName.toLowerCase() === behavior?.displayName.toLowerCase()
-          )) return "layer";
-          return keycodeCategoryByUsage.get(param1) || "other";
+          if (behavior && layerBehaviorForName(behavior.displayName)) return "layer";
+          if (behavior && /key press/i.test(behavior.displayName)) {
+            const { code } = decodeDeviceKeycode(param1);
+            return keycodeByCode.get(code)?.category || "other";
+          }
+          return "other";
         }
         if (/^&(mo|to|tog|lt)\s/.test(candidate)) return "layer";
         const keycode = candidate.match(/^&kp\s+([A-Z0-9_]+)$/);
@@ -765,17 +919,17 @@
         if (candidate.startsWith("@") && state.device) {
           const [behaviorId, param1, param2] = candidate.slice(1).split(":").map(Number);
           const behavior = state.device.behaviors.get(behaviorId);
-          const layerBehavior = layerBehaviorTypes.find(({ displayName }) =>
-            displayName.toLowerCase() === behavior?.displayName.toLowerCase()
-          );
+          if (behavior && /key press/i.test(behavior.displayName)) {
+            const { code } = decodeDeviceKeycode(param1);
+            return officialKeycodeRanks.get(code) ?? Number.MAX_SAFE_INTEGER;
+          }
+          const layerBehavior = behavior && layerBehaviorForName(behavior.displayName);
           if (layerBehavior) {
             const layer = param1;
-            const key = layerBehavior.code === "lt"
-              ? keycodeByUsage.get(param2) || keycodeByUsage.get(0x70000 | param2)
-              : "";
+            const { code: key } = decodeDeviceKeycode(param2);
             return layerBehaviorCandidateOrder(layerBehavior, layer, key);
           }
-          code = keycodeByUsage.get(param1) || keycodeByUsage.get(0x70000 | param1);
+          code = keycodeForUsage(param1);
         } else {
           code = candidate.match(/^&kp\s+([A-Z0-9_]+)$/)?.[1];
           const layerBinding = candidate.match(/^&(mo|to|tog|lt)\s+(\d+)(?:\s+([A-Z0-9_]+))?$/);
@@ -871,13 +1025,16 @@
           const column = index < 30 ? (index % 10 < 5 ? index % 10 + 1 : index % 10 + 4) : bottomColumns[index - 30];
           const key = document.createElement("button");
           const bindingValue = binding ? state.device ? deviceBindingKey(binding) : binding.value : "";
+          const bindingDisplay = binding ? deviceBindingDisplay(bindingValue) : "";
           const [label, detail] = binding ? bindingLabel(bindingValue) : ["", ""];
           key.type = "button";
           key.disabled = !binding;
           key.className = `key${!binding ? " placeholder" : bindingValue === "&trans" ? " transparent" : ""}${state.selectedKey === index ? " selected" : ""}`;
           key.style.gridColumn = `${column}${row === 3 && (index === 33 || index === 34) ? " / span 2" : ""}`;
           key.style.gridRow = String(row + 1);
-          key.title = binding ? `キー ${index + 1}: ${state.device ? `${label} (${bindingValue})` : bindingValue}` : `キー ${index + 1}`;
+          key.title = binding
+            ? `キー ${index + 1}: ${state.device ? `${label} (${bindingDisplay})` : bindingValue}${detail ? ` · ${detail}` : ""}`
+            : `キー ${index + 1}`;
           key.setAttribute("aria-label", key.title);
           key.innerHTML = `<span class="key-index">${index + 1}</span><span class="key-label"></span><span class="key-detail"></span>`;
           key.querySelector(".key-label").textContent = label;
@@ -892,7 +1049,7 @@
             } else {
               state.selectedKey = index;
               renderKeyboard();
-              elements.selectionHint.textContent = `キー ${index + 1} を選択中 · ${bindingValue}`;
+              elements.selectionHint.textContent = `キー ${index + 1} を選択中 · ${bindingDisplay || bindingValue}`;
             }
           });
           key.addEventListener("dragover", (event) => {
@@ -981,7 +1138,8 @@
         const selectedCategory = elements.categoryFilter.value;
         const matching = state.candidates.filter((candidate) => {
           const [label, detail] = bindingLabel(candidate);
-          const matchesQuery = `${candidate} ${label} ${detail}`.toLowerCase().includes(query);
+          const displayCode = deviceBindingDisplay(candidate);
+          const matchesQuery = `${candidate} ${displayCode} ${label} ${detail}`.toLowerCase().includes(query);
           return matchesQuery && (selectedCategory === "all" || candidateCategory(candidate) === selectedCategory);
         }).sort((left, right) => candidateOrder(left) - candidateOrder(right));
         elements.palette.replaceChildren();
@@ -996,19 +1154,20 @@
 
         for (const candidate of matching) {
           const [label] = bindingLabel(candidate);
+          const displayCode = deviceBindingDisplay(candidate);
           const button = document.createElement("button");
           button.type = "button";
           button.className = `candidate${state.selectedCandidate === candidate ? " selected" : ""}`;
           button.draggable = true;
-          button.title = candidate;
-          button.setAttribute("aria-label", `${label} (${candidate})`);
+          button.title = displayCode;
+          button.setAttribute("aria-label", `${label} (${displayCode})`);
           button.innerHTML = '<span class="candidate-label"></span><span class="candidate-code"></span>';
           button.querySelector(".candidate-label").textContent = label;
-          button.querySelector(".candidate-code").textContent = candidate;
+          button.querySelector(".candidate-code").textContent = displayCode;
           button.addEventListener("click", () => {
             state.selectedCandidate = candidate;
             state.selectedKey = null;
-            elements.selectionHint.textContent = `選択中: ${candidate} · 割り当てるキーをクリックしてください。`;
+            elements.selectionHint.textContent = `選択中: ${displayCode} · 割り当てるキーをクリックしてください。`;
             renderPalette();
             renderKeyboard();
           });
