@@ -16,7 +16,7 @@ LOG_MODULE_REGISTER(gridaria_layer_led, CONFIG_ZMK_LOG_LEVEL);
 #define RGB_EFFECT_SOLID 0
 #define RGB_EFFECT_SWIRL 3
 
-/* Indexed by keymap layer ID: 0 is rainbow, 1-6 are red, blue, green, yellow, violet, orange. */
+/* Indexed by keymap layer ID: 0 is rainbow, 1-7 are red, blue, green, yellow, violet, cyan, white. */
 static const struct zmk_led_hsb layer_colors[] = {
     {.h = 0, .s = 100, .b = 50},
     {.h = 0, .s = 100, .b = 50},
@@ -24,7 +24,8 @@ static const struct zmk_led_hsb layer_colors[] = {
     {.h = 120, .s = 100, .b = 50},
     {.h = 60, .s = 100, .b = 50},
     {.h = 270, .s = 100, .b = 50},
-    {.h = 30, .s = 100, .b = 50},
+    {.h = 180, .s = 100, .b = 50},
+    {.h = 0, .s = 0, .b = 50},
 };
 
 static uint8_t indicated_layer = ZMK_KEYMAP_LAYER_ID_INVAL;
