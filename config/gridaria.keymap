@@ -232,7 +232,7 @@
                 &mt LCTRL Q   &kp W      &kp E      &kp R      &kp T      &kp Y      &kp U      &kp I      &kp O      &kp P
                 &kp A         &kp S      &kp D      &kp F      &kp G      &kp H      &kp J      &kp K      &kp L      &td_CME
                 &mt LSHFT Z   &kp X      &kp C      &kp V      &kp B      &kp N      &kp M      &td_CS     &td_DC     &mt RSHFT SLASH
-                &mt LCTRL ESC  &mt LGUI CAPSLOCK &mt LALT TAB &lt 1 SPACE  &lt 2 RET &mt RALT BSPC &mt RGUI DEL &mt RCTRL RS(CAPSLOCK)
+                &mt LCTRL ESC  &mt LGUI CAPSLOCK &mt LALT CAPSLOCK &lt 1 SPACE  &lt 2 RET &mt RALT BSPC &mt RGUI DEL &mt RCTRL RS(CAPSLOCK)
             >;
         };
 
@@ -240,7 +240,7 @@
             bindings = <
                 &kp F1       &kp F2       &kp F3       &kp F4       &kp F5       &kp F6       &kp F7       &kp F8       &kp F9       &kp F10
                 &kp N1       &kp N2       &kp N3       &kp N4       &kp N5       &kp N6       &kp N7       &kp N8       &kp N9       &kp N0
-                &jp_plus     &kp MINUS    &jp_aster    &kp SLASH    &jp_under    &jp_equal    &jp_at       &jp_yen      &jp_colon    &kp INTERNATIONAL_1
+                &jp_plus     &kp MINUS    &jp_aster    &kp SLASH    &jp_under    &jp_equal    &jp_at       &jp_caret    &jp_colon    &mt RSHFT INTERNATIONAL_1
                 &lt 7 SPACE       &trans       &trans       &trans                    &trans       &trans       &trans       &trans
             >;
         };
@@ -248,8 +248,8 @@
         layer_2 {
             bindings = <
                 &kp EXCL    &jp_dquote  &kp HASH    &kp DLLR    &kp PRCNT   &jp_amp     &kp PG_UP   &kp UP      &kp PG_DN   &kp BSPC
-                &jp_amp     &jp_quote   &jp_lpar    &jp_lbrkt   &jp_lbrace  &kp HOME    &kp LEFT    &kp DOWN    &kp RIGHT   &kp DEL
-                &jp_caret   &jp_baqt    &jp_rpar    &jp_rbrkt   &jp_rbrace  &kp LA(UP)  &kp END     &trans      &trans      &trans
+                &kp TAB     &jp_quote   &jp_lpar    &jp_lbrkt   &jp_lbrace  &kp HOME    &kp LEFT    &kp DOWN    &kp RIGHT   &kp DEL
+                &trans      &jp_baqt    &jp_rpar    &jp_rbrkt   &jp_rbrace  &kp LA(UP)  &kp END     &trans      &trans      &trans
                 &trans      &trans      &trans      &trans                              &trans      &trans      &trans      &lt 7 SPACE
             >;
         };
