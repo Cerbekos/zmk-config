@@ -16,7 +16,7 @@
 &mt {
     tapping-term-ms = <180>;
     quick-tap-ms = <160>;
-    flavor = "hold-preferred";
+    flavor = "balanced";
 };
 
 /* ビヘイビア・キーマップ関連 */
