@@ -284,8 +284,8 @@
         /* The first seven transparent positions store the fader targets for Studio. */
         layer_6 {
             bindings = <
-                &kp LA(TAB) &kp LS(LA(TAB)) C_VOLUME_UP   &kp C_BRIGHTNESS_INC &trans     &rgb_ug RGB_TOG &rgb_ug RGB_SPI &rgb_ug RGB_EFF &trans  &trans
-                &kp LG(TAB) &kp LS(LG(TAB)) &trans &kp C_VOLUME_DOWN &kp C_BRIGHTNESS_DEC &trans     &trans          &rgb_ug RGB_SPD &rgb_ug RGB_EFR &trans  &trans
+                &kp LA(TAB) &kp LS(LA(TAB)) &kp C_VOLUME_UP   &kp C_BRIGHTNESS_INC &trans     &rgb_ug RGB_TOG &rgb_ug RGB_SPI &rgb_ug RGB_EFF &trans  &trans
+                &kp LG(TAB) &kp LS(LG(TAB)) &kp C_VOLUME_DOWN &kp C_BRIGHTNESS_DEC &trans     &trans          &rgb_ug RGB_SPD &rgb_ug RGB_EFR &trans  &trans
                 &trans &trans &trans            &kp C_MUTE           &trans     &trans          &trans          &trans          &trans  &trans
                 &trans &trans &trans            &trans                                          &trans          &trans          &trans  &trans
             >;
