@@ -260,6 +260,15 @@
     .keyboard-fader-point:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
     .palette-tools { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .binding-builder {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .binding-builder label { display: grid; gap: 5px; color: var(--muted); font-size: 12px; }
+    .binding-builder select { width: 100%; }
+    .binding-builder [hidden] { display: none; }
 
     input[type="search"], input[type="text"], select {
       min-width: 0;
@@ -324,6 +333,7 @@
       .section-heading .hint { text-align: left; }
       .custom-form { align-items: stretch; flex-direction: column; }
       .custom-form input { max-width: none; }
+      .binding-builder { grid-template-columns: 1fr 1fr; }
       .keyboard-fader { padding-right: 6px; padding-left: 6px; }
       .keyboard-fader-point { min-width: 34px; font-size: 10px; }
     }
@@ -342,6 +352,7 @@
         <button class="button" id="restore-stock-button" type="button" disabled>初期設定に戻す</button>
         <label class="button" for="file-picker">キーマップを開く</label>
         <input class="file-input" id="file-picker" type="file" accept=".keymap,.txt">
+        <button class="button primary" id="apply-file-button" type="button" hidden disabled>ファイルをキーボードへ適用</button>
         <button class="button" id="save-button" type="button" disabled>ファイルに保存</button>
       </div>
     </header>
@@ -395,12 +406,40 @@
           <option value="other">その他の動作</option>
         </select>
       </div>
+      <div class="binding-builder" aria-label="キー動作を作成">
+        <label>動作
+          <select id="binding-type">
+            <option value="kp">キー</option>
+            <option value="modified-kp">モッド＋キー</option>
+            <option value="mt">モッドタップ</option>
+            <option value="mo">押している間レイヤー</option>
+            <option value="lt">長押しレイヤー／タップキー</option>
+            <option value="tog">レイヤー切替</option>
+            <option value="to">レイヤー移動</option>
+          </select>
+        </label>
+        <label id="binding-modifier-label">モッド
+          <select id="binding-modifier">
+            <option value="LCTRL">左 Ctrl</option><option value="LSHFT">左 Shift</option>
+            <option value="LALT">左 Alt</option><option value="LGUI">左 GUI</option>
+            <option value="RCTRL">右 Ctrl</option><option value="RSHFT">右 Shift</option>
+            <option value="RALT">右 Alt</option><option value="RGUI">右 GUI</option>
+          </select>
+        </label>
+        <label id="binding-layer-label">レイヤー
+          <select id="binding-layer"></select>
+        </label>
+        <label id="binding-key-label">タップ／キー
+          <select id="binding-key"></select>
+        </label>
+        <button class="button" id="add-binding-button" type="button">候補を作成</button>
+      </div>
       <div class="palette" id="palette"></div>
       <form class="custom-form" id="custom-form">
         <input id="custom-binding" type="text" placeholder="例: &kp F11" autocomplete="off" aria-label="カスタムバインディング">
         <button class="button" type="submit">カスタム候補を追加</button>
       </form>
-      <p class="footer-note">候補にはZMK公式の<a href="https://zmk.dev/docs/keymaps/list-of-keycodes" target="_blank" rel="noopener noreferrer">キーコード一覧</a>にある有効なキーコードを収録しています。同じ動作をする別名は1つにまとめています。USB接続にはWeb Serial対応ブラウザー（Chrome / Edge）とインターネット接続が必要です。キーマップのレイヤー追加・削除はできません。ローカルファイルの保存とキーボード本体への保存は別々の操作です。</p>
+      <p class="footer-note">候補にはZMK公式の<a href="https://zmk.dev/docs/keymaps/list-of-keycodes" target="_blank" rel="noopener noreferrer">キーコード一覧</a>にある有効なキーコードを収録しています。同じ動作をする別名は1つにまとめています。USB接続にはWeb Serial対応ブラウザー（Chrome / Edge）とインターネット接続が必要です。キーマップのレイヤー追加・削除はできません。ファイルの適用とキーボード本体への保存は別々の操作です。</p>
     </section>
   </main>
 
@@ -601,6 +640,7 @@
         deviceSaveButton: document.getElementById("device-save-button"),
         restoreStockButton: document.getElementById("restore-stock-button"),
         filePicker: document.getElementById("file-picker"),
+        applyFileButton: document.getElementById("apply-file-button"),
         saveButton: document.getElementById("save-button"),
         status: document.getElementById("status"),
         layerTabs: document.getElementById("layer-tabs"),
@@ -610,6 +650,14 @@
         categoryFilter: document.getElementById("category-filter"),
         customForm: document.getElementById("custom-form"),
         customBinding: document.getElementById("custom-binding"),
+        bindingType: document.getElementById("binding-type"),
+        bindingModifier: document.getElementById("binding-modifier"),
+        bindingLayer: document.getElementById("binding-layer"),
+        bindingKey: document.getElementById("binding-key"),
+        bindingModifierLabel: document.getElementById("binding-modifier-label"),
+        bindingLayerLabel: document.getElementById("binding-layer-label"),
+        bindingKeyLabel: document.getElementById("binding-key-label"),
+        addBindingButton: document.getElementById("add-binding-button"),
         selectionHint: document.getElementById("selection-hint")
       };
 
@@ -629,8 +677,22 @@
         candidates: [],
         candidateBindings: new Map(),
         device: null,
+        pendingImport: null,
         dirty: false
       };
+
+      for (const layer of layerNumbers) {
+        const option = document.createElement("option");
+        option.value = String(layer);
+        option.textContent = `レイヤー ${layer}`;
+        elements.bindingLayer.append(option);
+      }
+      for (const { code } of keycodeCatalog) {
+        const option = document.createElement("option");
+        option.value = code;
+        option.textContent = `${displayKeycodeName(code)} (${code})`;
+        elements.bindingKey.append(option);
+      }
 
       function setStatus(message, kind = "") {
         elements.status.textContent = message;
@@ -728,6 +790,12 @@
           return description.name;
         }
         return `${description.name} ${value}`;
+      }
+
+      function deviceBehaviorLabel(behavior) {
+        const duplicates = [...(state.device?.behaviors.values() || [])]
+          .filter((candidate) => candidate.displayName === behavior.displayName);
+        return duplicates.length > 1 ? `${behavior.displayName} #${behavior.id}` : behavior.displayName;
       }
 
       function parseKeymap(source) {
@@ -837,7 +905,7 @@
           const parameters = [param1, param2]
             .map((value, index) => value ? formatBehaviorParameter(behavior, index + 1, value) : "")
             .filter(Boolean);
-          return [behavior.displayName, parameters.join(" · ")];
+          return [deviceBehaviorLabel(behavior), parameters.join(" · ")];
         }
         const parts = binding.split(/\s+/);
         const behavior = parts[0].slice(1);
@@ -894,8 +962,8 @@
             : "")
           .filter(Boolean);
         return parameters.length
-          ? `${behavior.displayName} · ${parameters.join(" · ")}`
-          : behavior.displayName;
+          ? `${deviceBehaviorLabel(behavior)} · ${parameters.join(" · ")}`
+          : deviceBehaviorLabel(behavior);
       }
 
       function candidateCategory(candidate) {
@@ -912,6 +980,152 @@
         if (/^&(mo|to|tog|lt)\s/.test(candidate)) return "layer";
         const keycode = candidate.match(/^&kp\s+([A-Z0-9_]+)$/);
         return keycode ? keycodeByCode.get(keycode[1])?.category || "other" : "other";
+      }
+
+      const keycodeAliases = new Map([
+        ["ESC", "ESCAPE"], ["RET", "RETURN"], ["ENTER", "RETURN"], ["BSPC", "BACKSPACE"],
+        ["DEL", "DELETE"], ["PG_UP", "PAGE_UP"], ["PG_DN", "PAGE_DOWN"], ["UP", "UP_ARROW"],
+        ["DOWN", "DOWN_ARROW"], ["LEFT", "LEFT_ARROW"], ["RIGHT", "RIGHT_ARROW"],
+        ["LCTRL", "LEFT_CONTROL"], ["RCTRL", "RIGHT_CONTROL"], ["LSHFT", "LEFT_SHIFT"],
+        ["RSHFT", "RIGHT_SHIFT"], ["LALT", "LEFT_ALT"], ["RALT", "RIGHT_ALT"],
+        ["LGUI", "LEFT_GUI"], ["RGUI", "RIGHT_GUI"], ["EXCL", "EXCLAMATION"],
+        ["DLLR", "DOLLAR"], ["PRCNT", "PERCENT"], ["KP_NUM", "KP_NUMLOCK"],
+        ["N0", "NUMBER_0"], ["N1", "NUMBER_1"], ["N2", "NUMBER_2"],
+        ["N3", "NUMBER_3"], ["N4", "NUMBER_4"], ["N5", "NUMBER_5"],
+        ["N6", "NUMBER_6"], ["N7", "NUMBER_7"], ["N8", "NUMBER_8"], ["N9", "NUMBER_9"],
+        ["DOT", "PERIOD"], ["SEMI", "SEMICOLON"],
+        ["KP_N0", "KP_NUMBER_0"], ["KP_N1", "KP_NUMBER_1"], ["KP_N2", "KP_NUMBER_2"],
+        ["KP_N3", "KP_NUMBER_3"], ["KP_N4", "KP_NUMBER_4"], ["KP_N5", "KP_NUMBER_5"],
+        ["KP_N6", "KP_NUMBER_6"], ["KP_N7", "KP_NUMBER_7"], ["KP_N8", "KP_NUMBER_8"],
+        ["KP_N9", "KP_NUMBER_9"], ["KP_SLASH", "KP_DIVIDE"], ["KP_ASTERISK", "KP_MULTIPLY"]
+      ]);
+      const modifierMasks = new Map([
+        ["LC", 0x01], ["LS", 0x02], ["LA", 0x04], ["LG", 0x08],
+        ["RC", 0x10], ["RS", 0x20], ["RA", 0x40], ["RG", 0x80]
+      ]);
+
+      function keyUsageFromExpression(expression) {
+        const modifier = expression.match(/^(LC|LS|LA|LG|RC|RS|RA|RG)\((.+)\)$/);
+        if (modifier) {
+          const innerUsage = keyUsageFromExpression(modifier[2]);
+          if (innerUsage === null) return null;
+          const mask = modifierMasks.get(modifier[1]);
+          return ((mask << 24) | innerUsage) >>> 0;
+        }
+        const code = keycodeAliases.get(expression) || expression;
+        return keycodeByCode.get(code)?.usage ?? null;
+      }
+
+      function behaviorForBindingName(name) {
+        const normalized = normalizeBehaviorName(name);
+        const behaviorAliases = {
+          bt: /bluetooth/i,
+          out: /output/i,
+          rgbug: /rgb.*underglow/i,
+          msc: /mouse.*scroll/i,
+          mmv: /mouse.*move/i,
+          mkp: /mouse.*(button|click)/i,
+          studiounlock: /studio.*unlock/i,
+          bootloader: /bootloader/i,
+          trans: /transparent/i,
+          none: /none/i
+        };
+        const behaviors = [...(state.device?.behaviors.values() || [])];
+        const matchingAlias = behaviorAliases[normalized];
+        return behaviors.find((behavior) =>
+          [behavior.name, behavior.displayName, behavior.label, behavior.behaviorName]
+            .filter((alias) => typeof alias === "string")
+            .some((alias) => normalizeBehaviorName(alias) === normalized)
+        ) || (matchingAlias && behaviors.find(({ displayName }) => matchingAlias.test(displayName)));
+      }
+
+      function parameterFromExpression(behavior, parameter, expression) {
+        const descriptions = (behavior.metadata || []).flatMap((set) => set[`param${parameter}`] || []);
+        const matchingConstant = descriptions.find((description) =>
+          description.constant !== undefined &&
+          normalizeBehaviorName(description.name) === normalizeBehaviorName(expression)
+        );
+        if (matchingConstant) return matchingConstant.constant;
+        const description = descriptions.find((entry) =>
+          entry.hidUsage || entry.layerId || entry.range
+        );
+        if (description?.hidUsage) {
+          const usage = keyUsageFromExpression(expression);
+          if (usage !== null) return usage;
+        }
+        if (description?.layerId || description?.range) {
+          if (/^\d+$/.test(expression)) return Number(expression);
+        }
+        if (!descriptions.length && /^\d+$/.test(expression)) return Number(expression);
+        return null;
+      }
+
+      function deviceBindingFromExpression(expression) {
+        const device = state.device;
+        if (!device?.loaded) return null;
+        const parts = expression.trim().split(/\s+/);
+        const name = parts[0]?.slice(1);
+        const args = parts.slice(1);
+        if (name === "trans" || name === "none") {
+          const behavior = behaviorForBindingName(name);
+          if (behavior) return { behaviorId: behavior.id, param1: 0, param2: 0 };
+          return device.keymap.layers.flatMap((layer) => layer.bindings).find((binding) =>
+            deviceBindingDisplay(deviceBindingKey(binding)) === expression
+          ) || null;
+        }
+
+        const behavior = name === "kp"
+          ? [...device.behaviors.values()].find((item) => /key press/i.test(item.displayName))
+          : layerBehaviorForName(name)
+            ? [...device.behaviors.values()].find((item) =>
+              normalizeBehaviorName(item.displayName) === normalizeBehaviorName(layerBehaviorForName(name).displayName)
+            )
+            : name === "mt"
+              ? [...device.behaviors.values()].find((item) => /hold.?tap|mod.?tap/i.test(item.displayName))
+              : tapDanceForName(name)
+                ? [...device.behaviors.values()].find((item) => tapDanceForBehavior(item)?.code === name)
+                : behaviorForBindingName(name);
+        if (!behavior) return null;
+
+        if (/key press/i.test(behavior.displayName) && args.length === 1) {
+          const usage = keyUsageFromExpression(args[0]);
+          return usage === null ? null : { behaviorId: behavior.id, param1: usage, param2: 0 };
+        }
+
+        const layerBehavior = layerBehaviorForName(behavior.displayName);
+        if (layerBehavior && args.length >= 1 && /^\d+$/.test(args[0])) {
+          const keyUsage = layerBehavior.code === "lt" && args[1]
+            ? keyUsageFromExpression(args[1])
+            : 0;
+          if (layerBehavior.code === "lt" && keyUsage === null) return null;
+          return {
+            behaviorId: behavior.id,
+            param1: Number(args[0]),
+            param2: keyUsage || 0
+          };
+        }
+
+        if (/hold.?tap|mod.?tap/i.test(behavior.displayName) && args.length >= 2) {
+          const param1 = keyUsageFromExpression(args[0]);
+          const param2 = keyUsageFromExpression(args.slice(1).join(" "));
+          return param1 === null || param2 === null
+            ? null
+            : { behaviorId: behavior.id, param1, param2 };
+        }
+
+        if (tapDanceForBehavior(behavior) && args.length === 0) {
+          return { behaviorId: behavior.id, param1: 0, param2: 0 };
+        }
+
+        const params = args.map((argument, index) =>
+          parameterFromExpression(behavior, index + 1, argument)
+        );
+        if (params.some((value) => value === null) || params.length > 2) return null;
+        return {
+          behaviorId: behavior.id,
+          param1: params[0] || 0,
+          param2: params[1] || 0
+        };
       }
 
       function candidateOrder(candidate) {
@@ -1028,7 +1242,7 @@
           const bindingDisplay = binding ? deviceBindingDisplay(bindingValue) : "";
           const [label, detail] = binding ? bindingLabel(bindingValue) : ["", ""];
           key.type = "button";
-          key.disabled = !binding;
+          key.disabled = !binding || Boolean(state.device?.applying);
           key.className = `key${!binding ? " placeholder" : bindingValue === "&trans" ? " transparent" : ""}${state.selectedKey === index ? " selected" : ""}`;
           key.style.gridColumn = `${column}${row === 3 && (index === 33 || index === 34) ? " / span 2" : ""}`;
           key.style.gridRow = String(row + 1);
@@ -1159,6 +1373,7 @@
           button.type = "button";
           button.className = `candidate${state.selectedCandidate === candidate ? " selected" : ""}`;
           button.draggable = true;
+          button.disabled = Boolean(state.device?.applying);
           button.title = displayCode;
           button.setAttribute("aria-label", `${label} (${displayCode})`);
           button.innerHTML = '<span class="candidate-label"></span><span class="candidate-code"></span>';
@@ -1177,6 +1392,62 @@
           });
           elements.palette.append(button);
         }
+      }
+
+      function updateBindingBuilder() {
+        const type = elements.bindingType.value;
+        const hasModifier = type === "modified-kp" || type === "mt";
+        const hasLayer = ["mo", "lt", "tog", "to"].includes(type);
+        const hasKey = ["kp", "modified-kp", "mt", "lt"].includes(type);
+        elements.bindingModifierLabel.hidden = !hasModifier;
+        elements.bindingLayerLabel.hidden = !hasLayer;
+        elements.bindingKeyLabel.hidden = !hasKey;
+      }
+
+      function bindingFromBuilder() {
+        const type = elements.bindingType.value;
+        const key = elements.bindingKey.value;
+        const modifier = elements.bindingModifier.value;
+        const layer = elements.bindingLayer.value;
+        if (type === "kp") return `&kp ${key}`;
+        if (type === "modified-kp") {
+          const modifierCode = { LCTRL: "LC", LSHFT: "LS", LALT: "LA", LGUI: "LG",
+            RCTRL: "RC", RSHFT: "RS", RALT: "RA", RGUI: "RG" }[modifier];
+          return `&kp ${modifierCode}(${key})`;
+        }
+        if (type === "mt") return `&mt ${modifier} ${key}`;
+        if (type === "lt") return `&lt ${layer} ${key}`;
+        return `&${type} ${layer}`;
+      }
+
+      function addBindingCandidate(value) {
+        if (!isValidBinding(value)) {
+          setStatus("バインディング形式が正しくありません。", "error");
+          return false;
+        }
+        if (state.device) {
+          const binding = deviceBindingFromExpression(value);
+          if (!binding) {
+            setStatus(`このキーボードでは「${value}」を設定できません。Studio対応ビヘイビアか、パラメーターを確認してください。`, "error");
+            return false;
+          }
+          const candidate = deviceBindingKey(binding);
+          state.candidateBindings.set(candidate, binding);
+          state.candidates = [...new Set([...state.candidates, candidate])];
+          state.selectedCandidate = candidate;
+        } else {
+          if (!state.layers.length) {
+            setStatus("先にGridariaのキーマップを開いてください。", "error");
+            return false;
+          }
+          state.candidates = [...new Set([...state.candidates, value])];
+          state.selectedCandidate = value;
+        }
+        state.selectedKey = null;
+        elements.selectionHint.textContent = `選択中: ${value} · 割り当てるキーをクリックしてください。`;
+        renderPalette();
+        renderKeyboard();
+        return true;
       }
 
       function isValidBinding(value) {
@@ -1259,30 +1530,60 @@
 
       async function setDeviceLayerBinding(layer, index, binding) {
         const device = state.device;
-        if (!device) return;
+        if (!device || device.applying) return;
         try {
-          const response = await device.client.call_rpc(device.connection, {
-            keymap: {
-              setLayerBinding: {
-                layerId: layer.id,
-                keyPosition: index,
-                binding
-              }
-            }
-          });
-          if (response.keymap?.setLayerBinding !== 0) {
-            throw new Error(`キー変更に失敗しました (応答: ${response.keymap?.setLayerBinding ?? "なし"})`);
-          }
-
-          layer.bindings[index] = { ...binding };
-          device.dirty = true;
-          elements.deviceSaveButton.disabled = false;
+          await writeDeviceLayerBinding(layer, index, binding);
           state.selectedKey = index;
+          updateImportedSourceBinding(layer, index, binding);
           setStatus("キーボードへ変更を適用しました。電源を切る前に「キーボードに保存」を押してください。", "success");
           refreshCandidates();
           renderKeyboard();
         } catch (error) {
           setStatus(`キーボードへ変更を適用できませんでした: ${error.message}`, "error");
+        }
+      }
+
+      async function writeDeviceLayerBinding(layer, index, binding) {
+        const device = state.device;
+        if (!device) throw new Error("キーボードが接続されていません。");
+        const response = await device.client.call_rpc(device.connection, {
+          keymap: {
+            setLayerBinding: {
+              layerId: layer.id,
+              keyPosition: index,
+              binding
+            }
+          }
+        });
+        const result = response.keymap?.setLayerBinding;
+        if (result !== 0) {
+          const reasons = {
+            1: "キー位置が無効です。キーマップを再読み込みしてください。",
+            2: "ビヘイビアIDがファームウェアにありません。キーマップとファームウェアの組み合わせを確認してください。",
+            3: "ビヘイビアのパラメーターがファームウェアの定義に合いません。モッドやレイヤーの設定値を確認してください。"
+          };
+          const reason = reasons[result] || `キー変更に失敗しました (応答: ${result ?? "なし"})`;
+          throw new Error(`${reason} (ID: ${binding.behaviorId}, param1: ${binding.param1}, param2: ${binding.param2})`);
+        }
+        layer.bindings[index] = { ...binding };
+        device.dirty = true;
+        elements.deviceSaveButton.disabled = Boolean(device.applying);
+      }
+
+      function updateImportedSourceBinding(layer, index, binding) {
+        const layerIndex = state.device?.keymap.layers.indexOf(layer) ?? -1;
+        const sourceBinding = state.layers[layerIndex]?.bindings[index];
+        const value = binding.behaviorId === state.device?.faderBehaviorId
+          ? `&fader_layer ${binding.param1}`
+          : deviceBindingDisplay(deviceBindingKey(binding));
+        if (!sourceBinding || !isValidBinding(value)) return;
+        state.source = state.source.slice(0, sourceBinding.start) + value + state.source.slice(sourceBinding.end);
+        try {
+          state.layers = parseKeymap(state.source);
+          state.dirty = true;
+          elements.saveButton.disabled = false;
+        } catch (error) {
+          setStatus(`キーボードには適用しましたが、ファイル用の変換に失敗しました: ${error.message}`, "error");
         }
       }
 
@@ -1314,7 +1615,10 @@
               behaviors: { getBehaviorDetails: { behaviorId } }
             });
             const details = response.behaviors?.getBehaviorDetails;
-            if (details) behaviors.set(details.id, details);
+            if (details) {
+              const id = Number(details.id ?? behaviorId);
+              if (Number.isInteger(id)) behaviors.set(id, { ...details, id });
+            }
           }
           const faderBehavior = [...behaviors.values()].find((behavior) => behavior.displayName === "Fader Layer");
           const faderSettings = faderBehavior
@@ -1332,6 +1636,11 @@
           device.faderSettingsStart = faderSettings.start;
           device.loaded = true;
           elements.restoreStockButton.disabled = false;
+          if (state.source && state.layers.length) {
+            state.pendingImport = { source: state.source, fileName: state.fileName, layers: state.layers };
+            elements.applyFileButton.hidden = false;
+            elements.applyFileButton.disabled = false;
+          }
           state.activeLayer = 0;
           state.selectedCandidate = null;
           state.selectedKey = null;
@@ -1368,6 +1677,8 @@
         elements.disconnectButton.hidden = true;
         elements.deviceSaveButton.disabled = true;
         elements.restoreStockButton.disabled = true;
+        elements.applyFileButton.hidden = true;
+        elements.applyFileButton.disabled = true;
         state.selectedCandidate = null;
         state.selectedKey = null;
         elements.selectionHint.textContent = "候補を選択してキーに割り当てます。ドラッグにも対応しています。";
@@ -1527,21 +1838,23 @@
         if (!file) return;
 
         try {
-          if (state.device) {
-            throw new Error("接続中はキーボード上の編集内容を表示しています。ファイルを編集するには先に切断してください。");
-          }
           const source = await file.text();
           const layers = parseKeymap(source);
           state.source = source;
           state.fileName = file.name.toLowerCase().endsWith(".keymap") ? file.name : "gridaria.keymap";
           state.layers = layers;
+          state.pendingImport = state.device ? { source, fileName: state.fileName, layers } : null;
           state.activeLayer = 0;
           state.selectedCandidate = null;
           state.selectedKey = null;
           elements.selectionHint.textContent = "候補を選択してキーに割り当てます。ドラッグにも対応しています。";
           state.dirty = false;
           elements.saveButton.disabled = true;
-          setStatus(`${file.name} を読み込みました。8レイヤー・各38キーを確認しました。`, "success");
+          elements.applyFileButton.hidden = !state.device;
+          elements.applyFileButton.disabled = !state.device?.loaded;
+          setStatus(state.device
+            ? `${file.name} を読み込みました。内容を確認後、「ファイルをキーボードへ適用」を押してください。`
+            : `${file.name} を読み込みました。8レイヤー・各38キーを確認しました。`, "success");
           renderLayerTabs();
           refreshCandidates();
           renderKeyboard();
@@ -1571,22 +1884,87 @@
       elements.customForm.addEventListener("submit", (event) => {
         event.preventDefault();
         const value = elements.customBinding.value.trim();
-        if (!isValidBinding(value)) {
-          setStatus("バインディング形式が正しくありません。例: &kp F11", "error");
-          return;
-        }
-        if (!state.layers.length) {
-          setStatus("先にGridariaのキーマップを開いてください。", "error");
-          return;
-        }
-        state.candidates = [...new Set([...state.candidates, value])];
-        state.selectedCandidate = value;
-        elements.customBinding.value = "";
-        elements.selectionHint.textContent = `選択中: ${value} · 割り当てるキーをクリックしてください。`;
-        renderPalette();
-        renderKeyboard();
+        if (addBindingCandidate(value)) elements.customBinding.value = "";
       });
 
+      elements.bindingType.addEventListener("change", updateBindingBuilder);
+      elements.addBindingButton.addEventListener("click", () => {
+        addBindingCandidate(bindingFromBuilder());
+      });
+      elements.applyFileButton.addEventListener("click", async () => {
+        const device = state.device;
+        const imported = state.pendingImport;
+        if (!device?.loaded || !imported || device.applying) return;
+        if (device.dirty && !window.confirm("キーボードに未保存の変更があります。ファイルを適用すると、未保存の変更は上書きされます。続行しますか？")) {
+          return;
+        }
+
+        const assignments = [];
+        try {
+          for (const [layerIndex, fileLayer] of imported.layers.entries()) {
+            const deviceLayer = device.keymap.layers[layerIndex];
+            for (const [keyPosition, fileBinding] of fileLayer.bindings.entries()) {
+              const binding = deviceBindingFromExpression(fileBinding.value);
+              if (!binding || !device.behaviors.has(binding.behaviorId)) {
+                throw new Error(`レイヤー ${layerIndex}・キー ${keyPosition + 1} の「${fileBinding.value}」は、このファームウェアでは設定できません。`);
+              }
+              assignments.push({ deviceLayer, keyPosition, binding });
+            }
+          }
+        } catch (error) {
+          setStatus(`ファイルを適用できません: ${error.message} 変更はまだキーボードへ送信されていません。`, "error");
+          return;
+        }
+
+        device.applying = true;
+        elements.applyFileButton.disabled = true;
+        elements.deviceSaveButton.disabled = true;
+        elements.disconnectButton.disabled = true;
+        elements.addBindingButton.disabled = true;
+        elements.customBinding.disabled = true;
+        renderPalette();
+        renderKeyboard();
+        try {
+          let completed = 0;
+          for (const assignment of assignments) {
+            const current = assignment.deviceLayer.bindings[assignment.keyPosition];
+            const next = assignment.binding;
+            if (current.behaviorId !== next.behaviorId ||
+                current.param1 !== next.param1 || current.param2 !== next.param2) {
+              await writeDeviceLayerBinding(assignment.deviceLayer, assignment.keyPosition, next);
+            }
+            completed++;
+            if (completed % 10 === 0 || completed === assignments.length) {
+              setStatus(`キーマップを適用しています: ${completed}/${assignments.length} キー`);
+            }
+          }
+          state.source = imported.source;
+          state.fileName = imported.fileName;
+          state.layers = imported.layers;
+          state.dirty = false;
+          elements.saveButton.disabled = true;
+          state.pendingImport = null;
+          elements.applyFileButton.hidden = true;
+          setStatus(device.dirty
+            ? "ファイルのキーマップをキーボードへ適用しました。「キーボードに保存」で本体へ保存してください。"
+            : "ファイルの内容はすでにキーボードと同じです。", "success");
+          refreshCandidates();
+          renderKeyboard();
+        } catch (error) {
+          setStatus(`キーマップの適用が途中で失敗しました: ${error.message} 変更済みのキーはキーボード上に残っています。`, "error");
+        } finally {
+          device.applying = false;
+          elements.deviceSaveButton.disabled = !device.dirty;
+          elements.applyFileButton.disabled = !state.pendingImport;
+          elements.disconnectButton.disabled = false;
+          elements.addBindingButton.disabled = false;
+          elements.customBinding.disabled = false;
+          renderPalette();
+          renderKeyboard();
+        }
+      });
+
+      updateBindingBuilder();
       renderLayerTabs();
       refreshCandidates();
       renderKeyboard();
