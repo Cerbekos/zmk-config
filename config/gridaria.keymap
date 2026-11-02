@@ -30,8 +30,7 @@
         };
 
         /* タップダンス */
-
-        td_CS: tap_dance_1 {
+        td_COMMA_SEMI: tap_dance_1 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <170>;
@@ -40,7 +39,7 @@
             label = ",";
         };
 
-        td_DC: tap_dance_2 {
+        td_DOT_COLON: tap_dance_2 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <170>;
@@ -49,7 +48,7 @@
             label = ".";
         };
 
-        td_CME: tap_dance_3 {
+        td_Ctrl_MINUS_EQUAL: tap_dance_3 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <170>;
@@ -58,6 +57,14 @@
             label = "/";
         };
 
+        td_Ctrl_Q_ESC: tap_dance_4 {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <170>;
+            bindings = <&mt RCTRL Q>, <&kp ESC>;
+
+            label = "/";
+        };
         /* 日本語キーボード用マクロ定義 */
 
         jp_dquote: jp_dquote {
@@ -229,10 +236,10 @@
 
         layer_0 {
             bindings = <
-                &mt LCTRL Q   &kp W      &kp E      &kp R      &kp T      &kp Y      &kp U      &kp I      &kp O      &kp P
-                &kp A         &kp S      &kp D      &kp F      &kp G      &kp H      &kp J      &kp K      &kp L      &td_CME
-                &mt LSHFT Z   &kp X      &kp C      &kp V      &kp B      &kp N      &kp M      &td_CS     &td_DC     &mt RSHFT SLASH
-                &mt LCTRL ESC  &lt 6 TAB &mt LALT CAPSLOCK &lt 1 SPACE  &lt 2 RET &mt RALT BSPC &mt RGUI DEL &mt RCTRL RS(CAPSLOCK)
+                &td_Ctrl_Q_ESC   &kp W      &kp E      &kp R      &kp T      &kp Y      &kp U      &kp I      &kp O      &kp P
+                &kp A         &kp S      &kp D      &kp F      &kp G      &kp H      &kp J      &kp K      &kp L      &td_Ctrl_MINUS_EQUAL
+                &mt LSHFT Z   &kp X      &kp C      &kp V      &kp B      &kp N      &kp M      &td_COMMA_SEMI     &td_DOT_COLON     &mt RSHFT SLASH
+                &mt LCTRL ESC  &lt 6 TAB &mt LALT GRAVE &lt 1 SPACE  &lt 2 RET &mt RALT BSPC &mt RGUI DEL &mt RCTRL RS(CAPSLOCK)
             >;
         };
 
