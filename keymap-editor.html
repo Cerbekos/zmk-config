@@ -619,7 +619,7 @@
           "&jp_baqt", "&jp_under", "&jp_lbrkt", "&jp_rbrkt", "&jp_lpar", "&jp_rpar",
           "&jp_lbrace", "&jp_rbrace", "&jp_kana", "&jp_eisu", "&jp_hanzen"
         ]],
-        ["タップダンス", ["&td_CME", "&td_CS", "&td_DC"]],
+        ["タップダンス", []],
         ["マウス", [
           "&msc SCRL_UP", "&msc SCRL_DOWN", "&msc SCRL_LEFT", "&msc SCRL_RIGHT",
           "&mmv MOVE_UP", "&mmv MOVE_DOWN", "&mmv MOVE_LEFT", "&mmv MOVE_RIGHT",
@@ -735,7 +735,44 @@
         candidates: [],
         candidateBindings: new Map(),
         customBindings: new Set(),
-        behaviorDefinitions: new Map(),
+        behaviorDefinitions: parseBehaviorDefinitions(`
+        td_COMMA_SEMI: tap_dance_1 {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            bindings = <&kp COMMA>, <&kp SEMI>;
+            label = ",";
+        };
+        td_DOT_COLON: tap_dance_2 {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            bindings = <&kp DOT>, <&jp_colon>;
+            label = ".";
+        };
+        td_Ctrl_MINUS_EQUAL: tap_dance_3 {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            bindings = <&mt RCTRL MINUS>, <&jp_equal>;
+            label = "/";
+        };
+        td_Ctrl_Q_ESC: tap_dance_4 {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            bindings = <&mt RCTRL Q>, <&kp ESC>;
+            label = "Q";
+        };
+        jp_equal: jp_equal {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "JP_EQUAL";
+            bindings = <&kp UNDER>;
+        };
+        jp_colon: jp_colon {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "JP_COLON";
+            bindings = <&kp SINGLE_QUOTE>;
+        };
+        `),
         device: null,
         candidateList: "zmk",
         dirty: false
@@ -890,6 +927,8 @@
 
       function tapDanceForBehavior(behavior) {
         const device = state.device;
+        const mappedDefinition = device?.tapDanceDefinitionsByBehaviorId?.get(behavior?.id);
+        if (mappedDefinition) return mappedDefinition;
         if (device?.keymap && behavior?.id !== undefined) {
           for (const [layerIndex, layer] of device.keymap.layers.entries()) {
             const sourceBindings = state.layers[layerIndex]?.bindings || [];
@@ -909,6 +948,26 @@
           .filter(Boolean)
           .map(tapDanceForName)
           .find(Boolean);
+      }
+
+      const defaultTapDancePositions = new Map([
+        ["0:0", "td_Ctrl_Q_ESC"],
+        ["0:19", "td_Ctrl_MINUS_EQUAL"],
+        ["0:27", "td_COMMA_SEMI"],
+        ["0:28", "td_DOT_COLON"]
+      ]);
+
+      function tapDanceDefinitionsByBehaviorId(keymap) {
+        const definitions = new Map();
+        for (const [position, code] of defaultTapDancePositions) {
+          const [layerIndex, keyIndex] = position.split(":").map(Number);
+          const binding = keymap.layers[layerIndex]?.bindings[keyIndex];
+          const definition = state.behaviorDefinitions.get(code);
+          if (definition && binding?.param1 === 0 && binding?.param2 === 0) {
+            definitions.set(binding.behaviorId, definition);
+          }
+        }
+        return definitions;
       }
 
       function parseBehaviorDefinitions(source) {
@@ -1979,6 +2038,7 @@
 
           device.keymap = keymap;
           device.behaviors = behaviors;
+          device.tapDanceDefinitionsByBehaviorId = tapDanceDefinitionsByBehaviorId(keymap);
           device.faderBehaviorId = faderBehavior.id;
           device.faderSettingsLayer = faderSettings.layer;
           device.faderSettingsStart = faderSettings.start;
