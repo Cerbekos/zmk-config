@@ -63,7 +63,7 @@
             tapping-term-ms = <170>;
             bindings = <&mt RCTRL Q>, <&kp ESC>;
 
-            label = "/";
+            label = "ESC";
         };
         /* 日本語キーボード用マクロ定義 */
 
