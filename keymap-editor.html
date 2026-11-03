@@ -292,6 +292,10 @@
     }
     .binding-builder label { display: grid; gap: 5px; color: var(--muted); font-size: 12px; }
     .binding-builder select { width: 100%; }
+    .binding-builder .modifier-picker { align-content: start; gap: 5px; color: var(--muted); font-size: 12px; }
+    .modifier-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 8px; }
+    .binding-builder .modifier-options label { display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+    .modifier-options input { margin: 0; accent-color: var(--accent); }
     .binding-builder [hidden] { display: none; }
     .binding-builder[hidden] { display: none; }
 
@@ -424,14 +428,19 @@
             <option value="to">レイヤー移動</option>
           </select>
         </label>
-        <label id="binding-modifier-label">モッド
-          <select id="binding-modifier">
-            <option value="LCTRL">左 Ctrl</option><option value="LSHFT">左 Shift</option>
-            <option value="LALT">左 Alt</option><option value="LGUI">左 GUI</option>
-            <option value="RCTRL">右 Ctrl</option><option value="RSHFT">右 Shift</option>
-            <option value="RALT">右 Alt</option><option value="RGUI">右 GUI</option>
-          </select>
-        </label>
+        <div id="binding-modifier-label" class="modifier-picker">
+          <span>モッド（複数選択可）</span>
+          <div class="modifier-options">
+            <label><input type="checkbox" value="LCTRL" checked>左 Ctrl</label>
+            <label><input type="checkbox" value="LSHFT">左 Shift</label>
+            <label><input type="checkbox" value="LALT">左 Alt</label>
+            <label><input type="checkbox" value="LGUI">左 GUI</label>
+            <label><input type="checkbox" value="RCTRL">右 Ctrl</label>
+            <label><input type="checkbox" value="RSHFT">右 Shift</label>
+            <label><input type="checkbox" value="RALT">右 Alt</label>
+            <label><input type="checkbox" value="RGUI">右 GUI</label>
+          </div>
+        </div>
         <label id="binding-layer-label">レイヤー
           <select id="binding-layer"></select>
         </label>
@@ -623,7 +632,7 @@
         ["マウス", [
           "&msc SCRL_UP", "&msc SCRL_DOWN", "&msc SCRL_LEFT", "&msc SCRL_RIGHT",
           "&mmv MOVE_UP", "&mmv MOVE_DOWN", "&mmv MOVE_LEFT", "&mmv MOVE_RIGHT",
-          "&mkp LCLK", "&mkp MB2", "&mkp MB3"
+          "&mkp LCLK", "&mkp MB2", "&mkp MB3", "&mkp MB4", "&mkp MB5"
         ]],
         ["RGB・Bluetooth・その他", [
           "&rgb_ug RGB_TOG", "&rgb_ug RGB_SPI", "&rgb_ug RGB_EFF", "&rgb_ug RGB_SPD",
@@ -711,7 +720,7 @@
         categoryFilter: document.getElementById("category-filter"),
         bindingBuilder: document.getElementById("binding-builder"),
         bindingType: document.getElementById("binding-type"),
-        bindingModifier: document.getElementById("binding-modifier"),
+        bindingModifiers: document.querySelectorAll("#binding-modifier-label input[type='checkbox']"),
         bindingLayer: document.getElementById("binding-layer"),
         bindingKey: document.getElementById("binding-key"),
         bindingModifierLabel: document.getElementById("binding-modifier-label"),
@@ -1152,41 +1161,74 @@
             MB1: "左ボタン", LCLK: "左ボタン",
             MB2: "右ボタン", RCLK: "右ボタン",
             MB3: "中ボタン", MCLK: "中ボタン",
+            MB4: "戻る", MB5: "進む",
             "1": "左ボタン", "2": "右ボタン", "4": "中ボタン"
           };
           return [buttons[action] || (action ? `マウスボタン ${action}` : "マウス"), "マウス"];
         }
         const actions = behavior === "mmv"
-          ? { MOVE_UP: "上移動", MOVE_DOWN: "下移動", MOVE_LEFT: "左移動", MOVE_RIGHT: "右移動" }
-          : { SCRL_UP: "上スクロール", SCRL_DOWN: "下スクロール", SCRL_LEFT: "左スクロール", SCRL_RIGHT: "右スクロール" };
-        return [actions[action] || "マウス", "マウス"];
+          ? ["MOVE_UP", "MOVE_DOWN", "MOVE_LEFT", "MOVE_RIGHT"]
+          : ["SCRL_UP", "SCRL_DOWN", "SCRL_LEFT", "SCRL_RIGHT"];
+        return [actions.includes(action) ? action : action || "マウス", "マウス"];
       }
 
       function deviceMouseActionLabel(behavior, value) {
-        const normalized = normalizeBehaviorName(behavior.displayName);
-        const descriptions = (behavior.metadata || []).flatMap((set) => set.param1 || []);
-        const description = descriptions.find((entry) => entry.constant === value)?.name || "";
-        const actionName = normalizeBehaviorName(description);
-        if (/button|click/.test(normalized)) {
-          const buttonNames = {
-            1: "左ボタン", 2: "右ボタン", 4: "中ボタン",
-            8: "戻るボタン", 16: "進むボタン"
-          };
-          const namedButton = /left|lclk|mb1/.test(actionName) ? "左ボタン"
-            : /right|rclk|mb2/.test(actionName) ? "右ボタン"
-              : /middle|mclk|mb3/.test(actionName) ? "中ボタン"
-                : /back|mb4/.test(actionName) ? "戻るボタン"
-                  : /forward|mb5/.test(actionName) ? "進むボタン"
-                    : null;
-          return [namedButton || buttonNames[value] || "マウス", "マウス"];
+        const behaviorName = normalizeBehaviorName([
+          behavior.displayName, behavior.name, behavior.label, behavior.behaviorName
+        ].filter(Boolean).join(" "));
+        const isButton = /button|click|mousekey|mkp/.test(behaviorName);
+        if (isButton) {
+          const buttonNames = [
+            [1, "左ボタン"], [2, "右ボタン"], [4, "中ボタン"],
+            [8, "戻るボタン"], [16, "進むボタン"]
+          ];
+          const pressed = buttonNames
+            .filter(([mask]) => (value & mask) !== 0)
+            .map(([, name]) => name);
+          return [pressed.join("+") || "マウスボタン", "マウス"];
         }
-        const motionNames = {
-          up: "上移動", down: "下移動", left: "左移動", right: "右移動",
-          scrollup: "上スクロール", scrolldown: "下スクロール",
-          scrollleft: "左スクロール", scrollright: "右スクロール"
-        };
-        const direction = Object.entries(motionNames).find(([name]) => actionName.includes(name))?.[1];
-        return [direction || "マウス", "マウス"];
+
+        const encoded = value >>> 0;
+        const x = (encoded >>> 16) & 0xffff;
+        const y = encoded & 0xffff;
+        const signedX = x & 0x8000 ? x - 0x10000 : x;
+        const signedY = y & 0x8000 ? y - 0x10000 : y;
+        const isScroll = /scroll|msc|scrl/.test(behaviorName) ||
+          [Math.abs(signedX), Math.abs(signedY)].includes(10);
+        const prefix = isScroll ? "SCRL" : "MOVE";
+
+        if (signedX && !signedY) {
+          if (isScroll && Math.abs(signedX) === 10) {
+            return [signedX < 0 ? "SCRL_LEFT" : "SCRL_RIGHT", "マウス"];
+          }
+          if (!isScroll && Math.abs(signedX) === 600) {
+            return [signedX < 0 ? "MOVE_LEFT" : "MOVE_RIGHT", "マウス"];
+          }
+          return [`${prefix}_X(${signedX})`, "マウス"];
+        }
+        if (signedY && !signedX) {
+          if (isScroll && Math.abs(signedY) === 10) {
+            return [signedY > 0 ? "SCRL_UP" : "SCRL_DOWN", "マウス"];
+          }
+          if (!isScroll && Math.abs(signedY) === 600) {
+            return [signedY < 0 ? "MOVE_UP" : "MOVE_DOWN", "マウス"];
+          }
+          return [`${prefix}_Y(${signedY})`, "マウス"];
+        }
+        return [String(value), "マウス"];
+      }
+
+      function isMouseBehavior(behavior) {
+        if (!behavior) return false;
+        const names = [behavior.displayName, behavior.name, behavior.label, behavior.behaviorName]
+          .filter(Boolean).join(" ");
+        const metadataNames = (behavior.metadata || []).flatMap((set) =>
+          ["param1", "param2"].flatMap((parameter) =>
+            (set[parameter] || []).map(({ name }) => name || "")
+          )
+        ).join(" ");
+        return /mouse|pointer|scroll|mkp|mmv|msc|scrl(?:up|down|left|right)|move(?:up|down|left|right)|mb[1-5]|[lr]clk|mclk/i
+          .test(`${names} ${metadataNames}`);
       }
 
       function specialBindingLabel(behavior, args) {
@@ -1209,10 +1251,10 @@
           if (!behavior) return [`Behavior ${behaviorId}`, `${param1}, ${param2}`];
 
           if (/transparent/i.test(behavior.displayName)) return ["Trans", ""];
+          if (isMouseBehavior(behavior)) return deviceMouseActionLabel(behavior, param1);
           if (isKeyPressBehavior(behavior)) {
             return [formatDeviceKeycode(param1), "キー"];
           }
-          if (/mouse/i.test(behavior.displayName)) return deviceMouseActionLabel(behavior, param1);
           const layerBehavior = layerBehaviorForName(behavior.displayName);
           if (layerBehavior) {
             if (layerBehavior.code === "lt") return [`${formatDeviceKeycode(param2)}\nL${param1}`, "LT"];
@@ -1265,6 +1307,10 @@
         const [behaviorId, param1, param2] = bindingKey.slice(1).split(":").map(Number);
         const behavior = state.device.behaviors.get(behaviorId);
         if (!behavior) return `不明な動作 (${behaviorId})`;
+        if (isMouseBehavior(behavior)) {
+          const [label] = deviceMouseActionLabel(behavior, param1);
+          return `${label} (${deviceBehaviorLabel(behavior)})`;
+        }
         if (isKeyPressBehavior(behavior)) {
           return `&kp ${formatDeviceKeycodeExpression(param1)}`;
         }
@@ -1373,6 +1419,18 @@
           normalizeBehaviorName(description.name) === normalizeBehaviorName(expression)
         );
         if (matchingConstant) return matchingConstant.constant;
+        if (parameter === 1 && isMouseBehavior(behavior)) {
+          const mouseButtonMasks = {
+            MB1: 1, LCLK: 1, MB2: 2, RCLK: 2, MB3: 4, MCLK: 4,
+            MB4: 8, MB5: 16
+          };
+          const buttonMask = mouseButtonMasks[expression.toUpperCase()];
+          if (buttonMask !== undefined && /button|click|mousekey|mkp/i.test([
+            behavior.displayName, behavior.name, behavior.label, behavior.behaviorName
+          ].filter(Boolean).join(" "))) {
+            return buttonMask;
+          }
+        }
         const description = descriptions.find((entry) =>
           entry.hidUsage || entry.layerId || entry.range
         );
@@ -1715,6 +1773,8 @@
         const hasLayer = ["mo", "lt", "tog", "to"].includes(type);
         const hasKey = ["kp", "modified-kp", "mt", "lt"].includes(type);
         elements.bindingModifierLabel.hidden = !hasModifier;
+        const modifierTitle = elements.bindingModifierLabel.querySelector("span");
+        modifierTitle.textContent = type === "mt" ? "モッド（1つ選択）" : "モッド（複数選択可）";
         elements.bindingLayerLabel.hidden = !hasLayer;
         elements.bindingKeyLabel.hidden = !hasKey;
       }
@@ -1722,15 +1782,22 @@
       function bindingFromBuilder() {
         const type = elements.bindingType.value;
         const key = elements.bindingKey.value;
-        const modifier = elements.bindingModifier.value;
+        const modifiers = [...elements.bindingModifiers]
+          .filter((checkbox) => checkbox.checked)
+          .map((checkbox) => checkbox.value);
         const layer = elements.bindingLayer.value;
         if (type === "kp") return `&kp ${key}`;
         if (type === "modified-kp") {
-          const modifierCode = { LCTRL: "LC", LSHFT: "LS", LALT: "LA", LGUI: "LG",
-            RCTRL: "RC", RSHFT: "RS", RALT: "RA", RGUI: "RG" }[modifier];
-          return `&kp ${modifierCode}(${key})`;
+          if (!modifiers.length) {
+            setStatus("モッド＋キーを作成するには、モッドを1つ以上選択してください。", "error");
+            return null;
+          }
+          const modifierCodes = { LCTRL: "LC", LSHFT: "LS", LALT: "LA", LGUI: "LG",
+            RCTRL: "RC", RSHFT: "RS", RALT: "RA", RGUI: "RG" };
+          return `&kp ${modifiers.reduce((expression, modifier) =>
+            `${modifierCodes[modifier]}(${expression})`, key)}`;
         }
-        if (type === "mt") return `&mt ${modifier} ${key}`;
+        if (type === "mt") return `&mt ${modifiers[0] || "LCTRL"} ${key}`;
         if (type === "lt") return `&lt ${layer} ${key}`;
         return `&${type} ${layer}`;
       }
@@ -2442,8 +2509,18 @@
         renderPalette();
       });
       elements.bindingType.addEventListener("change", updateBindingBuilder);
+      for (const checkbox of elements.bindingModifiers) {
+        checkbox.addEventListener("change", () => {
+          if (elements.bindingType.value === "mt" && checkbox.checked) {
+            for (const other of elements.bindingModifiers) {
+              if (other !== checkbox) other.checked = false;
+            }
+          }
+        });
+      }
       elements.addBindingButton.addEventListener("click", () => {
-        addBindingCandidate(bindingFromBuilder());
+        const binding = bindingFromBuilder();
+        if (binding) addBindingCandidate(binding);
       });
       updateBindingBuilder();
       renderLayerTabs();
