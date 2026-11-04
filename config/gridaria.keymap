@@ -23,6 +23,12 @@
 
 / {
     behaviors {
+        bt_led: bt_led {
+            compatible = "zmk,behavior-bt-led";
+            #binding-cells = <2>;
+            display-name = "Bluetooth LED";
+        };
+
         fader_layer: fader_layer {
             compatible = "zmk,behavior-fader-layer";
             #binding-cells = <1>;
@@ -300,7 +306,7 @@
 
         layer_7 {
             bindings = <
-                &bt BT_SEL 0    &bt BT_SEL 1    &bt BT_SEL 2    &bt BT_SEL 3    &bt BT_SEL 4    &studio_unlock  &out OUT_BLE    &out OUT_USB    &bt BT_CLR  &bt BT_CLR_ALL
+                &bt_led BT_SEL 0    &bt_led BT_SEL 1    &bt_led BT_SEL 2    &bt_led BT_SEL 3    &bt_led BT_SEL 4    &studio_unlock  &out OUT_BLE    &out OUT_USB    &bt_led BT_CLR  &bt_led BT_CLR_ALL
                 &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans      &trans
                 &fader_layer 3  &fader_layer 2  &fader_layer 1  &fader_layer 0  &fader_layer 4  &fader_layer 5  &fader_layer 6  &trans          &trans      &trans
                 &trans          &trans          &bootloader     &trans                                          &trans          &bootloader     &trans      &trans

@@ -1,0 +1,8 @@
+# Copyright (c) 2026 Cerbekos
+# SPDX-License-Identifier: GPL-2.0-or-later
+
+description: Bluetooth profile behavior with per-profile LED feedback
+
+compatible: "zmk,behavior-bt-led"
+
+include: two_param.yaml
