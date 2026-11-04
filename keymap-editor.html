@@ -636,8 +636,8 @@
         ]],
         ["RGB・Bluetooth・その他", [
           "&rgb_ug RGB_TOG", "&rgb_ug RGB_SPI", "&rgb_ug RGB_EFF", "&rgb_ug RGB_SPD",
-          "&rgb_ug RGB_EFR", "&bt BT_SEL 0", "&bt BT_SEL 1", "&bt BT_SEL 2",
-          "&bt BT_SEL 3", "&bt BT_SEL 4", "&bt BT_CLR", "&bt BT_CLR_ALL",
+          "&rgb_ug RGB_EFR", "&bt_led BT_SEL 0", "&bt_led BT_SEL 1", "&bt_led BT_SEL 2",
+          "&bt_led BT_SEL 3", "&bt_led BT_SEL 4", "&bt_led BT_CLR", "&bt_led BT_CLR_ALL",
           "&studio_unlock", "&out OUT_BLE", "&out OUT_USB", "&fader_layer 0",
           "&fader_layer 1", "&fader_layer 2", "&fader_layer 3", "&fader_layer 4",
           "&fader_layer 5", "&fader_layer 6", "&bootloader"
@@ -1172,6 +1172,29 @@
         return [actions.includes(action) ? action : action || "マウス", "マウス"];
       }
 
+      function isBluetoothLedBehavior(behavior) {
+        return [behavior?.displayName, behavior?.name, behavior?.label, behavior?.behaviorName]
+          .filter(Boolean)
+          .some((name) => /bluetooth.?led|bt.?led/i.test(name));
+      }
+
+      function bluetoothLedCommandValue(command) {
+        return ({
+          BT_CLR: 0,
+          BT_SEL: 3,
+          BT_CLR_ALL: 4
+        })[command.toUpperCase()] ?? null;
+      }
+
+      function bluetoothLedLabel(command, profile = 0) {
+        switch (command) {
+          case 0: return ["CLR", "Bluetooth"];
+          case 3: return [`BT ${profile + 1}`, "Bluetooth"];
+          case 4: return ["CLR ALL", "Bluetooth"];
+          default: return null;
+        }
+      }
+
       function deviceMouseActionLabel(behavior, value) {
         const behaviorName = normalizeBehaviorName([
           behavior.displayName, behavior.name, behavior.label, behavior.behaviorName
@@ -1235,6 +1258,10 @@
         if (["mkp", "mmv", "msc"].includes(behavior)) return mouseActionLabel(behavior, args);
         if (behavior === "fader_layer") return [`L${args[0] ?? ""}`, "Fader Layer"];
         if (behavior === "rgb_ug") return [args.join(" ") || "Underglow", "Underglow"];
+        if (behavior === "bt_led") {
+          const command = bluetoothLedCommandValue(args[0] || "");
+          return command === null ? null : bluetoothLedLabel(command, Number(args[1]) || 0);
+        }
         if (behavior === "bt") return [args.join(" ") || "Bluetooth", "Bluetooth"];
         if (behavior === "out") return [args.join(" ") || "Output", "Output"];
         if (behavior === "studio_unlock") return ["Studio Unlock", "その他の動作"];
@@ -1251,6 +1278,7 @@
           if (!behavior) return [`Behavior ${behaviorId}`, `${param1}, ${param2}`];
 
           if (/transparent/i.test(behavior.displayName)) return ["Trans", ""];
+          if (isBluetoothLedBehavior(behavior)) return bluetoothLedLabel(param1, param2) || ["Bluetooth LED", "Bluetooth"];
           if (isMouseBehavior(behavior)) return deviceMouseActionLabel(behavior, param1);
           if (isKeyPressBehavior(behavior)) {
             return [formatDeviceKeycode(param1), "キー"];
@@ -1307,6 +1335,11 @@
         const [behaviorId, param1, param2] = bindingKey.slice(1).split(":").map(Number);
         const behavior = state.device.behaviors.get(behaviorId);
         if (!behavior) return `不明な動作 (${behaviorId})`;
+        if (isBluetoothLedBehavior(behavior)) {
+          if (param1 === 3) return `&bt_led BT_SEL ${param2}`;
+          if (param1 === 0) return "&bt_led BT_CLR";
+          if (param1 === 4) return "&bt_led BT_CLR_ALL";
+        }
         if (isMouseBehavior(behavior)) {
           const [label] = deviceMouseActionLabel(behavior, param1);
           return `${label} (${deviceBehaviorLabel(behavior)})`;
@@ -1376,6 +1409,7 @@
         const normalized = normalizeBehaviorName(name);
         const behaviorAliases = {
           bt: /bluetooth/i,
+          btled: /bluetooth.?led/i,
           out: /output/i,
           rgbug: /rgb.*underglow/i,
           faderlayer: /fader.*layer/i,
@@ -1413,6 +1447,11 @@
       }
 
       function parameterFromExpression(behavior, parameter, expression) {
+        if (isBluetoothLedBehavior(behavior)) {
+          if (parameter === 1) return bluetoothLedCommandValue(expression);
+          if (parameter === 2 && /^\d+$/.test(expression)) return Number(expression);
+          return null;
+        }
         const descriptions = (behavior.metadata || []).flatMap((set) => set[`param${parameter}`] || []);
         const matchingConstant = descriptions.find((description) =>
           description.constant !== undefined &&
