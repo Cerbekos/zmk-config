@@ -11,6 +11,8 @@
 #include <zmk/keymap.h>
 #include <zmk/rgb_underglow.h>
 
+#include "gridaria_led.h"
+
 LOG_MODULE_REGISTER(gridaria_layer_led, CONFIG_ZMK_LOG_LEVEL);
 
 #define RGB_EFFECT_SOLID 0
@@ -66,14 +68,20 @@ static void show_layer_color(uint8_t layer) {
     indicated_layer = layer;
 }
 
+void gridaria_layer_led_refresh(void) {
+    zmk_keymap_layer_index_t layer_index = zmk_keymap_highest_layer_active();
+    zmk_keymap_layer_id_t layer = zmk_keymap_layer_index_to_id(layer_index);
+    show_layer_color(layer);
+}
+
 static int gridaria_layer_led_listener(const zmk_event_t *eh) {
     if (as_zmk_layer_state_changed(eh) == NULL) {
         return ZMK_EV_EVENT_BUBBLE;
     }
 
-    zmk_keymap_layer_index_t layer_index = zmk_keymap_highest_layer_active();
-    zmk_keymap_layer_id_t layer = zmk_keymap_layer_index_to_id(layer_index);
-    show_layer_color(layer);
+    if (!gridaria_battery_led_is_active()) {
+        gridaria_layer_led_refresh();
+    }
 
     return ZMK_EV_EVENT_BUBBLE;
 }
