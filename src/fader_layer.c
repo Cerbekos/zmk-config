@@ -18,8 +18,6 @@
 
 LOG_MODULE_REGISTER(gridaria_fader, CONFIG_ZMK_LOG_LEVEL);
 
-#if DT_NODE_HAS_STATUS(DT_NODELABEL(fader), okay)
-
 #define FADER_SAMPLE_COUNT 4
 #define FADER_HYSTERESIS 12
 #define FADER_LAYER_COUNT 7
@@ -153,5 +151,3 @@ static void gridaria_fader_input_callback(struct input_event *event, void *user_
 }
 
 INPUT_CALLBACK_DEFINE(DEVICE_DT_GET(DT_NODELABEL(fader)), gridaria_fader_input_callback, NULL);
-
-#endif
