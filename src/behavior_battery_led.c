@@ -59,7 +59,7 @@ static void show_battery_level(void) {
     }
     size_t lit_pixels = (charge * ARRAY_SIZE(pixels) + 99) / 100;
     for (size_t i = 0; i < ARRAY_SIZE(pixels); i++) {
-        bool on = i < lit_pixels;
+        bool on = i >= ARRAY_SIZE(pixels) - lit_pixels;
         pixels[i] = (struct led_rgb){
             .r = on ? BATTERY_LED_BRIGHTNESS : 0,
             .g = on ? BATTERY_LED_BRIGHTNESS : 0,
