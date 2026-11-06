@@ -96,7 +96,7 @@
     poll-period-ms = <8>;
 
     axis-x {
-      io-channels = <&adc 0>;
+      io-channels = <&adc 1>;
       in-min = <0>;
       in-max = <4095>;
       /* Keep zero positions observable; the driver suppresses unchanged zero values. */
@@ -114,8 +114,8 @@
   #address-cells = <1>;
   #size-cells = <0>;
 
-  channel@0 {
-    reg = <0>;
+  channel@1 {
+    reg = <1>;
     zephyr,resolution = <12>;
     zephyr,gain = "ADC_GAIN_1_4";
     zephyr,reference = "ADC_REF_VDD_1_4";
