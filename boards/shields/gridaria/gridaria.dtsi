@@ -1,8 +1,6 @@
 #include <dt-bindings/zmk/matrix_transform.h>
 #include <zephyr/dt-bindings/gpio/gpio.h>
 #include <dt-bindings/led/led.h>
-#include <zephyr/dt-bindings/adc/adc.h>
-#include <zephyr/dt-bindings/adc/nrf-saadc.h>
 #include <zephyr/dt-bindings/input/input-event-codes.h>
 #include <physical_layouts.dtsi>
 
@@ -92,7 +90,7 @@
 
   fader: analog_axis_hires {
     compatible = "analog-axis-hires";
-    status = "okay";
+    status = "disabled";
     poll-period-ms = <8>;
 
     axis-x {
@@ -105,22 +103,6 @@
       zephyr,axis-type = <INPUT_EV_ABS>;
       zephyr,axis = <INPUT_ABS_X>;
     };
-  };
-};
-
-&adc {
-  status = "okay";
-
-  #address-cells = <1>;
-  #size-cells = <0>;
-
-  channel@0 {
-    reg = <0>;
-    zephyr,resolution = <12>;
-    zephyr,gain = "ADC_GAIN_1_4";
-    zephyr,reference = "ADC_REF_VDD_1_4";
-    zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
-    zephyr,input-positive = <NRF_SAADC_AIN0>;
   };
 };
 
