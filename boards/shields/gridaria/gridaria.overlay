@@ -1,3 +1,8 @@
 #include "gridaria.dtsi"
 
+&vbatt {
+    output-ohms = <474300>;
+    full-ohms = <(1000000 + 474300)>;
+};
+
 &xiao_serial { status = "disabled"; };
